@@ -1,0 +1,353 @@
+export interface TmProduct {
+  id: string;
+  name_en: string;
+  name_bn: string;
+  price: number;
+  original_price: number;
+  image: string;
+  category: string;
+  save: number;
+  isOffer?: boolean;
+  description_en: string;
+  section?: string; // named homepage strip, e.g. "Hot Deals"
+}
+
+export interface TmCategory {
+  emoji: string;
+  name: string;
+  subcategories: string[];
+  highlight?: boolean;
+}
+
+export const CATEGORY_TREE: TmCategory[] = [
+  { emoji: "🏷️", name: "Offers", subcategories: ["Hot Deals", "Daily Specials", "Flash Sale", "Bundle Offers", "Clearance"] },
+  { emoji: "🏈", name: "Football Fest", highlight: true, subcategories: ["Football Fan Corner", "Argentina Fan Corner", "Brazil Fan Corner", "Kickoff Savings on Monthly Bazar", "Stadium Snacks", "Sip & Celebrate", "Half-Time Pick-Me-Up", "Candy Kick-Off", "Quick Bites for Extra Time", "Fresh for the Match"] },
+  { emoji: "🍦", name: "Savoy Ice Cream", subcategories: ["Ice Cream Tubs 1L", "Ice Cream Cakes", "Novelties & Bars", "Seasonal Flavors"] },
+  { emoji: "🧴", name: "Unilever", subcategories: ["Surf Excel", "Dove", "Lux", "Lifebuoy", "Sunsilk", "Closeup", "Pond's", "Fair & Lovely", "Vim"] },
+  { emoji: "🥛", name: "Nestlé", subcategories: ["Nescafe", "Maggi Noodles", "Nestlé Milk", "Milo", "KitKat", "Coffee Mate", "Nido"] },
+  { emoji: "🍎", name: "Fruits", subcategories: ["Fresh Fruits", "Imported Fruits", "Dried Fruits", "Fruit Juices & Shorbot", "Exotic Fruits"] },
+  { emoji: "🥦", name: "Vegetables", subcategories: ["Fresh Vegetables", "Leafy Greens", "Root Vegetables", "Herbs & Spices", "Organic Vegetables"] },
+  { emoji: "🥩", name: "Meat", subcategories: ["Chicken", "Beef", "Mutton & Lamb", "Processed Meat", "Sausages & Cold Cuts", "Marinated & Ready to Cook"] },
+  { emoji: "🐟", name: "Fish", subcategories: ["Fresh Fish", "Hilsa (Ilish)", "Prawns & Shrimp", "Dried Fish", "Fish Fillet", "Frozen Seafood"] },
+  { emoji: "🥛", name: "Dairy, Chilled & Eggs", subcategories: ["Milk", "Eggs", "Yoghurt & Doi", "Butter & Ghee", "Cheese", "Cream"] },
+  { emoji: "❄️", name: "Frozen & Ready Meals", subcategories: ["Frozen Chicken", "Frozen Snacks", "Ready Meals", "Frozen Vegetables", "Ice Cream (Frozen)", "Frozen Paratha & Roti"] },
+  { emoji: "🥓", name: "Deli Meat", subcategories: ["Chicken Sausages", "Beef Sausages", "Cold Cuts", "Salami", "Deli Slices"] },
+  { emoji: "🍦", name: "Ice Cream & Sweets", subcategories: ["Ice Cream Tubs", "Ice Cream Bars", "Traditional Sweets", "Halwa & Mithai", "Frozen Desserts"] },
+  { emoji: "🍿", name: "Snacks", subcategories: ["Chips & Crisps", "Biscuits & Crackers", "Nuts & Seeds", "Popcorn", "Rice Cakes", "Protein Snacks"] },
+  { emoji: "🥤", name: "Beverages", subcategories: ["Water", "Soft Drinks", "Juices", "Energy Drinks", "Tea", "Coffee", "Lassi & Dairy Drinks", "Coconut Water"] },
+  { emoji: "🍫", name: "Chocolates & Candy", subcategories: ["Chocolate Bars", "Boxed Chocolates", "Hard Candy", "Gummy & Jelly", "Lollipops", "Imported Chocolates"] },
+  { emoji: "🥐", name: "Bakery & Breakfast", subcategories: ["Bread & Loaves", "Buns & Rolls", "Croissants & Pastries", "Cereals & Oats", "Jam & Spreads", "Pancake & Waffle Mix"] },
+  { emoji: "🍳", name: "Daily Cooking", subcategories: ["Rice", "Dal & Lentils", "Flour & Atta", "Cooking Oil", "Salt & Sugar", "Vinegar & Sauces"] },
+  { emoji: "🌶️", name: "Spice & Herb", subcategories: ["Whole Spices", "Ground Spices", "Masala Mix", "Dry Herbs", "Garam Masala", "Curry Powder"] },
+  { emoji: "🎂", name: "Baking", subcategories: ["Baking Flour", "Yeast & Baking Powder", "Cocoa & Chocolate", "Vanilla & Extracts", "Food Coloring", "Cake Decorations"] },
+  { emoji: "☕", name: "Coffee & Tea", subcategories: ["Instant Coffee", "Ground Coffee", "Black Tea", "Green Tea", "Herbal Tea", "Milk Tea Mix"] },
+  { emoji: "🧺", name: "Cleaning & Laundry", subcategories: ["Detergent Powder", "Liquid Detergent", "Fabric Softener", "Dishwashing", "Toilet Cleaner", "Floor Cleaner", "Air Freshener"] },
+  { emoji: "💄", name: "Beauty & Personal Care", subcategories: ["Shampoo & Conditioner", "Body Wash & Soap", "Skincare", "Hair Oil", "Deodorant", "Toothpaste & Oral Care", "Feminine Care"] },
+  { emoji: "👶", name: "Mother & Baby", subcategories: ["Baby Diapers", "Baby Food", "Baby Wipes", "Baby Skincare", "Maternity Care", "Baby Accessories"] },
+  { emoji: "💊", name: "Pharmacy", subcategories: ["Pain Relief", "Vitamins & Supplements", "Digestive Health", "Cold & Flu", "First Aid", "Oral Rehydration"] },
+  { emoji: "🏠", name: "Household Essentials", subcategories: ["Tissue & Paper Products", "Garbage Bags", "Mosquito Repellent", "Candles & Lighters", "Storage & Organization", "Kitchen Accessories"] },
+  { emoji: "📱", name: "Electronics & Accessories", subcategories: ["Phone Accessories", "Power Banks", "Cables & Chargers", "Earphones", "Smart Gadgets"] },
+  { emoji: "⚽", name: "Sports & Lifestyle", subcategories: ["Sports Drinks", "Protein & Nutrition", "Fitness Accessories", "Outdoor & Camping", "Yoga & Wellness"] },
+  { emoji: "📚", name: "Stationeries, Toys & Gifts", subcategories: ["Pens & Pencils", "Notebooks", "Kids Toys", "Board Games", "Gift Wrapping", "Art Supplies"] },
+  { emoji: "🐾", name: "Pet Care", subcategories: ["Cat Food", "Dog Food", "Pet Treats", "Pet Grooming", "Pet Accessories", "Aquarium Supplies"] },
+];
+
+export const CATEGORIES = [
+  { emoji: "🛒", name: "All" },
+  ...CATEGORY_TREE.map((c) => ({ emoji: c.emoji, name: c.name })),
+];
+
+// Small representative photo per category, used for the pandamart-style icon
+// row above the product grid (replaces the old emoji pill bar).
+export const CATEGORY_ICONS: Record<string, string> = {
+  Offers: "https://images.unsplash.com/photo-1607082349566-187342175e2f?w=120&q=75",
+  "Football Fest": "https://images.unsplash.com/photo-1552667466-07770ae110d0?w=120&q=75",
+  "Savoy Ice Cream": "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=120&q=75",
+  Unilever: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=120&q=75",
+  "Nestlé": "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?w=120&q=75",
+  Fruits: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=120&q=75",
+  Vegetables: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=120&q=75",
+  Meat: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=120&q=75",
+  Fish: "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=120&q=75",
+  "Dairy, Chilled & Eggs": "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=120&q=75",
+  "Frozen & Ready Meals": "https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=120&q=75",
+  "Deli Meat": "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=120&q=75",
+  "Ice Cream & Sweets": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=120&q=75",
+  Snacks: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=120&q=75",
+  Beverages: "https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=120&q=75",
+  "Chocolates & Candy": "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=120&q=75",
+  "Bakery & Breakfast": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=120&q=75",
+  "Daily Cooking": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=120&q=75",
+  "Spice & Herb": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=120&q=75",
+  Baking: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=120&q=75",
+  "Coffee & Tea": "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?w=120&q=75",
+  "Cleaning & Laundry": "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=120&q=75",
+  "Beauty & Personal Care": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=120&q=75",
+  "Mother & Baby": "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=120&q=75",
+  Pharmacy: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=120&q=75",
+  "Household Essentials": "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=120&q=75",
+  "Electronics & Accessories": "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=120&q=75",
+  "Sports & Lifestyle": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=120&q=75",
+  "Stationeries, Toys & Gifts": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=120&q=75",
+  "Pet Care": "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=120&q=75",
+};
+
+export interface TmBanner {
+  title: string;
+  subtitle: string;
+  cta: string;
+  gradient: string;
+}
+
+// Rotating promotional banners shown at the top of the page, mirroring
+// pandamart's "Shop & Win" / "Grab Local Onion" ad carousel.
+export const BANNERS: TmBanner[] = [
+  { title: "Shop & Win", subtitle: "Add more unique items, win a Tk 3,000 voucher every day!", cta: "Start shopping", gradient: "from-turtle-pink to-pink-400" },
+  { title: "Grab Local Onion — 9Tk", subtitle: "Deshi Peyaj, 500gm pack. T&Cs apply.", cta: "Order now", gradient: "from-amber-500 to-orange-400" },
+  { title: "Football Fest is here", subtitle: "Up to 30% off match-day snacks & drinks", cta: "Shop the fest", gradient: "from-green-600 to-emerald-500" },
+  { title: "Monthly Bazar savings", subtitle: "Up to 50% off your whole month's groceries", cta: "See deals", gradient: "from-sky-600 to-blue-400" },
+];
+
+// Ordered named strips shown at the top of the "All" view, before the
+// per-category grouping. Mirrors the promo strips on the real homepage.
+export const SECTIONS: string[] = [
+  "Hot Deals",
+  "Popular Products",
+  "Kickoff Savings on Monthly Bazar",
+  "Fresh Champions of Monthly Bazar",
+  "Nestle Fan Zone Fuel",
+  "Savoy Football Carnival",
+  "Buy 2 Win Deals",
+  "Brand Rush 30% Off",
+  "Godrej",
+  "Everyday Essentials",
+  "Imported Bestsellers",
+  "Tong Dokan",
+];
+
+// Quick-jump pills shown above the grid — scroll to a Football Fest subsection.
+export const QUICK_TABS = [
+  "Offer",
+  "Football Fan Corner",
+  "Argentina Fan Corner",
+  "Brazil Fan Corner",
+  "Kickoff Savings on Monthly Bazar",
+  "Stadium Snacks",
+];
+
+export const PRODUCTS: TmProduct[] = [
+  // Fruits
+  { id: "fv1", name_en: "Fresh Mango (1kg)", name_bn: "তাজা আম (১ কেজি)", price: 120, original_price: 150, image: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=300&q=80", category: "Fruits", save: 30, isOffer: true, description_en: "Fresh seasonal mangoes, sweet and juicy. Sourced directly from farms in Rajshahi." },
+  { id: "fv2", name_en: "Banana Bunch (6 pcs)", name_bn: "কলা (৬টি)", price: 45, original_price: 60, image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=300&q=80", category: "Fruits", save: 15, description_en: "Fresh ripe bananas, naturally sweet and rich in potassium." },
+  { id: "fv6", name_en: "Watermelon (whole)", name_bn: "তরমুজ (পুরো)", price: 180, original_price: 220, image: "https://images.unsplash.com/photo-1563114773-84221bd62daa?w=300&q=80", category: "Fruits", save: 40, description_en: "Large, sweet, juicy watermelon. Perfect for summer days." },
+  { id: "fv8", name_en: "Apple (4 pcs)", name_bn: "আপেল (৪টি)", price: 160, original_price: 200, image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=300&q=80", category: "Fruits", save: 40, description_en: "Imported fresh apples, crisp and sweet." },
+  { id: "fv10", name_en: "Lemon (5 pcs)", name_bn: "লেবু (৫টি)", price: 40, original_price: 55, image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=300&q=80", category: "Fruits", save: 15, description_en: "Fresh juicy lemons, great for drinks and cooking." },
+
+  // Vegetables
+  { id: "fv3", name_en: "Tomato (500g)", name_bn: "টমেটো (৫০০গ্রা)", price: 40, original_price: 55, image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=300&q=80", category: "Vegetables", save: 15, description_en: "Farm-fresh red tomatoes, perfect for cooking and salads." },
+  { id: "fv4", name_en: "Potato (1kg)", name_bn: "আলু (১ কেজি)", price: 50, original_price: 65, image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300&q=80", category: "Vegetables", save: 15, description_en: "Premium quality potatoes, ideal for curries and fries." },
+  { id: "fv5", name_en: "Onion (1kg)", name_bn: "পেঁয়াজ (১ কেজি)", price: 60, original_price: 80, image: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=300&q=80", category: "Vegetables", save: 20, isOffer: true, description_en: "Fresh local onions, a kitchen essential for all cooking." },
+  { id: "fv7", name_en: "Spinach (250g)", name_bn: "পালং শাক (২৫০গ্রা)", price: 30, original_price: 40, image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300&q=80", category: "Vegetables", save: 10, description_en: "Fresh tender spinach leaves, rich in iron and vitamins." },
+  { id: "fv9", name_en: "Garlic (100g)", name_bn: "রসুন (১০০গ্রা)", price: 35, original_price: 45, image: "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=300&q=80", category: "Vegetables", save: 10, description_en: "Fresh garlic bulbs, aromatic and flavourful." },
+  { id: "vg1", name_en: "Lady's Finger / Dherosh (500g)", name_bn: "ঢেঁড়স (৫০০গ্রা)", price: 62, original_price: 69, image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300&q=80", category: "Vegetables", save: 7, isOffer: true, description_en: "Fresh tender lady's finger, perfect for bhaji and curry." },
+  { id: "vg2", name_en: "Cauliflower (1 piece)", name_bn: "ফুলকপি (১টি)", price: 95, original_price: 115, image: "https://images.unsplash.com/photo-1568584711271-6c929fb49b60?w=300&q=80", category: "Vegetables", save: 20, description_en: "Fresh whole cauliflower, crisp and pale." },
+
+  // Meat
+  { id: "mf1", name_en: "Chicken Breast (500g)", name_bn: "চিকেন ব্রেস্ট (৫০০গ্রা)", price: 280, original_price: 320, image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=300&q=80", category: "Meat", save: 40, isOffer: true, description_en: "Fresh boneless chicken breast, high protein and low fat." },
+  { id: "mf3", name_en: "Beef Mince (500g)", name_bn: "গরুর কিমা (৫০০গ্রা)", price: 350, original_price: 420, image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=300&q=80", category: "Meat", save: 70, description_en: "Fresh minced beef, perfect for kebabs and curries." },
+  { id: "mf6", name_en: "Whole Chicken (1kg)", name_bn: "পুরো মুরগি (১ কেজি)", price: 320, original_price: 380, image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=300&q=80", category: "Meat", save: 60, description_en: "Fresh whole broiler chicken, cleaned and dressed." },
+  { id: "mf8", name_en: "Mutton (500g)", name_bn: "মাটন (৫০০গ্রা)", price: 580, original_price: 680, image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=300&q=80", category: "Meat", save: 100, description_en: "Tender goat meat, perfect for rich curry and biryani." },
+  { id: "mt1", name_en: "Broiler Chicken Breast Boneless (500g)", name_bn: "ব্রয়লার চিকেন ব্রেস্ট বোনলেস (৫০০গ্রা)", price: 290, original_price: 320, image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=300&q=80", category: "Meat", save: 30, isOffer: true, description_en: "Boneless broiler chicken breast, freshly cut." },
+
+  // Fish
+  { id: "mf2", name_en: "Hilsha Fish (1pc)", name_bn: "ইলিশ মাছ (১টি)", price: 650, original_price: 800, image: "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=300&q=80", category: "Fish", save: 150, isOffer: true, description_en: "Premium Padma Hilsha fish, the pride of Bangladesh cuisine." },
+  { id: "mf4", name_en: "Rui Fish (500g)", name_bn: "রুই মাছ (৫০০গ্রা)", price: 220, original_price: 260, image: "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=300&q=80", category: "Fish", save: 40, description_en: "Fresh Rui (Rohu) fish, a popular Bangladeshi favourite." },
+  { id: "mf5", name_en: "Shrimp (250g)", name_bn: "চিংড়ি (২৫০গ্রা)", price: 380, original_price: 450, image: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=300&q=80", category: "Fish", save: 70, description_en: "Fresh medium-sized shrimp, ready to cook." },
+  { id: "mf7", name_en: "Catfish / Pangash (500g)", name_bn: "পাঙ্গাস মাছ (৫০০গ্রা)", price: 180, original_price: 220, image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=300&q=80", category: "Fish", save: 40, description_en: "Fresh Pangash fish, great for curry and fry." },
+
+  // Dairy, Chilled & Eggs
+  { id: "d1", name_en: "Whole Milk (1L)", name_bn: "সম্পূর্ণ দুধ (১ লিটার)", price: 80, original_price: 95, image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=300&q=80", category: "Dairy, Chilled & Eggs", save: 15, description_en: "Fresh full-cream cow's milk, rich and nutritious." },
+  { id: "d2", name_en: "Plain Yogurt / Doi (400g)", name_bn: "দই (৪০০গ্রা)", price: 70, original_price: 85, image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&q=80", category: "Dairy, Chilled & Eggs", save: 15, description_en: "Thick creamy plain yogurt, great with biryani or as a snack." },
+  { id: "d3", name_en: "Cheese Slice (200g)", name_bn: "চিজ স্লাইস (২০০গ্রা)", price: 220, original_price: 260, image: "https://images.unsplash.com/photo-1452195100486-9cc805987862?w=300&q=80", category: "Dairy, Chilled & Eggs", save: 40, isOffer: true, description_en: "Individually wrapped processed cheese slices, perfect for sandwiches." },
+  { id: "d4", name_en: "Butter (100g)", name_bn: "মাখন (১০০গ্রা)", price: 110, original_price: 130, image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80", category: "Dairy, Chilled & Eggs", save: 20, description_en: "Pure golden butter, rich in flavour." },
+  { id: "d6", name_en: "Cooking Cream (200ml)", name_bn: "ক্রিম (২০০মিলি)", price: 180, original_price: 210, image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=300&q=80", category: "Dairy, Chilled & Eggs", save: 30, description_en: "Fresh cooking cream, ideal for pasta sauces and curries." },
+  { id: "eg1", name_en: "Kazi Farms Kitchen Egg (12 pcs)", name_bn: "কাজী ফার্মস ডিম (১২টি)", price: 190, original_price: 190, image: "https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=300&q=80", category: "Dairy, Chilled & Eggs", save: 0, description_en: "Farm-fresh brown eggs, 12-piece tray." },
+
+  // Frozen & Ready Meals
+  { id: "fz1", name_en: "Frozen Chicken Nuggets (500g)", name_bn: "ফ্রোজেন চিকেন নাগেটস (৫০০গ্রা)", price: 320, original_price: 370, image: "https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=300&q=80", category: "Frozen & Ready Meals", save: 50, description_en: "Ready-to-fry frozen chicken nuggets." },
+  { id: "fz2", name_en: "Frozen Paratha (10 pcs)", name_bn: "ফ্রোজেন পরোটা (১০টি)", price: 180, original_price: 210, image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300&q=80", category: "Frozen & Ready Meals", save: 30, description_en: "Ready-to-cook layered frozen parathas." },
+  { id: "fz3", name_en: "Frozen Mixed Vegetables (500g)", name_bn: "ফ্রোজেন মিক্সড ভেজিটেবল (৫০০গ্রা)", price: 140, original_price: 165, image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=300&q=80", category: "Frozen & Ready Meals", save: 25, description_en: "Pre-cut frozen mixed vegetables, ready to cook." },
+
+  // Deli Meat
+  { id: "dm1", name_en: "GB Chicken Sausage Cooked (300g)", name_bn: "জিবি চিকেন সসেজ (৩০০গ্রা)", price: 152, original_price: 190, image: "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=300&q=80", category: "Deli Meat", save: 38, isOffer: true, description_en: "Fully cooked chicken sausages, ready to grill or pan-fry." },
+  { id: "dm2", name_en: "German Butcher Beef Sausage (10 pcs, 300g)", name_bn: "জার্মান বুচার বিফ সসেজ (১০টি, ৩০০গ্রা)", price: 255, original_price: 300, image: "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=300&q=80", category: "Deli Meat", save: 45, isOffer: true, description_en: "Premium beef sausages from German Butcher." },
+  { id: "dm3", name_en: "Chicken Salami (200g)", name_bn: "চিকেন সালামি (২০০গ্রা)", price: 210, original_price: 250, image: "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=300&q=80", category: "Deli Meat", save: 40, description_en: "Sliced chicken salami for sandwiches and pizza." },
+
+  // Ice Cream & Sweets
+  { id: "ics1", name_en: "Traditional Roshogolla (1kg)", name_bn: "রসগোল্লা (১ কেজি)", price: 260, original_price: 300, image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300&q=80", category: "Ice Cream & Sweets", save: 40, description_en: "Soft, spongy roshogolla soaked in light syrup." },
+  { id: "ics2", name_en: "Kaju Barfi (500g)", name_bn: "কাজু বরফি (৫০০গ্রা)", price: 480, original_price: 550, image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300&q=80", category: "Ice Cream & Sweets", save: 70, description_en: "Rich cashew nut fudge, a festive favourite." },
+
+  // Snacks
+  { id: "sn1", name_en: "Potato Chips (100g)", name_bn: "আলু চিপস (১০০গ্রা)", price: 60, original_price: 75, image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300&q=80", category: "Snacks", save: 15, description_en: "Crispy salted potato chips, your favourite evening snack." },
+  { id: "sn2", name_en: "Peanuts (200g)", name_bn: "চিনাবাদাম (২০০গ্রা)", price: 50, original_price: 65, image: "https://images.unsplash.com/photo-1567306301408-9b74779a11af?w=300&q=80", category: "Snacks", save: 15, description_en: "Roasted salted peanuts, a classic healthy snack." },
+  { id: "sn4", name_en: "Biscuits Pack (200g)", name_bn: "বিস্কুট প্যাক (২০০গ্রা)", price: 55, original_price: 70, image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300&q=80", category: "Snacks", save: 15, description_en: "Light crispy biscuits, perfect with tea." },
+  { id: "sn5", name_en: "Mixed Nuts (150g)", name_bn: "মিক্সড বাদাম (১৫০গ্রা)", price: 190, original_price: 230, image: "https://images.unsplash.com/photo-1567306301408-9b74779a11af?w=300&q=80", category: "Snacks", save: 40, description_en: "Premium mix of almonds, cashews, and pistachios." },
+  { id: "sn6", name_en: "Popcorn (80g)", name_bn: "পপকর্ন (৮০গ্রা)", price: 45, original_price: 60, image: "https://images.unsplash.com/photo-1578849278619-e73505e9610f?w=300&q=80", category: "Snacks", save: 15, description_en: "Ready-to-eat buttery popcorn. Movie night essential." },
+  { id: "sn7", name_en: "Haque Chocolate Digestive Biscuit (118g)", name_bn: "হক চকোলেট ডাইজেস্টিভ বিস্কুট (১১৮গ্রা)", price: 38, original_price: 40, image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300&q=80", category: "Snacks", save: 2, isOffer: true, description_en: "Chocolate-coated digestive biscuits." },
+
+  // Beverages
+  { id: "bv1", name_en: "Orange Juice (1L)", name_bn: "কমলার রস (১ লিটার)", price: 150, original_price: 180, image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=300&q=80", category: "Beverages", save: 30, isOffer: true, description_en: "100% pure orange juice, no added sugar or preservatives." },
+  { id: "bv2", name_en: "Mineral Water (1.5L)", name_bn: "মিনারেল ওয়াটার (১.৫ লিটার)", price: 25, original_price: 35, image: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=300&q=80", category: "Beverages", save: 10, description_en: "Pure mineral water, naturally filtered from mountain springs." },
+  { id: "bv3", name_en: "Cola 500ml", name_bn: "কোলা ৫০০মিলি", price: 55, original_price: 70, image: "https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=300&q=80", category: "Beverages", save: 15, description_en: "Classic cola drink, ice cold and refreshing." },
+  { id: "bv4", name_en: "Green Tea (20 bags)", name_bn: "গ্রিন টি (২০ ব্যাগ)", price: 120, original_price: 150, image: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=300&q=80", category: "Beverages", save: 30, description_en: "Premium Japanese green tea bags, antioxidant-rich." },
+  { id: "bv5", name_en: "Energy Drink (250ml)", name_bn: "এনার্জি ড্রিংক (২৫০মিলি)", price: 90, original_price: 110, image: "https://images.unsplash.com/photo-1622543925917-763c34d1a86e?w=300&q=80", category: "Beverages", save: 20, description_en: "High-energy drink to keep you going through the day." },
+  { id: "bv6", name_en: "Mango Drink (1L)", name_bn: "ম্যাঙ্গো ড্রিংক (১ লিটার)", price: 80, original_price: 100, image: "https://images.unsplash.com/photo-1534353436294-0dbd4bdac845?w=300&q=80", category: "Beverages", save: 20, description_en: "Sweet mango-flavoured drink, a tropical favourite." },
+  { id: "bv7", name_en: "Daabs Green Coconut (1pc)", name_bn: "ডাব (১টি)", price: 165, original_price: 170, image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=300&q=80", category: "Beverages", save: 5, description_en: "Fresh green coconut, straight from the source." },
+  { id: "bv8", name_en: "Fresh Mango Shorbot (250ml)", name_bn: "আমের শরবত (২৫০মিলি)", price: 44, original_price: 55, image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=300&q=80", category: "Beverages", save: 11, isOffer: true, description_en: "Chilled fresh mango shorbot, made daily." },
+
+  // Chocolates & Candy
+  { id: "cc1", name_en: "Milk Chocolate Bar (50g)", name_bn: "মিল্ক চকোলেট বার (৫০গ্রা)", price: 80, original_price: 100, image: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=300&q=80", category: "Chocolates & Candy", save: 20, isOffer: true, description_en: "Rich smooth milk chocolate bar. A daily indulgence." },
+  { id: "cc2", name_en: "Gummy Bears (150g)", name_bn: "গামি বিয়ার (১৫০গ্রা)", price: 120, original_price: 145, image: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=300&q=80", category: "Chocolates & Candy", save: 25, description_en: "Fruity chewy gummy bears, kids' favourite." },
+
+  // Bakery & Breakfast
+  { id: "bk1", name_en: "Fresh Bread Loaf", name_bn: "তাজা পাউরুটি", price: 65, original_price: 80, image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&q=80", category: "Bakery & Breakfast", save: 15, description_en: "Soft freshly baked white bread, great for toast and sandwiches." },
+  { id: "bk2", name_en: "Croissant (2 pcs)", name_bn: "ক্রোয়াসাঁ (২টি)", price: 90, original_price: 110, image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=300&q=80", category: "Bakery & Breakfast", save: 20, isOffer: true, description_en: "Flaky buttery croissants, freshly baked every morning." },
+  { id: "bk4", name_en: "Whole Wheat Bread", name_bn: "হোল হুইট ব্রেড", price: 75, original_price: 95, image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=300&q=80", category: "Bakery & Breakfast", save: 20, description_en: "Healthy whole wheat bread, high in fibre." },
+  { id: "bk5", name_en: "Muffin (4 pcs)", name_bn: "মাফিন (৪টি)", price: 140, original_price: 170, image: "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=300&q=80", category: "Bakery & Breakfast", save: 30, description_en: "Soft chocolate chip muffins, baked fresh daily." },
+  { id: "bk6", name_en: "Bun (6 pcs)", name_bn: "বান (৬টি)", price: 55, original_price: 70, image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&q=80", category: "Bakery & Breakfast", save: 15, description_en: "Soft dinner buns, perfect for burgers or with tea." },
+
+  // Daily Cooking
+  { id: "ck2", name_en: "Basmati Rice (1kg)", name_bn: "বাসমতি চাল (১ কেজি)", price: 180, original_price: 210, image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=300&q=80", category: "Daily Cooking", save: 30, description_en: "Aromatic long-grain basmati rice, ideal for biryani." },
+  { id: "ck4", name_en: "Salt (1kg)", name_bn: "লবণ (১ কেজি)", price: 30, original_price: 40, image: "https://images.unsplash.com/photo-1610725664285-7c57e6eeac3f?w=300&q=80", category: "Daily Cooking", save: 10, description_en: "Iodised table salt, a kitchen essential." },
+  { id: "ck5", name_en: "Soy Sauce (200ml)", name_bn: "সয়া সস (২০০মিলি)", price: 95, original_price: 115, image: "https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=300&q=80", category: "Daily Cooking", save: 20, description_en: "Premium soy sauce, perfect for stir-fries and marinades." },
+  { id: "ck1", name_en: "Mustard Oil (1L)", name_bn: "সরিষার তেল (১ লিটার)", price: 220, original_price: 260, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=300&q=80", category: "Daily Cooking", save: 40, isOffer: true, description_en: "Pure cold-pressed mustard oil, the heart of Bangladeshi cooking." },
+
+  // Spice & Herb
+  { id: "ck3", name_en: "Turmeric Powder (100g)", name_bn: "হলুদ গুড়া (১০০গ্রা)", price: 45, original_price: 60, image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&q=80", category: "Spice & Herb", save: 15, description_en: "Pure ground turmeric, vibrant colour and earthy flavour." },
+  { id: "sh1", name_en: "Whole Cumin Seeds (100g)", name_bn: "গোটা জিরা (১০০গ্রা)", price: 60, original_price: 75, image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&q=80", category: "Spice & Herb", save: 15, description_en: "Aromatic whole cumin seeds for tempering." },
+
+  // Baking
+  { id: "ck6", name_en: "Biryani Masala (50g)", name_bn: "বিরিয়ানি মশলা (৫০গ্রা)", price: 55, original_price: 70, image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&q=80", category: "Baking", save: 15, description_en: "Authentic Bangladeshi biryani spice blend." },
+  { id: "bkg1", name_en: "Baking Powder (100g)", name_bn: "বেকিং পাউডার (১০০গ্রা)", price: 60, original_price: 75, image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&q=80", category: "Baking", save: 15, description_en: "Double-acting baking powder for cakes and breads." },
+
+  // Coffee & Tea
+  { id: "ct1", name_en: "Ground Coffee (200g)", name_bn: "গ্রাউন্ড কফি (২০০গ্রা)", price: 380, original_price: 460, image: "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?w=300&q=80", category: "Coffee & Tea", save: 80, description_en: "Freshly ground coffee beans, medium roast." },
+  { id: "ct2", name_en: "Black Tea (100 bags)", name_bn: "কালো চা (১০০ ব্যাগ)", price: 220, original_price: 260, image: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=300&q=80", category: "Coffee & Tea", save: 40, description_en: "Strong, classic black tea bags." },
+
+  // Cleaning & Laundry
+  { id: "cl1", name_en: "Dishwash Liquid (500ml)", name_bn: "ডিশওয়াশ লিকুইড (৫০০মিলি)", price: 85, original_price: 105, image: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=300&q=80", category: "Cleaning & Laundry", save: 20, description_en: "Powerful grease-cutting dish soap, gentle on hands." },
+  { id: "cl2", name_en: "Floor Cleaner (1L)", name_bn: "ফ্লোর ক্লিনার (১ লিটার)", price: 120, original_price: 150, image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=300&q=80", category: "Cleaning & Laundry", save: 30, isOffer: true, description_en: "Fragrant floor cleaning liquid for all floor types." },
+  { id: "cl3", name_en: "Harpic All-in-1 Toilet Powder (400g)", name_bn: "হারপিক টয়লেট পাউডার (৪০০গ্রা)", price: 91, original_price: 110, image: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=300&q=80", category: "Cleaning & Laundry", save: 19, isOffer: true, description_en: "Powerful toilet bowl cleaning powder, kills 99.9% of germs." },
+  { id: "cl4", name_en: "Wheel Washing Powder 2in1 (1kg)", name_bn: "হুইল ওয়াশিং পাউডার (১ কেজি)", price: 150, original_price: 165, image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80", category: "Cleaning & Laundry", save: 15, isOffer: true, description_en: "High-efficiency laundry powder for bright, clean clothes." },
+  { id: "cl5", name_en: "Vim Dishwashing Bar (115g)", name_bn: "ভিম ডিশওয়াশিং বার (১১৫গ্রা)", price: 13, original_price: 15, image: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=300&q=80", category: "Cleaning & Laundry", save: 2, isOffer: true, description_en: "Grease-cutting dishwashing bar." },
+
+  // Beauty & Personal Care
+  { id: "pc1", name_en: "Shampoo (200ml)", name_bn: "শ্যাম্পু (২০০মিলি)", price: 145, original_price: 180, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&q=80", category: "Beauty & Personal Care", save: 35, isOffer: true, description_en: "Nourishing shampoo for soft, shiny hair." },
+  { id: "pc2", name_en: "Face Wash (100ml)", name_bn: "ফেস ওয়াশ (১০০মিলি)", price: 185, original_price: 220, image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=300&q=80", category: "Beauty & Personal Care", save: 35, description_en: "Gentle foaming face wash for all skin types." },
+  { id: "pc3", name_en: "Toothpaste (150g)", name_bn: "টুথপেস্ট (১৫০গ্রা)", price: 90, original_price: 110, image: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=300&q=80", category: "Beauty & Personal Care", save: 20, description_en: "Fluoride toothpaste for strong teeth and fresh breath." },
+  { id: "pc4", name_en: "Soap Bar (3 pcs)", name_bn: "সাবান (৩টি)", price: 75, original_price: 95, image: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=300&q=80", category: "Beauty & Personal Care", save: 20, description_en: "Moisturising soap bars with natural ingredients." },
+  { id: "pc5", name_en: "Deodorant Spray", name_bn: "ডিওডোরেন্ট স্প্রে", price: 210, original_price: 250, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&q=80", category: "Beauty & Personal Care", save: 40, description_en: "Long-lasting 48hr deodorant protection." },
+  { id: "pc6", name_en: "Hand Lotion (150ml)", name_bn: "হ্যান্ড লোশন (১৫০মিলি)", price: 130, original_price: 160, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&q=80", category: "Beauty & Personal Care", save: 30, description_en: "Softening hand lotion with aloe vera and vitamin E." },
+
+  // Mother & Baby
+  { id: "mb1", name_en: "Baby Diapers (Size M, 30 pcs)", name_bn: "বেবি ডায়াপার (মিডিয়াম, ৩০টি)", price: 850, original_price: 980, image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=300&q=80", category: "Mother & Baby", save: 130, description_en: "Soft, absorbent baby diapers, size medium." },
+  { id: "mb2", name_en: "Baby Wipes (80 pcs)", name_bn: "বেবি ওয়াইপস (৮০টি)", price: 180, original_price: 220, image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=300&q=80", category: "Mother & Baby", save: 40, description_en: "Gentle fragrance-free baby wipes." },
+
+  // Pharmacy
+  { id: "ph1", name_en: "Paracetamol 500mg (10 tabs)", name_bn: "প্যারাসিটামল ৫০০মিগ্রা (১০ ট্যাবলেট)", price: 25, original_price: 30, image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&q=80", category: "Pharmacy", save: 5, description_en: "Common pain and fever relief tablets." },
+  { id: "ph2", name_en: "Vitamin C (30 tabs)", name_bn: "ভিটামিন সি (৩০ ট্যাবলেট)", price: 150, original_price: 180, image: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=300&q=80", category: "Pharmacy", save: 30, description_en: "Immune-support vitamin C supplement." },
+
+  // Household Essentials
+  { id: "he1", name_en: "Fresh Toilet Tissue Family Pack (4 pcs)", name_bn: "টয়লেট টিস্যু ফ্যামিলি প্যাক (৪টি)", price: 100, original_price: 100, image: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=300&q=80", category: "Household Essentials", save: 0, description_en: "Soft multi-ply toilet tissue, family value pack." },
+  { id: "he2", name_en: "Good Knight Liquid Repellent Refill (Twin, 45ml)", name_bn: "গুড নাইট লিকুইড রিফিল (৪৫মিলি)", price: 250, original_price: 250, image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=300&q=80", category: "Household Essentials", save: 0, description_en: "Mosquito repellent liquid refill, twin pack." },
+
+  // Electronics & Accessories
+  { id: "ea1", name_en: "Fast Phone Charger (20W)", name_bn: "ফাস্ট ফোন চার্জার (২০ওয়াট)", price: 650, original_price: 800, image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=300&q=80", category: "Electronics & Accessories", save: 150, description_en: "Fast-charging 20W USB-C wall charger." },
+  { id: "ea2", name_en: "Wireless Earphones", name_bn: "ওয়্যারলেস ইয়ারফোন", price: 1200, original_price: 1500, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&q=80", category: "Electronics & Accessories", save: 300, description_en: "Compact true wireless earphones." },
+
+  // Sports & Lifestyle
+  { id: "sl1", name_en: "Sports Water Bottle (750ml)", name_bn: "স্পোর্টস ওয়াটার বোতল (৭৫০মিলি)", price: 380, original_price: 475, image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&q=80", category: "Sports & Lifestyle", save: 95, description_en: "Leak-proof sports water bottle." },
+  { id: "sl2", name_en: "Yoga Mat (6mm)", name_bn: "যোগব্যায়াম ম্যাট (৬মিমি)", price: 650, original_price: 800, image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=300&q=80", category: "Sports & Lifestyle", save: 150, description_en: "Non-slip 6mm cushioned yoga mat." },
+
+  // Stationeries, Toys & Gifts
+  { id: "stg1", name_en: "A4 Ruled Notebook (200 pages)", name_bn: "এ৪ রুলড নোটবুক (২০০ পৃষ্ঠা)", price: 120, original_price: 150, image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300&q=80", category: "Stationeries, Toys & Gifts", save: 30, description_en: "200-page ruled A4 notebook." },
+  { id: "stg2", name_en: "Kids Building Blocks Set", name_bn: "কিডস বিল্ডিং ব্লকস সেট", price: 480, original_price: 590, image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300&q=80", category: "Stationeries, Toys & Gifts", save: 110, description_en: "Colourful building block set for kids." },
+
+  // Pet Care
+  { id: "pet1", name_en: "Dry Dog Food (2kg)", name_bn: "ড্রাই ডগ ফুড (২কেজি)", price: 780, original_price: 960, image: "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=300&q=80", category: "Pet Care", save: 180, description_en: "Balanced dry kibble for adult dogs." },
+  { id: "pet2", name_en: "Wet Cat Food (12 cans)", name_bn: "ওয়েট ক্যাট ফুড (১২ ক্যান)", price: 650, original_price: 800, image: "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=300&q=80", category: "Pet Care", save: 150, description_en: "Tasty wet cat food, 12-can pack." },
+
+  // ---- Named homepage strips (Football Fest + brand campaigns) ----
+
+  // Popular Products
+  { id: "pp1", name_en: "brightfarms Egg Brown Regular (12 pcs)", name_bn: "ব্রাইটফার্মস ডিম (১২টি)", price: 139, original_price: 139, image: "https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=300&q=80", category: "Dairy, Chilled & Eggs", save: 0, section: "Popular Products", description_en: "Farm-fresh brown eggs, 12-piece tray." },
+  { id: "pp2", name_en: "Fresh Super Sugar (1kg)", name_bn: "ফ্রেশ সুপার সুগার (১কেজি)", price: 110, original_price: 110, image: "https://images.unsplash.com/photo-1610725664285-7c57e6eeac3f?w=300&q=80", category: "Daily Cooking", save: 0, section: "Popular Products", description_en: "Refined white sugar, 1kg pack." },
+  { id: "pp3", name_en: "Farm Fresh UHT Whole Milk (1L)", name_bn: "ফার্ম ফ্রেশ ইউএইচটি দুধ (১ লিটার)", price: 125, original_price: 125, image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=300&q=80", category: "Dairy, Chilled & Eggs", save: 0, section: "Popular Products", description_en: "Long-life UHT whole milk." },
+  { id: "pp4", name_en: "brightfarms Cucumber Local (500g)", name_bn: "ব্রাইটফার্মস শসা (৫০০গ্রা)", price: 99, original_price: 99, image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=300&q=80", category: "Vegetables", save: 0, section: "Popular Products", description_en: "Fresh local cucumbers. Buy 2, get 8% off." },
+  { id: "pp5", name_en: "Aarong Sour Yoghurt (500g)", name_bn: "আড়ং টক দই (৫০০গ্রা)", price: 120, original_price: 120, image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&q=80", category: "Dairy, Chilled & Eggs", save: 0, section: "Popular Products", description_en: "Traditional sour yoghurt from Aarong Dairy." },
+  { id: "pp6", name_en: "Mum Drinking Mineral Water (5L)", name_bn: "মাম মিনারেল ওয়াটার (৫ লিটার)", price: 100, original_price: 100, image: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=300&q=80", category: "Beverages", save: 0, section: "Popular Products", description_en: "Large 5L mineral water jug." },
+  { id: "pp7", name_en: "Rupchanda Soybean Oil (5L)", name_bn: "রূপচাঁদা সয়াবিন তেল (৫ লিটার)", price: 975, original_price: 975, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=300&q=80", category: "Daily Cooking", save: 0, section: "Popular Products", description_en: "Household staple soybean cooking oil." },
+  { id: "pp8", name_en: "Fay Facial Tissues (150 pcs)", name_bn: "ফে ফেসিয়াল টিস্যু (১৫০টি)", price: 105, original_price: 105, image: "https://images.unsplash.com/photo-1584556812952-905ffd0c611a?w=300&q=80", category: "Household Essentials", save: 0, section: "Popular Products", description_en: "Soft facial tissue box, 150 pulls." },
+
+  // Kickoff Savings on Monthly Bazar (Football Fest)
+  { id: "ff1", name_en: "brightfarms Orange Malta (1kg)", name_bn: "ব্রাইটফার্মস মাল্টা (১কেজি)", price: 315, original_price: 355, image: "https://images.unsplash.com/photo-1547514701-42782101795e?w=300&q=80", category: "Football Fest", save: 39, isOffer: true, section: "Kickoff Savings on Monthly Bazar", description_en: "Sweet orange malta, sold by the kilo." },
+  { id: "ff2", name_en: "German Butcher Mutton Bone In (1kg)", name_bn: "জার্মান বুচার মাটন (১কেজি)", price: 1150, original_price: 1250, image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=300&q=80", category: "Football Fest", save: 100, isOffer: true, section: "Kickoff Savings on Monthly Bazar", description_en: "Premium bone-in mutton for the match-day curry." },
+  { id: "ff3", name_en: "German Butcher Chicken Breast (500g)", name_bn: "জার্মান বুচার চিকেন ব্রেস্ট (৫০০গ্রা)", price: 293, original_price: 345, image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=300&q=80", category: "Football Fest", save: 51, isOffer: true, section: "Kickoff Savings on Monthly Bazar", description_en: "Boneless chicken breast, butcher-cut." },
+  { id: "ff4", name_en: "German Butcher Chicken Curry Cut (1kg)", name_bn: "জার্মান বুচার চিকেন কারি কাট (১কেজি)", price: 383, original_price: 450, image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=300&q=80", category: "Football Fest", save: 67, isOffer: true, section: "Kickoff Savings on Monthly Bazar", description_en: "Curry-cut chicken, ready for the pot." },
+  { id: "ff5", name_en: "German Butcher Beef Sausage (10 pcs, 300g)", name_bn: "জার্মান বুচার বিফ সসেজ (১০টি)", price: 255, original_price: 300, image: "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=300&q=80", category: "Football Fest", save: 45, isOffer: true, section: "Kickoff Savings on Monthly Bazar", description_en: "Grillable beef sausages, match-night snack." },
+
+  // Fresh Champions of Monthly Bazar (Football Fest)
+  { id: "fc1", name_en: "German Butcher Chicken Leg (500g)", name_bn: "জার্মান বুচার চিকেন লেগ (৫০০গ্রা)", price: 213, original_price: 250, image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=300&q=80", category: "Football Fest", save: 37, isOffer: true, section: "Fresh Champions of Monthly Bazar", description_en: "Chicken leg pieces, skin-on." },
+  { id: "fc2", name_en: "Taqwa BBQ Delight Boneless Chicken Cube (5 stick, 250g)", name_bn: "তাকওয়া বিবিকিউ চিকেন কিউব (৫ স্টিক)", price: 252, original_price: 280, image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=300&q=80", category: "Football Fest", save: 28, isOffer: true, section: "Fresh Champions of Monthly Bazar", description_en: "Marinated boneless chicken skewers, oven-ready." },
+  { id: "fc3", name_en: "Taqwa BBQ Delight Chicken Strips (250g)", name_bn: "তাকওয়া বিবিকিউ চিকেন স্ট্রিপস (২৫০গ্রা)", price: 252, original_price: 280, image: "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=300&q=80", category: "Football Fest", save: 28, isOffer: true, section: "Fresh Champions of Monthly Bazar", description_en: "Marinated chicken strips for the grill." },
+
+  // Nestle Fan Zone Fuel
+  { id: "nf1", name_en: "Nescafe 3 In 1 (14g)", name_bn: "নেসক্যাফে ৩ ইন ১ (১৪গ্রা)", price: 15, original_price: 15, image: "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?w=300&q=80", category: "Nestlé", save: 0, section: "Nestle Fan Zone Fuel", description_en: "Single-serve 3-in-1 instant coffee sachet." },
+  { id: "nf2", name_en: "Nestle Nido Family Choice Milk Powder (500g)", name_bn: "নেসলে নিডো মিল্ক পাউডার (৫০০গ্রা)", price: 500, original_price: 500, image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=300&q=80", category: "Nestlé", save: 0, section: "Nestle Fan Zone Fuel", description_en: "Full-cream milk powder for the whole family." },
+  { id: "nf3", name_en: "Maggi Chicken Magic Seasoning (8g)", name_bn: "ম্যাগি চিকেন ম্যাজিক সিজনিং (৮গ্রা)", price: 10, original_price: 10, image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&q=80", category: "Nestlé", save: 0, section: "Nestle Fan Zone Fuel", description_en: "All-purpose chicken seasoning sachet." },
+  { id: "nf4", name_en: "Maggi 2 Minutes Fried Chicken Noodles (8 pack, 400g)", name_bn: "ম্যাগি ফ্রাইড চিকেন নুডলস (৮ প্যাক)", price: 130, original_price: 180, image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&q=80", category: "Nestlé", save: 50, isOffer: true, section: "Nestle Fan Zone Fuel", description_en: "Instant noodles, fried chicken flavour, 8-pack." },
+  { id: "nf5", name_en: "Nestle Coffee Mate Pouch (1kg)", name_bn: "নেসলে কফি মেট (১কেজি)", price: 875, original_price: 875, image: "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?w=300&q=80", category: "Nestlé", save: 0, section: "Nestle Fan Zone Fuel", description_en: "Non-dairy coffee creamer, bulk pouch." },
+
+  // Savoy Football Carnival
+  { id: "sf1", name_en: "Savoy Dark Desire Ice Cream Cake (1L)", name_bn: "স্যাভয় ডার্ক ডিজায়ার আইসক্রিম কেক (১ লিটার)", price: 1100, original_price: 1100, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Rich dark chocolate ice cream cake." },
+  { id: "sf2", name_en: "Savoy Coffee Ice Cream (1L)", name_bn: "স্যাভয় কফি আইসক্রিম (১ লিটার)", price: 500, original_price: 500, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Bold coffee-flavoured ice cream tub." },
+  { id: "sf3", name_en: "Savoy Chocolate Fudge Ice Cream (1L)", name_bn: "স্যাভয় চকোলেট ফাজ আইসক্রিম (১ লিটার)", price: 500, original_price: 500, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Fudge-swirled chocolate ice cream." },
+  { id: "sf4", name_en: "Savoy Double Sundae Mango & Vanilla (1L)", name_bn: "স্যাভয় ডাবল সান্ডে ম্যাংগো ও ভ্যানিলা (১ লিটার)", price: 350, original_price: 350, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Two flavours in one tub — mango and vanilla." },
+  { id: "sf5", name_en: "Savoy Doi Ice Cream (1L)", name_bn: "স্যাভয় দই আইসক্রিম (১ লিটার)", price: 420, original_price: 420, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Tangy sweet doi (yoghurt) flavoured ice cream." },
+
+  // Buy 2 Win Deals
+  { id: "b2w1", name_en: "Dettol Soap Original (75g)", name_bn: "ডেটল সাবান অরিজিনাল (৭৫গ্রা)", price: 60, original_price: 65, image: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=300&q=80", category: "Beauty & Personal Care", save: 5, isOffer: true, section: "Buy 2 Win Deals", description_en: "Germ-protection soap bar." },
+  { id: "b2w2", name_en: "Dettol Handwash Original Pump (200ml)", name_bn: "ডেটল হ্যান্ডওয়াশ পাম্প (২০০মিলি)", price: 104, original_price: 115, image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=300&q=80", category: "Beauty & Personal Care", save: 11, isOffer: true, section: "Buy 2 Win Deals", description_en: "Liquid handwash with germ protection." },
+  { id: "b2w3", name_en: "Vanish Oxi Action All in One (400ml)", name_bn: "ভ্যানিশ অক্সি অ্যাকশন (৪০০মিলি)", price: 235, original_price: 275, image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80", category: "Cleaning & Laundry", save: 40, isOffer: true, section: "Buy 2 Win Deals", description_en: "Stain-removing laundry booster." },
+  { id: "b2w4", name_en: "Harpic Toilet Cleaning Liquid Combo (2 pcs, 750ml)", name_bn: "হারপিক টয়লেট ক্লিনার কম্বো (২টি)", price: 310, original_price: 360, image: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=300&q=80", category: "Cleaning & Laundry", save: 50, isOffer: true, section: "Buy 2 Win Deals", description_en: "Twin pack toilet cleaning liquid." },
+  { id: "b2w5", name_en: "Dettol Cool Bodywash (250ml)", name_bn: "ডেটল কুল বডিওয়াশ (২৫০মিলি)", price: 199, original_price: 225, image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=300&q=80", category: "Beauty & Personal Care", save: 26, isOffer: true, section: "Buy 2 Win Deals", description_en: "Cooling antibacterial bodywash." },
+  { id: "b2w6", name_en: "Mortein 2 In 1 Spray (400ml)", name_bn: "মর্টেইন ২ ইন ১ স্প্রে (৪০০মিলি)", price: 349, original_price: 415, image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=300&q=80", category: "Household Essentials", save: 66, isOffer: true, section: "Buy 2 Win Deals", description_en: "Mosquito and fly killer spray." },
+
+  // Brand Rush 30% Off
+  { id: "br1", name_en: "Parachute Advansed Secrets Almond Hair Oil (200ml)", name_bn: "প্যারাসুট আলমন্ড হেয়ার অয়েল (২০০মিলি)", price: 182, original_price: 260, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&q=80", category: "Beauty & Personal Care", save: 78, isOffer: true, section: "Brand Rush 30% Off", description_en: "Nourishing almond-infused hair oil." },
+  { id: "br2", name_en: "Parachute Naturale Shampoo Damage Repair (320ml)", name_bn: "প্যারাসুট ন্যাচারালে শ্যাম্পু (৩২০মিলি)", price: 265, original_price: 265, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&q=80", category: "Beauty & Personal Care", save: 0, section: "Brand Rush 30% Off", description_en: "Damage-repair formula shampoo." },
+  { id: "br3", name_en: "Parachute Naturale Shampoo Onion (320ml)", name_bn: "প্যারাসুট ন্যাচারালে অনিয়ন শ্যাম্পু (৩২০মিলি)", price: 252, original_price: 265, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&q=80", category: "Beauty & Personal Care", save: 13, isOffer: true, section: "Brand Rush 30% Off", description_en: "Onion extract shampoo for hair fall control." },
+  { id: "br4", name_en: "Fiera Spotless Pink Brightening Cream (23g)", name_bn: "ফিয়েরা স্পটলেস পিংক ক্রিম (২৩গ্রা)", price: 85, original_price: 95, image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&q=80", category: "Beauty & Personal Care", save: 10, isOffer: true, section: "Brand Rush 30% Off", description_en: "Brightening face cream." },
+
+  // Godrej
+  { id: "gj1", name_en: "Aer Car Freshener Cool Blue (AC Vent)", name_bn: "এয়ার কার ফ্রেশনার কুল ব্লু", price: 449, original_price: 449, image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=300&q=80", category: "Household Essentials", save: 0, section: "Godrej", description_en: "AC-vent car air freshener, cool blue scent." },
+  { id: "gj2", name_en: "Godrej Aer Matic Cool Surf Blue (2200 sprays)", name_bn: "গোদরেজ এয়ার ম্যাটিক কুল সার্ফ ব্লু", price: 954, original_price: 999, image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=300&q=80", category: "Household Essentials", save: 45, isOffer: true, section: "Godrej", description_en: "Automatic room freshener dispenser + refill." },
+  { id: "gj3", name_en: "Good Knight Liquid Repellent Refill Twin Pack (45ml)", name_bn: "গুড নাইট লিকুইড রিফিল টুইন প্যাক", price: 250, original_price: 250, image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=300&q=80", category: "Household Essentials", save: 0, section: "Godrej", description_en: "Mosquito repellent liquid refill, twin pack." },
+  { id: "gj4", name_en: "Godrej Fab Liquid Detergent (1kg)", name_bn: "গোদরেজ ফ্যাব লিকুইড ডিটারজেন্ট (১কেজি)", price: 225, original_price: 250, image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80", category: "Cleaning & Laundry", save: 25, isOffer: true, section: "Godrej", description_en: "Liquid detergent for all fabric types." },
+
+  // Everyday Essentials
+  { id: "ee1", name_en: "Farmer's Gold Red Amon Rice (2kg)", name_bn: "ফার্মার্স গোল্ড লাল আমন চাল (২কেজি)", price: 220, original_price: 220, image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=300&q=80", category: "Daily Cooking", save: 0, section: "Everyday Essentials", description_en: "Locally grown red amon rice." },
+  { id: "ee2", name_en: "Farmer's Gold Mug Dal (1kg)", name_bn: "ফার্মার্স গোল্ড মুগ ডাল (১কেজি)", price: 200, original_price: 200, image: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=300&q=80", category: "Daily Cooking", save: 0, section: "Everyday Essentials", description_en: "Split mung dal, 1kg pack." },
+  { id: "ee3", name_en: "Farmer's Gold Moshur Dal (1kg)", name_bn: "ফার্মার্স গোল্ড মসুর ডাল (১কেজি)", price: 190, original_price: 190, image: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=300&q=80", category: "Daily Cooking", save: 0, section: "Everyday Essentials", description_en: "Red lentils, 1kg pack." },
+  { id: "ee4", name_en: "Farmer's Gold Almond Oil (100ml)", name_bn: "ফার্মার্স গোল্ড আলমন্ড অয়েল (১০০মিলি)", price: 765, original_price: 850, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=300&q=80", category: "Daily Cooking", save: 85, isOffer: true, section: "Everyday Essentials", description_en: "Pure almond oil for cooking and skincare." },
+
+  // Imported Bestsellers
+  { id: "ib1", name_en: "Samyang Hot Chicken Ramen Jjajang (700g)", name_bn: "সামইয়াং হট চিকেন রামেন জাজাং (৭০০গ্রা)", price: 1025, original_price: 1075, image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&q=80", category: "Snacks", save: 50, isOffer: true, section: "Imported Bestsellers", description_en: "Korean fire noodles, jjajang flavour multipack." },
+  { id: "ib2", name_en: "Nongshim Soon Veggie Ramyun (112g)", name_bn: "নংশিম সুন ভেজি রামিয়ন (১১২গ্রা)", price: 187, original_price: 220, image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&q=80", category: "Snacks", save: 33, isOffer: true, section: "Imported Bestsellers", description_en: "Korean vegetable ramyun, single pack." },
+  { id: "ib3", name_en: "Nongshim Neoguri Seafood (600g)", name_bn: "নংশিম নিওগুরি সিফুড (৬০০গ্রা)", price: 941, original_price: 1045, image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&q=80", category: "Snacks", save: 104, isOffer: true, section: "Imported Bestsellers", description_en: "Thick udon-style Korean seafood noodles, multipack." },
+
+  // Tong Dokan
+  { id: "td1", name_en: "Molo Zero", name_bn: "মলো জিরো", price: 50, original_price: 50, image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300&q=80", category: "Snacks", save: 0, section: "Tong Dokan", description_en: "Classic tong-dokan candy favourite." },
+  { id: "td2", name_en: "Kachi Kola", name_bn: "কাঁচা কলা চিপস", price: 50, original_price: 50, image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300&q=80", category: "Snacks", save: 0, section: "Tong Dokan", description_en: "Crispy raw-banana chips, roadside style." },
+  { id: "td3", name_en: "Dabaibashi", name_bn: "ডাবাইবাশি", price: 270, original_price: 320, image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300&q=80", category: "Snacks", save: 50, isOffer: true, section: "Tong Dokan", description_en: "Traditional roadside snack mix." },
+];

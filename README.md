@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Food Turtle 🐢
 
-## Getting Started
+**The only delivery app that never disappoints, because we never deliver.**
 
-First, run the development server:
+Food Turtle is a satirical food-delivery web app, built pixel-for-pixel in the style of a real delivery app (Foodpanda), with one twist: no order ever actually arrives. You browse restaurants, add items to your cart, pay through a fully-simulated checkout (cash on delivery, mobile wallet, or card), and watch a live 2-minute order-tracking screen count down to your door, only for the reveal to admit the food was never coming, and turn that into the joke.
+
+It's a real, working Next.js app end to end, everything except the food is functional.
+
+## What's in it
+
+- **Delivery** — browse restaurants by cuisine, ratings, and delivery fee, with filters and search
+- **Pickup** — same restaurants, walk-time/distance framing instead of delivery
+- **Turtlemart** — a full grocery storefront with categories, offers, and a product catalog
+- **Shops** — a directory of local shops (pharmacy, pet stores, florists, etc.), each with its own product list
+- **Cart & checkout** — items can come from multiple restaurants/shops/Turtlemart at once; checkout groups them by vendor, with cash-on-delivery, wallet, and card payment flows (all simulated, nothing is actually charged)
+- **Order tracking & reveal** — a real-time countdown with delivery steps, then the payoff
+- **Accounts** — login/signup, profile, favourites, vouchers, order history, a fake subscription tier (Turtle Pro)
+- **Admin dashboard** (`/admin`) — real Firestore-backed analytics (visitors, live-now, signups, fake orders/revenue) alongside catalog management for restaurants, menu items, Turtlemart products, shops, banners, and vouchers
+- **Bilingual** — full English and Bengali translations throughout, switchable in the navbar
+
+## Tech stack
+
+- [Next.js](https://nextjs.org) (App Router, Turbopack) + React 19 + TypeScript
+- Tailwind CSS
+- Firebase (Firestore) for restaurant/menu/voucher data and live analytics, with a graceful fallback to local seed data when Firebase isn't configured
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Firebase (optional but recommended)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app works out of the box with local seed data if you skip this. To connect a real Firebase project:
 
-## Learn More
+1. Copy `.env.example` to `.env.local` and fill in your Firebase web app config.
+2. Paste `firestore.rules` (repo root) into **Firebase Console → Firestore Database → Rules → Publish**. This isn't deployed automatically; it's what unlocks real visitor/order tracking on the admin dashboard. Until it's published, the site works fine and the dashboard just shows local-only placeholder numbers.
 
-To learn more about Next.js, take a look at the following resources:
+### Admin panel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Visit `/admin`. It's gated by a demo login (see `app/admin/login/page.tsx` for the credentials), not real authentication, so don't rely on it for anything sensitive.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/` — routes (App Router)
+- `components/` — shared UI, organized by area (`layout/`, `home/`, `shared/`, `admin/`)
+- `context/` — cart, user, and language state
+- `lib/` — data access (Firebase-backed hooks with seed-data fallback), seed data, analytics
+- `locales/` — `en.json` / `bn.json` translation files

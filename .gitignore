@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# editor / OS
+.vscode/
+.idea/
+Thumbs.db
+
+# design reference screenshots — not part of the app, not for the repo
+/Photo/

@@ -1,0 +1,66 @@
+// Food Turtle — Firestore security rules
+//
+// This file is NOT auto-deployed. Paste its contents into
+// Firebase Console → Firestore Database → Rules → Publish
+// (or deploy via `firebase deploy --only firestore:rules` if you use the CLI).
+//
+// Until you publish these rules, every read/write from this app will fail
+// silently and the site/admin dashboard fall back to local-only data —
+// that's expected and safe, nothing breaks.
+//
+// KNOWN LIMITATION: these rules validate the *shape* of writes to the
+// analytics counter documents (stats/summary, daily_stats/*, restaurant_stats/*),
+// not the *amount*. Firestore rules can't inspect FieldValue.increment()
+// deltas, so a visitor with devtools open could in theory write an arbitrary
+// number directly instead of incrementing by 1. Fully closing that gap needs
+// a Cloud Function (or App Check) sitting in front of these writes, which is
+// out of scope for a rules-only setup. Good enough for a growing hobby app,
+// not bulletproof against a determined bad actor.
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Existing public catalog data — read-only from every client.
+    // (The admin CRUD pages for these don't currently write to Firestore.)
+    match /restaurants/{id}   { allow read: if true; allow write: if false; }
+    match /menu_items/{id}    { allow read: if true; allow write: if false; }
+    match /fake_vouchers/{id} { allow read: if true; allow write: if false; }
+
+    // One doc per anonymous visitor, created once, never mutated.
+    match /visitors/{id} {
+      allow read: if false;
+      allow create: if request.resource.data.keys().hasOnly(['firstSeenAt', 'firstPath'])
+                    && request.resource.data.firstPath is string;
+      allow update, delete: if false;
+    }
+
+    // One doc per open tab, refreshed every ~30s while visible.
+    // Used to approximate "visitors online now" by recency.
+    match /sessions/{id} {
+      allow read: if true;
+      allow create, update: if request.resource.data.keys().hasOnly(['visitorId', 'path', 'lastSeenAt'])
+                            && request.resource.data.visitorId is string
+                            && request.resource.data.path is string;
+      allow delete: if false;
+    }
+
+    // Aggregate counters powering the admin dashboard.
+    match /stats/summary {
+      allow read: if true;
+      allow write: if request.resource.data.keys().hasOnly(
+        ['pageViews', 'visitors', 'signups', 'logins', 'ordersPlaced', 'itemsOrdered', 'revenue', 'updatedAt']
+      );
+    }
+    match /daily_stats/{date} {
+      allow read: if true;
+      allow write: if request.resource.data.keys().hasOnly(
+        ['date', 'pageViews', 'signups', 'logins', 'orders', 'updatedAt']
+      );
+    }
+    match /restaurant_stats/{id} {
+      allow read: if true;
+      allow write: if request.resource.data.keys().hasOnly(['name', 'orders', 'updatedAt']);
+    }
+  }
+}
