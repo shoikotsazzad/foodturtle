@@ -20,7 +20,7 @@ export default function HelpPage() {
 
   return (
     <>
-      <PageTitle title="Help Center — Food Turtle" />
+      <PageTitle title="Help Center · Food Turtle" />
       <Navbar />
       <main className="max-w-2xl mx-auto w-full px-4 py-6 pb-20 sm:pb-6">
         <div className="bg-turtle-pink rounded-2xl p-6 mb-6">

@@ -13,7 +13,7 @@ import { PRODUCTS, CATEGORIES, type TmProduct } from "@/lib/turtlemart-data";
 
 export default function TurtlemartProductPage({ params }: { params: Promise<{ productId: string }> }) {
   const { productId } = use(params);
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const router = useRouter();
   const { items, addItem, updateQuantity } = useCart();
 
@@ -25,9 +25,9 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
         <Navbar />
         <div className="max-w-2xl mx-auto px-4 py-20 text-center">
           <img src="/logo.png" alt="Food Turtle" className="w-16 h-16 object-contain mb-4 opacity-60 mx-auto" />
-          <h1 className="text-xl font-bold text-turtle-dark mb-2">Product not found</h1>
+          <h1 className="text-xl font-bold text-turtle-dark mb-2">{t("tm_product_not_found")}</h1>
           <Link href="/turtlemart" className="text-turtle-pink font-medium hover:underline">
-            ← Back to Turtlemart
+            ← {t("back_to_turtlemart")}
           </Link>
         </div>
         <Footer />
@@ -65,11 +65,11 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
       <main className="max-w-5xl mx-auto px-4 py-6 pb-20 sm:pb-6">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1 text-xs text-turtle-gray-2 mb-6">
-          <Link href="/" className="hover:text-turtle-pink">Home</Link>
+          <Link href="/" className="hover:text-turtle-pink">{t("breadcrumb_home")}</Link>
           <span>›</span>
-          <Link href="/turtlemart" className="hover:text-turtle-pink">Turtlemart</Link>
+          <Link href="/turtlemart" className="hover:text-turtle-pink">{t("nav_turtlemart")}</Link>
           <span>›</span>
-          <span className="text-turtle-dark">{product.name_en}</span>
+          <span className="text-turtle-dark">{name}</span>
         </nav>
 
         <button
@@ -77,7 +77,7 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
           className="flex items-center gap-1 text-sm text-turtle-gray-2 hover:text-turtle-pink mb-6 transition-colors"
         >
           <ArrowLeft size={16} />
-          Back
+          {t("back_btn")}
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
@@ -94,7 +94,7 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
               </span>
             )}
             <span className="absolute top-4 right-4 bg-white/95 text-turtle-pink text-xs font-bold px-3 py-1 rounded-full border border-turtle-pink/20">
-              Save Tk {product.save}
+              {t("save_amount", { amount: `Tk ${product.save}` })}
             </span>
           </div>
 
@@ -105,7 +105,7 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
                 {catEmoji} {product.category}
               </span>
               <span className="text-xs bg-green-50 text-green-600 px-2 py-0.5 rounded-full font-medium">
-                {discountPct}% OFF
+                {t("discount_pct_off", { percent: discountPct })}
               </span>
             </div>
 
@@ -121,15 +121,15 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
             <div className="flex gap-3 mb-6">
               <div className="flex items-center gap-1.5 text-xs text-turtle-dark bg-turtle-gray p-2 rounded-lg">
                 <Clock size={13} className="text-turtle-gray-2" />
-                <span>Delivery 15–30 min</span>
+                <span>{t("tm_delivery_time_badge")}</span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-turtle-dark bg-turtle-gray p-2 rounded-lg">
                 <Shield size={13} className="text-green-500" />
-                <span>Fresh guarantee</span>
+                <span>{t("tm_fresh_guarantee_badge")}</span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-turtle-dark bg-turtle-gray p-2 rounded-lg">
                 <Star size={13} className="text-amber-500 fill-amber-500" />
-                <span>4.7 rating</span>
+                <span>{t("tm_rating_badge", { rating: "4.7" })}</span>
               </div>
             </div>
 
@@ -156,7 +156,7 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
                   className="flex-1 bg-turtle-pink text-white py-3 rounded-full font-bold text-sm flex items-center justify-center gap-2 hover:bg-turtle-pink/90 transition-colors"
                 >
                   <ShoppingCart size={16} />
-                  Go to Checkout
+                  {t("cart_go_checkout")}
                 </button>
               </div>
             ) : (
@@ -165,7 +165,7 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
                 className="w-full bg-turtle-pink text-white py-3.5 rounded-full font-bold text-sm flex items-center justify-center gap-2 hover:bg-turtle-pink/90 transition-colors mb-4"
               >
                 <Plus size={16} />
-                Add to Cart
+                {t("add_to_cart_btn")}
               </button>
             )}
 
@@ -173,7 +173,7 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
               href="/checkout"
               className="block w-full text-center border-2 border-turtle-pink text-turtle-pink py-3 rounded-full font-bold text-sm hover:bg-turtle-pink-bg transition-colors"
             >
-              Buy Now
+              {t("buy_now_btn")}
             </Link>
           </div>
         </div>
@@ -181,7 +181,9 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
         {/* Related products */}
         {related.length > 0 && (
           <section>
-            <h2 className="text-lg font-bold text-turtle-dark mb-4">More from {catEmoji} {product.category}</h2>
+            <h2 className="text-lg font-bold text-turtle-dark mb-4">
+              {t("tm_more_from", { category: `${catEmoji} ${product.category}` })}
+            </h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {related.map((p) => {
                 const rName = lang === "bn" ? p.name_bn : p.name_en;

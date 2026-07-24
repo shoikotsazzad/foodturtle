@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import Sidebar, { FilterState } from "@/components/layout/Sidebar";
+import MobileFilterSheet from "@/components/layout/MobileFilterSheet";
 import HeroBanner from "@/components/home/HeroBanner";
 import PromoBanner from "@/components/home/PromoBanner";
 import CuisineGrid from "@/components/home/CuisineGrid";
@@ -29,7 +30,7 @@ export default function HomePage() {
 
   return (
     <>
-      <PageTitle title="Food Turtle — Delivery" />
+      <PageTitle title="Food Turtle · Delivery" />
       <Navbar />
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6 pb-20 sm:pb-6">
         <div className="flex gap-6">
@@ -44,9 +45,12 @@ export default function HomePage() {
               onCuisineFilter={setCuisineFilter}
               activeCuisine={cuisineFilter}
             />
-            <PromoBanner restaurants={restaurants} />
+            <div className="lg:hidden">
+              <MobileFilterSheet filters={filters} onChange={setFilters} />
+            </div>
+            <PromoBanner restaurants={restaurants} loading={loading} />
             <CuisineGrid onFilter={setCuisineFilter} active={cuisineFilter} />
-            <PopularForGroups restaurants={restaurants} />
+            <PopularForGroups restaurants={restaurants} loading={loading} />
             <RestaurantGrid
               restaurants={restaurants}
               loading={loading}

@@ -18,23 +18,32 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Language>("en");
 
-  useEffect(() => {
-    const saved = localStorage.getItem("ft_lang") as Language | null;
-    if (saved === "en" || saved === "bn") setLangState(saved);
-  }, []);
-
-  const setLang = useCallback((newLang: Language) => {
-    setLangState(newLang);
-    localStorage.setItem("ft_lang", newLang);
-    if (typeof document !== "undefined") {
-      document.documentElement.lang = newLang;
-      if (newLang === "bn") {
-        document.body.classList.add("lang-bn");
-      } else {
-        document.body.classList.remove("lang-bn");
-      }
+  const applyDomLang = useCallback((newLang: Language) => {
+    if (typeof document === "undefined") return;
+    document.documentElement.lang = newLang;
+    if (newLang === "bn") {
+      document.body.classList.add("lang-bn");
+    } else {
+      document.body.classList.remove("lang-bn");
     }
   }, []);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("ft_lang") as Language | null;
+    if (saved === "en" || saved === "bn") {
+      setLangState(saved);
+      applyDomLang(saved);
+    }
+  }, [applyDomLang]);
+
+  const setLang = useCallback(
+    (newLang: Language) => {
+      setLangState(newLang);
+      localStorage.setItem("ft_lang", newLang);
+      applyDomLang(newLang);
+    },
+    [applyDomLang]
+  );
 
   const t = useCallback(
     (key: keyof Translations, vars?: Record<string, string | number>): string => {

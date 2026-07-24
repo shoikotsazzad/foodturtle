@@ -7,6 +7,7 @@ import { Plus, Minus, ShoppingCart, Trash2, ChevronLeft, ChevronRight } from "lu
 import Navbar from "@/components/layout/Navbar";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
+import CartBottomBar from "@/components/cart/CartBottomBar";
 import { useLanguage } from "@/context/LanguageContext";
 import { useCart } from "@/context/CartContext";
 import PageTitle from "@/components/shared/PageTitle";
@@ -31,13 +32,15 @@ function BannerCarousel() {
       </div>
       <button
         onClick={() => setActive((i) => (i - 1 + BANNERS.length) % BANNERS.length)}
-        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/30 hover:bg-white/50 text-white flex items-center justify-center transition-colors"
+        aria-label="Previous banner"
+        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-turtle-dark shadow flex items-center justify-center transition-colors"
       >
         <ChevronLeft size={16} />
       </button>
       <button
         onClick={() => setActive((i) => (i + 1) % BANNERS.length)}
-        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/30 hover:bg-white/50 text-white flex items-center justify-center transition-colors"
+        aria-label="Next banner"
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-turtle-dark shadow flex items-center justify-center transition-colors"
       >
         <ChevronRight size={16} />
       </button>
@@ -208,7 +211,7 @@ export default function TurtlemartPage() {
 
   return (
     <>
-      <PageTitle title="Turtlemart — Food Turtle" />
+      <PageTitle title="Turtlemart · Food Turtle" />
       <Navbar />
       <main className="max-w-7xl mx-auto w-full px-4 py-4 pb-20 sm:pb-4">
         <div className="flex gap-4">
@@ -217,7 +220,7 @@ export default function TurtlemartPage() {
           <aside className="hidden lg:flex flex-col w-56 shrink-0 sticky top-[7rem] h-[calc(100vh-7rem)] overflow-y-auto scrollbar-hide pb-6">
             <div className="bg-white rounded-xl border border-gray-100 p-3">
               <p className="font-bold text-turtle-dark text-sm mb-0.5 flex items-center gap-1"><img src="/logo.png" alt="" className="w-4 h-4 object-contain" /> Turtlemart</p>
-              <p className="text-xs text-turtle-gray-2 mb-3">Gulshan, Dhaka</p>
+              <p className="text-xs text-turtle-gray-2 mb-3">{t("gulshan_dhaka_label")}</p>
               <div className="space-y-0.5">
                 <button
                   onClick={() => setActiveCategory("All")}
@@ -349,7 +352,7 @@ export default function TurtlemartPage() {
             {filtered.length === 0 && (
               <div className="text-center py-16 text-turtle-gray-2">
                 <img src="/logo.png" alt="Food Turtle" className="w-12 h-12 object-contain mb-3 opacity-60 mx-auto" />
-                <p className="font-medium">No products found</p>
+                <p className="font-medium">{t("no_products_found")}</p>
               </div>
             )}
           </div>
@@ -367,8 +370,8 @@ export default function TurtlemartPage() {
               {tmItems.length === 0 ? (
                 <div className="text-center py-8 flex-1">
                   <ShoppingCart size={32} className="text-turtle-gray mx-auto mb-2" />
-                  <p className="text-sm font-medium text-turtle-dark">Your cart</p>
-                  <p className="text-xs text-turtle-gray-2">Start adding items</p>
+                  <p className="text-sm font-medium text-turtle-dark">{t("tm_your_cart")}</p>
+                  <p className="text-xs text-turtle-gray-2">{t("tm_start_adding_items")}</p>
                 </div>
               ) : (
                 <div className="flex-1 overflow-y-auto space-y-3 mb-3">
@@ -406,11 +409,11 @@ export default function TurtlemartPage() {
 
               <div className="border-t border-gray-100 pt-3">
                 <div className="flex justify-between text-sm text-turtle-gray-2 mb-1">
-                  <span>Subtotal</span>
+                  <span>{t("cart_subtotal")}</span>
                   <span>Tk {tmTotal}</span>
                 </div>
                 <div className="flex justify-between text-sm font-bold text-turtle-dark mb-3">
-                  <span>Total</span>
+                  <span>{t("cart_total")}</span>
                   <span>Tk {tmTotal + (tmTotal > 0 ? 5 : 0)}</span>
                 </div>
                 <button
@@ -422,7 +425,7 @@ export default function TurtlemartPage() {
                       : "bg-gray-200 text-turtle-gray-2 cursor-not-allowed"
                   }`}
                 >
-                  {tmItems.length > 0 ? `Go to checkout (${tmItems.length})` : "Go to checkout"}
+                  {tmItems.length > 0 ? t("cart_go_checkout_count", { count: tmItems.length }) : t("cart_go_checkout")}
                 </button>
               </div>
             </div>
@@ -432,6 +435,7 @@ export default function TurtlemartPage() {
       </main>
       <Footer />
       <MobileNav />
+      <CartBottomBar />
     </>
   );
 }

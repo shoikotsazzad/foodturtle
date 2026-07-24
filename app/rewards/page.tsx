@@ -9,7 +9,7 @@ import { Star, ChevronRight, Gift } from "lucide-react";
 export default function RewardsPage() {
   return (
     <>
-      <PageTitle title="Turtle Rewards — Food Turtle" />
+      <PageTitle title="Turtle Rewards · Food Turtle" />
       <Navbar />
       <main className="w-full pb-20 sm:pb-6">
         <div className="bg-turtle-pink px-4 py-10">

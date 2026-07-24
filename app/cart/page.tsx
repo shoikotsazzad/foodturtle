@@ -30,14 +30,14 @@ export default function CartPage() {
     <>
       <Navbar />
       <main className="max-w-2xl mx-auto px-4 py-6 pb-24">
-        <h1 className="text-xl font-bold text-turtle-dark mb-4">Your cart</h1>
+        <h1 className="text-xl font-bold text-turtle-dark mb-4">{t("cart_heading")}</h1>
         {itemCount === 0 ? (
           <div className="text-center py-20">
             <img src="/logo.png" alt="Food Turtle" className="w-16 h-16 object-contain mb-4 opacity-60 mx-auto" />
             <p className="font-bold text-turtle-dark mb-2">{t("cart_empty_title")}</p>
             <p className="text-sm text-turtle-gray-2 mb-4">{t("cart_empty_subtitle")}</p>
             <Link href="/" className="bg-turtle-pink text-white px-6 py-2.5 rounded-full text-sm font-bold">
-              Find restaurants
+              {t("find_restaurants_cta")}
             </Link>
           </div>
         ) : (
@@ -88,19 +88,19 @@ export default function CartPage() {
 
             <div className="bg-white rounded-xl border border-gray-100 p-4 space-y-2 mb-4">
               <div className="flex justify-between text-sm">
-                <span className="text-turtle-gray-2">Subtotal</span>
+                <span className="text-turtle-gray-2">{t("cart_subtotal")}</span>
                 <span className="font-medium">Tk {total}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-turtle-gray-2">Delivery</span>
-                <span className="text-turtle-green font-medium">Free</span>
+                <span className="text-turtle-gray-2">{t("cart_delivery_fee")}</span>
+                <span className="text-turtle-green font-medium">{t("cart_free")}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-turtle-gray-2">Service fee</span>
+                <span className="text-turtle-gray-2">{t("cart_service_fee")}</span>
                 <span className="font-medium">Tk {SERVICE_FEE}</span>
               </div>
               <div className="flex justify-between font-bold pt-2 border-t border-gray-100">
-                <span>Total</span>
+                <span>{t("cart_total")}</span>
                 <span className="text-turtle-pink">Tk {total + SERVICE_FEE}</span>
               </div>
             </div>

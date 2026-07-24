@@ -68,7 +68,7 @@ export default function DineInPage() {
           </div>
           {query && (
             <p className="text-xs text-turtle-gray-2 -mt-8 mb-10">
-              Reservations for &quot;{query}&quot; aren&apos;t live yet — leave your email below and we&apos;ll let you know when they are.
+              Reservations for &quot;{query}&quot; aren&apos;t live yet, leave your email below and we&apos;ll let you know when they are.
             </p>
           )}
 
@@ -88,7 +88,7 @@ export default function DineInPage() {
             {notified ? (
               <div className="flex items-center gap-3">
                 <CheckCircle2 size={22} className="text-turtle-green shrink-0" />
-                <p className="text-sm font-semibold text-turtle-dark">You&apos;re on the list — we&apos;ll email you when table reservations open up.</p>
+                <p className="text-sm font-semibold text-turtle-dark">You&apos;re on the list, we&apos;ll email you when table reservations open up.</p>
               </div>
             ) : (
               <>

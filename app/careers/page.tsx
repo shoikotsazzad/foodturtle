@@ -38,7 +38,7 @@ const BENEFITS = [
   "Unlimited (never delivered) snacks",
   "Flexible hours, since nothing has a real deadline",
   "A team that gets the joke",
-  "Zero commute — everyone works from wherever",
+  "Zero commute, everyone works from wherever",
 ];
 
 export default function CareersPage() {

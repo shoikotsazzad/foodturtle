@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
+import { useLanguage } from "@/context/LanguageContext";
 import { useCart } from "@/context/CartContext";
 import { getPendingOrder, finalizePendingOrder, type PendingOrder } from "@/lib/orders";
 import { ChevronLeft, CreditCard, ShieldCheck, CheckCircle2, Loader2 } from "lucide-react";
@@ -26,6 +27,7 @@ function formatExpiry(raw: string) {
 
 export default function CardPaymentPage() {
   const router = useRouter();
+  const { t } = useLanguage();
   const { clearCart } = useCart();
   const [pending, setPending] = useState<PendingOrder | null>(null);
   const [step, setStep] = useState<Step>("form");
@@ -78,7 +80,7 @@ export default function CardPaymentPage() {
               href="/checkout"
               className="inline-flex items-center gap-1 text-sm font-semibold text-turtle-dark mb-6 hover:text-turtle-pink"
             >
-              <ChevronLeft size={16} /> Back to checkout
+              <ChevronLeft size={16} /> {t("pay_back_to_checkout")}
             </Link>
           )}
 
@@ -88,8 +90,8 @@ export default function CardPaymentPage() {
                 <CreditCard size={20} className="text-turtle-pink" />
               </div>
               <div>
-                <p className="font-bold text-turtle-dark">Pay by card</p>
-                <p className="text-xs text-turtle-gray-2">Simulated payment, nothing is actually charged</p>
+                <p className="font-bold text-turtle-dark">{t("pay_card_title")}</p>
+                <p className="text-xs text-turtle-gray-2">{t("pay_simulated_note")}</p>
               </div>
             </div>
 
@@ -98,23 +100,23 @@ export default function CardPaymentPage() {
             {step === "form" && (
               <div className="space-y-3">
                 <p className="text-xs text-turtle-gray-2 -mt-1 mb-1">
-                  You&apos;ll pay <span className="font-semibold text-turtle-dark">Tk {pending.grandTotal}</span> to Food Turtle
+                  {t("pay_will_pay", { amount: `Tk ${pending.grandTotal}` })}
                 </p>
                 <div>
-                  <label className="text-xs font-medium text-turtle-gray-2 block mb-1">Cardholder name</label>
+                  <label className="text-xs font-medium text-turtle-gray-2 block mb-1">{t("pay_cardholder_name")}</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Name on card"
+                    placeholder={t("pay_name_on_card_placeholder")}
                     className={`w-full px-3 py-2.5 text-sm border rounded-lg focus:outline-none ${
                       attempted && !nameValid ? "border-red-400" : "border-gray-200 focus:border-turtle-pink"
                     }`}
                   />
-                  {attempted && !nameValid && <p className="text-xs text-red-500 mt-1">Required</p>}
+                  {attempted && !nameValid && <p className="text-xs text-red-500 mt-1">{t("pay_required")}</p>}
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-turtle-gray-2 block mb-1">Card number</label>
+                  <label className="text-xs font-medium text-turtle-gray-2 block mb-1">{t("pay_card_number")}</label>
                   <input
                     type="text"
                     inputMode="numeric"
@@ -125,11 +127,11 @@ export default function CardPaymentPage() {
                       attempted && !cardValid ? "border-red-400" : "border-gray-200 focus:border-turtle-pink"
                     }`}
                   />
-                  {attempted && !cardValid && <p className="text-xs text-red-500 mt-1">Enter a 16-digit card number</p>}
+                  {attempted && !cardValid && <p className="text-xs text-red-500 mt-1">{t("pay_card_number_invalid")}</p>}
                 </div>
                 <div className="flex gap-3">
                   <div className="flex-1">
-                    <label className="text-xs font-medium text-turtle-gray-2 block mb-1">Expiry</label>
+                    <label className="text-xs font-medium text-turtle-gray-2 block mb-1">{t("pay_expiry")}</label>
                     <input
                       type="text"
                       inputMode="numeric"
@@ -140,10 +142,10 @@ export default function CardPaymentPage() {
                         attempted && !expiryValid ? "border-red-400" : "border-gray-200 focus:border-turtle-pink"
                       }`}
                     />
-                    {attempted && !expiryValid && <p className="text-xs text-red-500 mt-1">MM/YY</p>}
+                    {attempted && !expiryValid && <p className="text-xs text-red-500 mt-1">{t("pay_expiry_invalid")}</p>}
                   </div>
                   <div className="flex-1">
-                    <label className="text-xs font-medium text-turtle-gray-2 block mb-1">CVV</label>
+                    <label className="text-xs font-medium text-turtle-gray-2 block mb-1">{t("pay_cvv")}</label>
                     <input
                       type="password"
                       inputMode="numeric"
@@ -154,18 +156,18 @@ export default function CardPaymentPage() {
                         attempted && !cvvValid ? "border-red-400" : "border-gray-200 focus:border-turtle-pink"
                       }`}
                     />
-                    {attempted && !cvvValid && <p className="text-xs text-red-500 mt-1">3 digits</p>}
+                    {attempted && !cvvValid && <p className="text-xs text-red-500 mt-1">{t("pay_cvv_invalid")}</p>}
                   </div>
                 </div>
                 <button
                   onClick={handlePay}
                   className="w-full bg-turtle-pink text-white py-3 rounded-full text-sm font-bold mt-2 hover:bg-turtle-pink-light transition-colors"
                 >
-                  Pay Tk {pending.grandTotal}
+                  {t("pay_amount", { amount: `Tk ${pending.grandTotal}` })}
                 </button>
                 <div className="flex items-center gap-1.5 justify-center mt-1 text-turtle-gray-2">
                   <ShieldCheck size={12} />
-                  <span className="text-[11px]">Simulated payment, no real card data is sent anywhere</span>
+                  <span className="text-[11px]">{t("pay_card_no_data_note")}</span>
                 </div>
               </div>
             )}
@@ -173,22 +175,24 @@ export default function CardPaymentPage() {
             {step === "processing" && (
               <div className="py-10 text-center">
                 <Loader2 size={36} className="animate-spin text-turtle-pink mx-auto mb-4" />
-                <p className="text-sm font-semibold text-turtle-dark">Processing your payment...</p>
-                <p className="text-xs text-turtle-gray-2 mt-1">Please don&apos;t close this window</p>
+                <p className="text-sm font-semibold text-turtle-dark">{t("pay_processing")}</p>
+                <p className="text-xs text-turtle-gray-2 mt-1">{t("pay_dont_close")}</p>
               </div>
             )}
 
             {step === "success" && (
               <div className="py-6 text-center">
                 <CheckCircle2 size={48} className="text-turtle-green mx-auto mb-4" />
-                <p className="text-lg font-bold text-turtle-dark mb-1">Payment successful</p>
-                <p className="text-sm text-turtle-gray-2 mb-1">Tk {pending.grandTotal} paid by card ending in {cardDigits.slice(-4)}</p>
-                <p className="text-xs text-turtle-gray-2 mb-6">Order {orderId}</p>
+                <p className="text-lg font-bold text-turtle-dark mb-1">{t("pay_success")}</p>
+                <p className="text-sm text-turtle-gray-2 mb-1">
+                  {t("pay_card_paid", { amount: `Tk ${pending.grandTotal}`, last4: cardDigits.slice(-4) })}
+                </p>
+                <p className="text-xs text-turtle-gray-2 mb-6">{t("pay_order_id", { id: orderId })}</p>
                 <button
                   onClick={() => router.replace("/order-placed")}
                   className="w-full bg-turtle-pink text-white py-3 rounded-full text-sm font-bold hover:bg-turtle-pink-light transition-colors"
                 >
-                  Continue
+                  {t("pay_continue")}
                 </button>
               </div>
             )}

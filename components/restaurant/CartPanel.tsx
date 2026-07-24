@@ -67,7 +67,7 @@ export default function CartPanel({ otherItems = [], restaurantSlug }: CartPanel
           ) : (
             <div className="space-y-3">
               {/* Your items heading */}
-              <p className="text-sm font-bold text-turtle-dark">Your items</p>
+              <p className="text-sm font-bold text-turtle-dark">{t("cart_panel_your_items")}</p>
 
               {/* Cart items */}
               {items.map((item) => {

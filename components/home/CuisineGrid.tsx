@@ -38,44 +38,47 @@ export default function CuisineGrid({ onFilter, active }: CuisineGridProps) {
         {t("section_favourite_cuisines")}
       </h2>
 
-      <button
-        onClick={() => scrollBy(-1)}
-        aria-label="Scroll left"
-        className="hidden sm:flex absolute left-0 top-1/2 translate-y-1 -translate-x-3 z-10 w-8 h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
-      >
-        <ChevronLeft size={16} className="text-turtle-dark" />
-      </button>
-      <button
-        onClick={() => scrollBy(1)}
-        aria-label="Scroll right"
-        className="hidden sm:flex absolute right-0 top-1/2 translate-y-1 translate-x-3 z-10 w-8 h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
-      >
-        <ChevronRight size={16} className="text-turtle-dark" />
-      </button>
+      <div className="relative">
+        <button
+          onClick={() => scrollBy(-1)}
+          aria-label="Scroll left"
+          className="flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
+        >
+          <ChevronLeft size={16} className="text-turtle-dark" />
+        </button>
+        <button
+          onClick={() => scrollBy(1)}
+          aria-label="Scroll right"
+          className="flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
+        >
+          <ChevronRight size={16} className="text-turtle-dark" />
+        </button>
 
-      <div ref={scrollerRef} className="flex gap-5 overflow-x-auto scrollbar-hide pb-1 scroll-smooth">
-        {CUISINES.map(({ image, labelKey, value }) => (
-          <button
-            key={value}
-            onClick={() => onFilter(active === value ? "" : value)}
-            className="flex flex-col items-center gap-2 shrink-0 group"
-          >
-            <div
-              className={`w-28 h-28 rounded-2xl overflow-hidden border-2 transition-colors ${
-                active === value ? "border-turtle-pink" : "border-transparent"
-              }`}
+        <div ref={scrollerRef} className="flex gap-5 overflow-x-auto scrollbar-hide pb-1 scroll-smooth snap-x snap-proximity">
+          {CUISINES.map(({ image, labelKey, value }) => (
+            <button
+              key={value}
+              onClick={() => onFilter(active === value ? "" : value)}
+              className="flex flex-col items-center gap-2 shrink-0 group snap-start"
             >
-              <img src={image} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-            </div>
-            <span
-              className={`text-sm font-medium whitespace-nowrap ${
-                active === value ? "text-turtle-pink font-semibold" : "text-turtle-dark"
-              }`}
-            >
-              {t(labelKey)}
-            </span>
-          </button>
-        ))}
+              <div
+                className={`w-28 h-28 rounded-2xl overflow-hidden border-2 transition-colors ${
+                  active === value ? "border-turtle-pink" : "border-transparent"
+                }`}
+              >
+                <img src={image} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+              </div>
+              <span
+                className={`text-sm font-medium whitespace-nowrap ${
+                  active === value ? "text-turtle-pink font-semibold" : "text-turtle-dark"
+                }`}
+              >
+                {t(labelKey)}
+              </span>
+            </button>
+          ))}
+          <div className="w-1 shrink-0" aria-hidden />
+        </div>
       </div>
     </section>
   );

@@ -5,6 +5,7 @@ import { Gift, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Restaurant } from "@/types";
 import RestaurantCard from "./RestaurantCard";
+import { SkeletonCard } from "@/components/shared/LoadingSkeleton";
 
 const ACTIVE_SECS = 30 * 60; // real 30 minute countdown
 const START_KEY = "ft_promo_started_at";
@@ -50,9 +51,10 @@ function useCountdown() {
 
 interface PromoBannerProps {
   restaurants: Restaurant[];
+  loading?: boolean;
 }
 
-export default function PromoBanner({ restaurants }: PromoBannerProps) {
+export default function PromoBanner({ restaurants, loading }: PromoBannerProps) {
   const { t } = useLanguage();
   const { phase, secs } = useCountdown();
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -95,30 +97,42 @@ export default function PromoBanner({ restaurants }: PromoBannerProps) {
         </span>
       </div>
 
-      {deals.length > 0 && (
-        <>
+      {loading ? (
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-1">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="w-52 shrink-0">
+              <SkeletonCard />
+            </div>
+          ))}
+        </div>
+      ) : deals.length > 0 && (
+        <div className="relative">
           <button
             onClick={() => scrollBy(-1)}
             aria-label="Scroll left"
-            className="hidden sm:flex absolute left-1 top-1/2 translate-y-3 z-10 w-8 h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
+            className="flex absolute left-1 top-1/2 -translate-y-1/2 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
           >
             <ChevronLeft size={16} className="text-turtle-dark" />
           </button>
           <button
             onClick={() => scrollBy(1)}
             aria-label="Scroll right"
-            className="hidden sm:flex absolute right-1 top-1/2 translate-y-3 z-10 w-8 h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
+            className="flex absolute right-1 top-1/2 -translate-y-1/2 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
           >
             <ChevronRight size={16} className="text-turtle-dark" />
           </button>
-          <div ref={scrollerRef} className="flex gap-3 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-1 scroll-smooth">
+          <div
+            ref={scrollerRef}
+            className="flex gap-3 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-1 scroll-smooth snap-x snap-proximity"
+          >
             {deals.map((r) => (
-              <div key={r.id} className="w-52 shrink-0">
+              <div key={r.id} className="w-52 shrink-0 snap-start">
                 <RestaurantCard restaurant={r} compact />
               </div>
             ))}
+            <div className="w-1 shrink-0" aria-hidden />
           </div>
-        </>
+        </div>
       )}
     </div>
   );

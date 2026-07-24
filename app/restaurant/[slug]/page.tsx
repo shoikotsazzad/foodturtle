@@ -115,7 +115,7 @@ export default function RestaurantPage({ params }: { params: Promise<{ slug: str
   const name = restaurant ? (lang === "bn" ? restaurant.name_bn : restaurant.name_en) : "";
   const cuisines = restaurant ? (lang === "bn" ? restaurant.cuisine_bn : restaurant.cuisine_en) : [];
   const fav = restaurant ? isFavourite(restaurant.id) : false;
-  const pageTitle = name ? `${name} — Food Turtle` : "Food Turtle";
+  const pageTitle = name ? `${name} · Food Turtle` : "Food Turtle";
 
   // Group menu items by category
   const categories = Array.from(new Set(menuItems.map((item) => item.category_en)));
@@ -154,11 +154,11 @@ export default function RestaurantPage({ params }: { params: Promise<{ slug: str
   if (!restaurant) {
     return (
       <>
-        <PageTitle title="Restaurant not found — Food Turtle" />
+        <PageTitle title="Restaurant not found · Food Turtle" />
         <Navbar />
         <div className="max-w-7xl mx-auto w-full px-4 py-20 text-center">
           <img src="/logo.png" alt="Food Turtle" className="w-16 h-16 object-contain mb-4 opacity-60 mx-auto" />
-          <h1 className="text-xl font-bold text-turtle-dark">Restaurant not found</h1>
+          <h1 className="text-xl font-bold text-turtle-dark">{t("restaurant_not_found_title")}</h1>
           <Link href="/" className="mt-4 inline-block text-turtle-pink hover:underline">← Back to home</Link>
         </div>
       </>
@@ -225,7 +225,7 @@ export default function RestaurantPage({ params }: { params: Promise<{ slug: str
         </div>
 
         {/* Deals strip */}
-        <div className="grid grid-cols-3 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
           <div className="bg-turtle-dark text-white rounded-xl p-3">
             <p className="text-xs font-bold mb-0.5">🏷️ {t("deals_app_only_title")}</p>
             <p className="text-[10px] text-gray-400">{t("deals_app_only_subtitle")}</p>
@@ -244,9 +244,20 @@ export default function RestaurantPage({ params }: { params: Promise<{ slug: str
           {/* Main content */}
           <div className="flex-1 min-w-0">
             {/* Sticky menu tabs */}
-            <div className="sticky top-16 bg-white border-b border-gray-100 z-20 -mx-4 px-4 mb-4">
+            <div className="sticky top-[9rem] md:top-16 bg-white border-b border-gray-100 z-20 -mx-4 px-4 mb-4">
+              {/* Mobile search — full width, own row above the tab strip */}
+              <div className="md:hidden relative pt-2 pb-2">
+                <Search size={14} className="absolute left-2.5 top-[1.15rem] text-turtle-gray-2" />
+                <input
+                  type="text"
+                  value={menuSearch}
+                  onChange={(e) => setMenuSearch(e.target.value)}
+                  placeholder={t("menu_search")}
+                  className="w-full pl-8 pr-3 py-2 text-sm bg-turtle-gray rounded-full focus:outline-none focus:ring-1 focus:ring-turtle-pink"
+                />
+              </div>
               <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
-                <div className="relative shrink-0">
+                <div className="hidden md:block relative shrink-0">
                   <Search size={14} className="absolute left-2.5 top-2.5 text-turtle-gray-2" />
                   <input
                     type="text"
@@ -265,7 +276,7 @@ export default function RestaurantPage({ params }: { params: Promise<{ slug: str
                         : "border-transparent text-turtle-gray-2 hover:text-turtle-dark"
                     }`}
                   >
-                    Popular ({popularItems.length})
+                    {t("menu_popular_badge")} ({popularItems.length})
                   </button>
                 )}
                 {categories.map((cat) => (

@@ -7,6 +7,7 @@ import { ArrowLeft, Clock, Star, Plus, Minus, ShoppingCart, Trash2, Search, MapP
 import Navbar from "@/components/layout/Navbar";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
+import CartBottomBar from "@/components/cart/CartBottomBar";
 import { useLanguage } from "@/context/LanguageContext";
 import { useCart } from "@/context/CartContext";
 import { SHOPS, SHOP_TYPES, getShopProducts, type Shop, type ShopProduct } from "@/lib/shops-data";
@@ -83,7 +84,7 @@ function ShopProductCard({ product, shop }: { product: ShopProduct; shop: Shop }
 
 export default function ShopDetailPage({ params }: { params: Promise<{ shopId: string }> }) {
   const { shopId } = use(params);
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const router = useRouter();
   const { items, updateQuantity, removeItem } = useCart();
   const [search, setSearch] = useState("");
@@ -97,9 +98,9 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
         <Navbar />
         <div className="max-w-2xl mx-auto px-4 py-20 text-center">
           <img src="/logo.png" alt="Food Turtle" className="w-16 h-16 object-contain mb-4 opacity-60 mx-auto" />
-          <h1 className="text-xl font-bold text-turtle-dark mb-2">Shop not found</h1>
+          <h1 className="text-xl font-bold text-turtle-dark mb-2">{t("shop_not_found_title")}</h1>
           <Link href="/shops" className="text-turtle-pink font-medium hover:underline">
-            ← Back to Shops
+            ← {t("back_to_shops")}
           </Link>
         </div>
         <Footer />
@@ -129,11 +130,11 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
       <main className="max-w-7xl mx-auto w-full px-4 py-4 pb-20 sm:pb-4">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1 text-xs text-turtle-gray-2 mb-4">
-          <Link href="/" className="hover:text-turtle-pink">Home</Link>
+          <Link href="/" className="hover:text-turtle-pink">{t("breadcrumb_home")}</Link>
           <span>›</span>
-          <Link href="/shops" className="hover:text-turtle-pink">Shops</Link>
+          <Link href="/shops" className="hover:text-turtle-pink">{t("nav_shops")}</Link>
           <span>›</span>
-          <span className="text-turtle-dark">{shop.name_en}</span>
+          <span className="text-turtle-dark">{shopName}</span>
         </nav>
 
         {/* Shop header */}
@@ -146,7 +147,7 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
                   {emoji} {shop.type}
                 </span>
                 <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${shop.is_open ? "bg-green-50 text-green-600" : "bg-gray-100 text-turtle-gray-2"}`}>
-                  {shop.is_open ? "Open Now" : "Closed"}
+                  {shop.is_open ? t("status_open_now") : t("status_closed")}
                 </span>
               </div>
               <h1 className="text-xl font-bold text-turtle-dark">{shopName}</h1>
@@ -167,7 +168,7 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
               className="shrink-0 flex items-center gap-1 text-sm text-turtle-gray-2 hover:text-turtle-pink transition-colors"
             >
               <ArrowLeft size={16} />
-              Back
+              {t("back_btn")}
             </button>
           </div>
         </div>
@@ -176,7 +177,7 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
           {/* Left sidebar */}
           <aside className="hidden lg:flex flex-col w-48 shrink-0 sticky top-[7rem] h-[calc(100vh-7rem)] overflow-y-auto scrollbar-hide pb-6">
             <div className="bg-white rounded-xl border border-gray-100 p-3">
-              <p className="text-xs font-bold text-turtle-gray-2 uppercase mb-3">Categories</p>
+              <p className="text-xs font-bold text-turtle-gray-2 uppercase mb-3">{t("categories_label")}</p>
               <div className="space-y-0.5">
                 {categories.map((cat) => (
                   <button
@@ -206,7 +207,7 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder={`Search in ${shop.name_en}...`}
+                placeholder={t("search_in_shop_placeholder", { shop: shopName })}
                 className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-turtle-pink"
               />
             </div>
@@ -230,8 +231,9 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
 
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm text-turtle-gray-2">
-                {filtered.length} product{filtered.length !== 1 ? "s" : ""}
-                {activeCategory !== "All" ? ` in ${activeCategory}` : ""}
+                {activeCategory !== "All"
+                  ? t("shop_product_count_category", { count: filtered.length, category: activeCategory })
+                  : t("shop_product_count_all", { count: filtered.length })}
               </p>
             </div>
 
@@ -244,7 +246,7 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
             {filtered.length === 0 && (
               <div className="text-center py-16 text-turtle-gray-2">
                 <img src="/logo.png" alt="Food Turtle" className="w-12 h-12 object-contain mb-3 opacity-60 mx-auto" />
-                <p className="font-medium">No products found</p>
+                <p className="font-medium">{t("no_products_found")}</p>
               </div>
             )}
           </div>
@@ -253,14 +255,14 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
           <div className="hidden xl:flex flex-col w-60 shrink-0 sticky top-[7rem] h-[calc(100vh-7rem)] overflow-y-auto scrollbar-hide pb-6">
             <div className="bg-white rounded-xl border border-gray-100 p-4 flex flex-col h-full">
               <p className="font-bold text-turtle-dark text-sm mb-4 border-b border-gray-100 pb-3">
-                Your order from {shopName}
+                {t("your_order_from", { name: shopName })}
               </p>
 
               {shopItems.length === 0 ? (
                 <div className="text-center py-8 flex-1">
                   <ShoppingCart size={28} className="text-turtle-gray mx-auto mb-2" />
-                  <p className="text-sm text-turtle-dark">Cart is empty</p>
-                  <p className="text-xs text-turtle-gray-2">Add items to start ordering</p>
+                  <p className="text-sm text-turtle-dark">{t("shop_cart_empty")}</p>
+                  <p className="text-xs text-turtle-gray-2">{t("shop_cart_empty_subtitle")}</p>
                 </div>
               ) : (
                 <div className="flex-1 overflow-y-auto space-y-3 mb-3">
@@ -298,10 +300,10 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
 
               <div className="border-t border-gray-100 pt-3">
                 <div className="flex justify-between text-sm text-turtle-gray-2 mb-1">
-                  <span>Subtotal</span><span>Tk {shopTotal}</span>
+                  <span>{t("cart_subtotal")}</span><span>Tk {shopTotal}</span>
                 </div>
                 <div className="flex justify-between text-sm font-bold text-turtle-dark mb-3">
-                  <span>Total</span><span>Tk {shopTotal + (shopTotal > 0 ? 5 : 0)}</span>
+                  <span>{t("cart_total")}</span><span>Tk {shopTotal + (shopTotal > 0 ? 5 : 0)}</span>
                 </div>
                 <button
                   onClick={() => router.push("/checkout")}
@@ -312,7 +314,7 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
                       : "bg-gray-200 text-turtle-gray-2 cursor-not-allowed"
                   }`}
                 >
-                  {shopItems.length > 0 ? `Checkout (${shopItems.length})` : "Checkout"}
+                  {shopItems.length > 0 ? t("checkout_btn_count", { count: shopItems.length }) : t("checkout_btn")}
                 </button>
               </div>
             </div>
@@ -321,6 +323,7 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
       </main>
       <Footer />
       <MobileNav />
+      <CartBottomBar />
     </>
   );
 }

@@ -103,7 +103,7 @@ export interface TmBanner {
 // pandamart's "Shop & Win" / "Grab Local Onion" ad carousel.
 export const BANNERS: TmBanner[] = [
   { title: "Shop & Win", subtitle: "Add more unique items, win a Tk 3,000 voucher every day!", cta: "Start shopping", gradient: "from-turtle-pink to-pink-400" },
-  { title: "Grab Local Onion — 9Tk", subtitle: "Deshi Peyaj, 500gm pack. T&Cs apply.", cta: "Order now", gradient: "from-amber-500 to-orange-400" },
+  { title: "Grab Local Onion, 9Tk", subtitle: "Deshi Peyaj, 500gm pack. T&Cs apply.", cta: "Order now", gradient: "from-amber-500 to-orange-400" },
   { title: "Football Fest is here", subtitle: "Up to 30% off match-day snacks & drinks", cta: "Shop the fest", gradient: "from-green-600 to-emerald-500" },
   { title: "Monthly Bazar savings", subtitle: "Up to 50% off your whole month's groceries", cta: "See deals", gradient: "from-sky-600 to-blue-400" },
 ];
@@ -312,7 +312,7 @@ export const PRODUCTS: TmProduct[] = [
   { id: "sf1", name_en: "Savoy Dark Desire Ice Cream Cake (1L)", name_bn: "স্যাভয় ডার্ক ডিজায়ার আইসক্রিম কেক (১ লিটার)", price: 1100, original_price: 1100, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Rich dark chocolate ice cream cake." },
   { id: "sf2", name_en: "Savoy Coffee Ice Cream (1L)", name_bn: "স্যাভয় কফি আইসক্রিম (১ লিটার)", price: 500, original_price: 500, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Bold coffee-flavoured ice cream tub." },
   { id: "sf3", name_en: "Savoy Chocolate Fudge Ice Cream (1L)", name_bn: "স্যাভয় চকোলেট ফাজ আইসক্রিম (১ লিটার)", price: 500, original_price: 500, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Fudge-swirled chocolate ice cream." },
-  { id: "sf4", name_en: "Savoy Double Sundae Mango & Vanilla (1L)", name_bn: "স্যাভয় ডাবল সান্ডে ম্যাংগো ও ভ্যানিলা (১ লিটার)", price: 350, original_price: 350, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Two flavours in one tub — mango and vanilla." },
+  { id: "sf4", name_en: "Savoy Double Sundae Mango & Vanilla (1L)", name_bn: "স্যাভয় ডাবল সান্ডে ম্যাংগো ও ভ্যানিলা (১ লিটার)", price: 350, original_price: 350, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Two flavours in one tub, mango and vanilla." },
   { id: "sf5", name_en: "Savoy Doi Ice Cream (1L)", name_bn: "স্যাভয় দই আইসক্রিম (১ লিটার)", price: 420, original_price: 420, image: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=300&q=80", category: "Savoy Ice Cream", save: 0, section: "Savoy Football Carnival", description_en: "Tangy sweet doi (yoghurt) flavoured ice cream." },
 
   // Buy 2 Win Deals

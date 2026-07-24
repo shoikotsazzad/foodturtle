@@ -17,7 +17,7 @@ const SECTIONS = [
   },
   {
     title: "Analytics",
-    body: "We track basic, anonymous usage data — page views, an anonymous visitor ID, roughly how many people are browsing at once, and how many fake orders and signups happen — to understand how the app is used and to keep the admin dashboard honest. This data isn't tied to your name or email, and no advertising profile is built from it.",
+    body: "We track basic, anonymous usage data (page views, an anonymous visitor ID, roughly how many people are browsing at once, and how many fake orders and signups happen) to understand how the app is used and to keep the admin dashboard honest. This data isn't tied to your name or email, and no advertising profile is built from it.",
   },
   {
     title: "Cookies and local storage",

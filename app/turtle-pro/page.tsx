@@ -42,10 +42,10 @@ const PLANS = [
 ];
 
 const FAQ = [
-  { q: "What is Turtle Pro?", a: "Turtle Pro is a subscription plan that offers exclusive deals like free delivery and discounts on food, groceries, and more — for as long as an order never actually arrives." },
+  { q: "What is Turtle Pro?", a: "Turtle Pro is a subscription plan that offers exclusive deals like free delivery and discounts on food, groceries, and more, for as long as an order never actually arrives." },
   { q: "How do I use my Turtle Pro perks?", a: "Once you're a Pro, your perks are added to your account automatically. Free delivery is applied at checkout, and other vouchers can be selected there too." },
   { q: "When can I enjoy my Turtle Pro perks?", a: "As soon as you subscribe. Just make sure you meet the minimum spend where required." },
-  { q: "What are surprise perks?", a: "Occasional bonus discounts we drop on Pro members. No surprises about the delivery time, though — that part stays exactly as slow as ever." },
+  { q: "What are surprise perks?", a: "Occasional bonus discounts we drop on Pro members. No surprises about the delivery time though, that part stays exactly as slow as ever." },
 ];
 
 export default function TurtleProPage() {
@@ -55,7 +55,7 @@ export default function TurtleProPage() {
 
   return (
     <>
-      <PageTitle title="Turtle Pro — Food Turtle" />
+      <PageTitle title="Turtle Pro · Food Turtle" />
       <Navbar />
       <main className="w-full pb-20 sm:pb-6">
         {/* Hero */}

@@ -17,11 +17,11 @@ const SECTIONS = [
   },
   {
     title: "3. Orders and payments",
-    body: "All checkout flows — cash on delivery, Turtle Pay Wallet, and card — are fully simulated. No real payment is processed, no card details are transmitted anywhere, and no money changes hands. Order totals, discounts, and \"savings\" shown after checkout are for comedic effect only.",
+    body: "All checkout flows (cash on delivery, Turtle Pay Wallet, and card) are fully simulated. No real payment is processed, no card details are transmitted anywhere, and no money changes hands. Order totals, discounts, and \"savings\" shown after checkout are for comedic effect only.",
   },
   {
     title: "4. Accounts",
-    body: "Signing in only stores a name and email locally in your browser to personalize your experience (favourites, order history, saved address). We don't run a real authentication system, so please don't use a password you use anywhere else — there's nowhere to type one here in the first place.",
+    body: "Signing in only stores a name and email locally in your browser to personalize your experience (favourites, order history, saved address). We don't run a real authentication system, so please don't use a password you use anywhere else, there's nowhere to type one here in the first place.",
   },
   {
     title: "5. Prohibited use",
@@ -33,7 +33,7 @@ const SECTIONS = [
   },
   {
     title: "7. Changes to these terms",
-    body: "We may update these terms as the app grows. Continued use after a change means you accept the update — much like continued use of Food Turtle means you accept that dinner isn't coming.",
+    body: "We may update these terms as the app grows. Continued use after a change means you accept the update, much like continued use of Food Turtle means you accept that dinner isn't coming.",
   },
   {
     title: "8. Contact",

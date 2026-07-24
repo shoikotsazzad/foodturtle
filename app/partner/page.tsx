@@ -16,7 +16,7 @@ const BENEFITS = [
 const FAQ = [
   { q: "Do you deliver my actual food?", a: "No. Nothing on Food Turtle is ever delivered, to anyone, ever. That's the whole idea." },
   { q: "Is there a fee to list my restaurant or shop?", a: "No fees. There's also no real listing, but the enthusiasm is genuine." },
-  { q: "Can I remove my business later?", a: "Since nothing is a real listing, there's nothing to remove — but reach out through the form below and we'll follow up." },
+  { q: "Can I remove my business later?", a: "Since nothing is a real listing, there's nothing to remove, but reach out through the form below and we'll follow up." },
 ];
 
 export default function PartnerPage() {

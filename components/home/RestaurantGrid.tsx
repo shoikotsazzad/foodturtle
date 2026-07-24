@@ -73,8 +73,8 @@ export default function RestaurantGrid({
     return (
       <div className="text-center py-16">
         <img src="/logo.png" alt="Food Turtle" className="w-16 h-16 object-contain mb-4 opacity-60 mx-auto" />
-        <p className="text-turtle-dark font-semibold">No restaurants found</p>
-        <p className="text-sm text-turtle-gray-2 mt-1">Try adjusting your filters</p>
+        <p className="text-turtle-dark font-semibold">{t("no_restaurants_found")}</p>
+        <p className="text-sm text-turtle-gray-2 mt-1">{t("no_restaurants_found_subtitle")}</p>
       </div>
     );
   }

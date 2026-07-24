@@ -58,14 +58,14 @@ function ScrollArrows({ onLeft, onRight }: { onLeft: () => void; onRight: () => 
       <button
         onClick={onLeft}
         aria-label="Scroll left"
-        className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10 w-8 h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
+        className="flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
       >
         <ChevronLeft size={16} className="text-turtle-dark" />
       </button>
       <button
         onClick={onRight}
         aria-label="Scroll right"
-        className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10 w-8 h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
+        className="flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-gray-200 shadow items-center justify-center hover:bg-turtle-gray transition-colors"
       >
         <ChevronRight size={16} className="text-turtle-dark" />
       </button>
@@ -221,8 +221,8 @@ export default function ShopsPage() {
 
   const typeFilterPanel = (
     <>
-      <p className="text-xs font-bold text-turtle-gray-2 uppercase mb-3">Filters</p>
-      <p className="text-xs font-semibold text-turtle-dark mb-2">Offers</p>
+      <p className="text-xs font-bold text-turtle-gray-2 uppercase mb-3">{t("filter_title")}</p>
+      <p className="text-xs font-semibold text-turtle-dark mb-2">{t("filter_offers")}</p>
       <label className="flex items-center gap-2 cursor-pointer mb-4">
         <input
           type="checkbox"
@@ -230,10 +230,10 @@ export default function ShopsPage() {
           onChange={() => setShowVouchers(!showVouchersOnly)}
           className="accent-turtle-pink"
         />
-        <span className="text-sm text-turtle-dark">Accepts vouchers</span>
+        <span className="text-sm text-turtle-dark">{t("filter_vouchers")}</span>
       </label>
 
-      <p className="text-xs font-semibold text-turtle-dark mb-2">Shop types</p>
+      <p className="text-xs font-semibold text-turtle-dark mb-2">{t("shop_types_label")}</p>
       <div className="space-y-1.5">
         {shownTypes.map((name) => (
           <label key={name} className="flex items-center gap-2 cursor-pointer">
@@ -251,7 +251,7 @@ export default function ShopsPage() {
         onClick={() => setShowAllTypes((v) => !v)}
         className="flex items-center gap-1 text-xs font-semibold text-turtle-pink mt-3 hover:underline"
       >
-        {showAllTypes ? "Show less" : "Show more"}
+        {showAllTypes ? t("filter_show_less") : t("filter_show_more")}
         <ChevronDown size={13} className={showAllTypes ? "rotate-180 transition-transform" : "transition-transform"} />
       </button>
     </>
@@ -259,7 +259,7 @@ export default function ShopsPage() {
 
   return (
     <>
-      <PageTitle title="Shops — Food Turtle" />
+      <PageTitle title="Shops · Food Turtle" />
       <Navbar />
       <main className="max-w-7xl mx-auto w-full px-4 py-6 pb-20 sm:pb-6">
         <div className="flex gap-6">
@@ -280,40 +280,44 @@ export default function ShopsPage() {
 
             {/* Popular strip — brand tile + name/time, not circular, with scroll arrows */}
             {isBrowsing && (
-              <section className="mb-8 relative">
+              <section className="mb-8">
                 <h2 className="text-lg font-bold text-turtle-dark mb-3">{t("shops_popular")}</h2>
-                <ScrollArrows onLeft={() => popularScroll.scrollBy(-1)} onRight={() => popularScroll.scrollBy(1)} />
-                <div ref={popularScroll.ref} className="flex gap-6 overflow-x-auto scrollbar-hide pb-1 scroll-smooth">
-                  {popularShops.map((shop) => {
-                    const name = lang === "bn" ? shop.name_bn : shop.name_en;
-                    return (
-                      <Link
-                        key={shop.id}
-                        href={`/shops/${shop.id}`}
-                        className="shrink-0 flex items-center gap-2.5 w-52 group"
-                      >
-                        <img
-                          src={shop.logo}
-                          alt=""
-                          className="w-14 h-14 rounded-xl object-cover shrink-0 group-hover:shadow-md transition-shadow"
-                        />
-                        <div className="min-w-0">
-                          <p className="text-sm font-semibold text-turtle-dark truncate">{name}</p>
-                          <p className="text-xs text-turtle-gray-2">{shop.delivery_time.split("-")[0]} min</p>
-                        </div>
-                      </Link>
-                    );
-                  })}
+                <div className="relative">
+                  <ScrollArrows onLeft={() => popularScroll.scrollBy(-1)} onRight={() => popularScroll.scrollBy(1)} />
+                  <div ref={popularScroll.ref} className="flex gap-6 overflow-x-auto scrollbar-hide pb-1 scroll-smooth snap-x snap-proximity">
+                    {popularShops.map((shop) => {
+                      const name = lang === "bn" ? shop.name_bn : shop.name_en;
+                      return (
+                        <Link
+                          key={shop.id}
+                          href={`/shops/${shop.id}`}
+                          className="shrink-0 flex items-center gap-2.5 w-52 group snap-start"
+                        >
+                          <img
+                            src={shop.logo}
+                            alt=""
+                            className="w-14 h-14 rounded-xl object-cover shrink-0 group-hover:shadow-md transition-shadow"
+                          />
+                          <div className="min-w-0">
+                            <p className="text-sm font-semibold text-turtle-dark truncate">{name}</p>
+                            <p className="text-xs text-turtle-gray-2">{shop.delivery_time.split("-")[0]} min</p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                    <div className="w-1 shrink-0" aria-hidden />
+                  </div>
                 </div>
               </section>
             )}
 
             {/* Monthly deals swimlane — bigger cards, foodpanda "Monthly deals" style, with scroll arrows */}
             {isBrowsing && dealShops.length > 0 && (
-              <section className="mb-8 relative">
-                <h2 className="text-lg font-bold text-turtle-dark mb-3">Monthly deals</h2>
+              <section className="mb-8">
+                <h2 className="text-lg font-bold text-turtle-dark mb-3">{t("monthly_deals_heading")}</h2>
+                <div className="relative">
                 <ScrollArrows onLeft={() => dealsScroll.scrollBy(-1)} onRight={() => dealsScroll.scrollBy(1)} />
-                <div ref={dealsScroll.ref} className="flex gap-4 overflow-x-auto scrollbar-hide pb-1 scroll-smooth">
+                <div ref={dealsScroll.ref} className="flex gap-4 overflow-x-auto scrollbar-hide pb-1 scroll-smooth snap-x snap-proximity">
                   {dealShops.map((shop, i) => {
                     const name = lang === "bn" ? shop.name_bn : shop.name_en;
                     const deal = dealForShop(shop);
@@ -322,7 +326,7 @@ export default function ShopsPage() {
                       <Link
                         key={shop.id}
                         href={`/shops/${shop.id}`}
-                        className="shrink-0 w-56 bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow block"
+                        className="shrink-0 snap-start w-56 bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow block"
                       >
                         <div className="relative h-28 bg-turtle-gray">
                           <img src={shop.logo} alt="" className="w-full h-full object-cover" />
@@ -352,6 +356,8 @@ export default function ShopsPage() {
                       </Link>
                     );
                   })}
+                  <div className="w-1 shrink-0" aria-hidden />
+                </div>
                 </div>
               </section>
             )}
@@ -367,7 +373,7 @@ export default function ShopsPage() {
               {swimlaneShops.length === 0 && (
                 <div className="text-center py-16 text-turtle-gray-2">
                   <img src="/logo.png" alt="Food Turtle" className="w-12 h-12 object-contain mb-3 opacity-60 mx-auto" />
-                  <p className="font-medium">No shops found</p>
+                  <p className="font-medium">{t("no_shops_found")}</p>
                 </div>
               )}
             </section>

@@ -12,7 +12,7 @@ export interface FilterState {
   maxPrice: number;
 }
 
-interface SidebarProps {
+interface FilterControlsProps {
   filters: FilterState;
   onChange: (f: FilterState) => void;
 }
@@ -29,7 +29,7 @@ const CUISINES = [
   "Thai", "Turkish", "Vegetarian", "Western", "Wraps",
 ];
 
-export default function Sidebar({ filters, onChange }: SidebarProps) {
+export function FilterControls({ filters, onChange }: FilterControlsProps) {
   const { t } = useLanguage();
   const [showAllCuisines, setShowAllCuisines] = useState(false);
   const [cuisineSearch, setCuisineSearch] = useState("");
@@ -47,7 +47,7 @@ export default function Sidebar({ filters, onChange }: SidebarProps) {
   };
 
   return (
-    <aside className="w-56 shrink-0 space-y-5 sticky top-[7rem] h-[calc(100vh-7rem)] overflow-y-auto pb-6 scrollbar-hide">
+    <div className="space-y-5">
       {/* Sort by */}
       <div>
         <p className="text-sm font-bold text-turtle-dark mb-2">{t("filter_sort_by")}</p>
@@ -159,6 +159,14 @@ export default function Sidebar({ filters, onChange }: SidebarProps) {
           <span>Tk {filters.maxPrice === 2000 ? "2000+" : filters.maxPrice}</span>
         </div>
       </div>
+    </div>
+  );
+}
+
+export default function Sidebar({ filters, onChange }: FilterControlsProps) {
+  return (
+    <aside className="w-56 shrink-0 sticky top-[7rem] h-[calc(100vh-7rem)] overflow-y-auto pb-6 scrollbar-hide">
+      <FilterControls filters={filters} onChange={onChange} />
     </aside>
   );
 }

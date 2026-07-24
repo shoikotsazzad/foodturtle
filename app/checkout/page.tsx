@@ -146,9 +146,9 @@ export default function CheckoutPage() {
         <Navbar />
         <div className="max-w-7xl mx-auto w-full px-4 py-20 text-center">
           <img src="/logo.png" alt="Food Turtle" className="w-16 h-16 object-contain mb-4 opacity-60 mx-auto" />
-          <h1 className="text-xl font-bold text-turtle-dark">Your cart is empty</h1>
+          <h1 className="text-xl font-bold text-turtle-dark">{t("checkout_cart_empty_title")}</h1>
           <Link href="/" className="mt-4 inline-block bg-turtle-pink text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-turtle-pink-light">
-            Find restaurants
+            {t("find_restaurants_cta")}
           </Link>
         </div>
       </>
@@ -159,7 +159,7 @@ export default function CheckoutPage() {
     <>
       <PageTitle title="Checkout · Food Turtle" />
       <Navbar />
-      <main className="max-w-4xl mx-auto px-4 py-6 pb-20 sm:pb-6">
+      <main className="max-w-4xl mx-auto px-4 py-6 pb-28 lg:pb-6">
         <h1 className="text-2xl font-bold text-turtle-dark mb-6">{t("checkout_title")}</h1>
 
         <div className="flex flex-col lg:flex-row gap-6">
@@ -548,6 +548,28 @@ export default function CheckoutPage() {
           </div>
         </div>
       </main>
+
+      {/* Sticky mobile CTA — desktop already has an in-flow/sticky summary button */}
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-100 px-4 py-3 safe-area-pb">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-[10px] text-turtle-gray-2 leading-none mb-0.5">Total</p>
+            <p className="text-base font-bold text-turtle-pink leading-none">Tk {grandTotal}</p>
+          </div>
+          <button
+            onClick={handlePlaceOrder}
+            disabled={placingOrder}
+            className="flex-1 max-w-[65%] bg-turtle-pink text-white py-3 rounded-full text-sm font-bold hover:bg-turtle-pink-light transition-colors disabled:opacity-70"
+          >
+            {placingOrder
+              ? "Placing order..."
+              : paymentMethod === "cod"
+              ? t("checkout_place_order")
+              : "Continue to payment"}
+          </button>
+        </div>
+      </div>
+
       {showAddress && <AddressModal onClose={() => setShowAddress(false)} />}
     </>
   );

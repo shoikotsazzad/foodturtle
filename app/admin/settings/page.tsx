@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function AdminSettingsPage() {
   const [appName, setAppName] = useState("Food Turtle");
-  const [tagline, setTagline] = useState("The only delivery app that never disappoints — because we never deliver.");
+  const [tagline, setTagline] = useState("The only delivery app that never disappoints, because we never deliver.");
   const [revealDelay, setRevealDelay] = useState(3);
   const [revealMessage, setRevealMessage] = useState("খাবার আসবে না ভাই\nকিন্তু মন ভালো হলো তো?");
   const [maintenance, setMaintenance] = useState(false);

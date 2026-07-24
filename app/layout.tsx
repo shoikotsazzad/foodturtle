@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
@@ -14,7 +14,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Food Turtle",
-  description: "The only delivery app that never disappoints — because we never deliver.",
+  description: "The only delivery app that never disappoints, because we never deliver.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#FF2B85",
 };
 
 export default function RootLayout({

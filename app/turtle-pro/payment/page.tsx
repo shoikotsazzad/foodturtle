@@ -31,7 +31,7 @@ function PaymentForm() {
         <img src="/logo.png" alt="Food Turtle" className="w-24 h-24 object-contain mx-auto mb-6" />
         <h1 className="text-2xl font-bold text-turtle-dark mb-2">You&apos;re a Turtle Pro member!</h1>
         <p className="text-sm text-turtle-gray-2 mb-1">Your free deliveries begin the moment your first order arrives.</p>
-        <p className="text-sm text-turtle-gray-2 mb-8">So — never. But hey, unlimited 0% of nothing is still unlimited.</p>
+        <p className="text-sm text-turtle-gray-2 mb-8">So, never. But hey, unlimited 0% of nothing is still unlimited.</p>
         <Link
           href="/"
           className="inline-block bg-turtle-pink text-white font-bold px-6 py-3 rounded-full hover:bg-turtle-pink-light transition-colors"
@@ -98,7 +98,7 @@ function PaymentForm() {
         <div className="bg-white rounded-xl border border-gray-100 p-5 h-fit sticky top-24">
           <p className="font-bold text-turtle-dark mb-3">Review your plan</p>
           <div className="flex items-center justify-between text-sm mb-1">
-            <span className="text-turtle-dark font-medium">Turtle Pro — {plan.label}</span>
+            <span className="text-turtle-dark font-medium">Turtle Pro · {plan.label}</span>
           </div>
           <p className="text-xs text-turtle-gray-2 mb-4">{plan.billed}</p>
           <div className="border-t border-gray-100 pt-3 flex items-center justify-between mb-4">
@@ -134,7 +134,7 @@ function PaymentForm() {
 export default function TurtleProPaymentPage() {
   return (
     <>
-      <PageTitle title="Complete your payment — Turtle Pro" />
+      <PageTitle title="Complete your payment · Turtle Pro" />
       <Navbar />
       <main className="w-full pb-20 sm:pb-6">
         <Suspense fallback={null}>

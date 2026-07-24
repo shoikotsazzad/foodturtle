@@ -51,16 +51,16 @@ export default function ProfilePage() {
 
   return (
     <>
-      <PageTitle title="Profile — Food Turtle" />
+      <PageTitle title="Profile · Food Turtle" />
       <Navbar />
       <main className="max-w-2xl mx-auto px-4 py-6 pb-20 sm:pb-6">
         <h1 className="text-2xl font-bold text-turtle-dark mb-6">{t("profile_title")}</h1>
 
         {/* My profile */}
         <div className="bg-white rounded-xl border border-gray-100 p-5 mb-4 space-y-3">
-          <p className="font-bold text-turtle-dark mb-1">My profile</p>
+          <p className="font-bold text-turtle-dark mb-1">{t("profile_my_profile")}</p>
           <div>
-            <label className="text-xs font-medium text-turtle-gray-2 block mb-1">Email</label>
+            <label className="text-xs font-medium text-turtle-gray-2 block mb-1">{t("checkout_email")}</label>
             <input
               type="email"
               value={user.email}
@@ -69,27 +69,27 @@ export default function ProfilePage() {
             />
           </div>
           <div>
-            <label className="text-xs font-medium text-turtle-gray-2 block mb-1">First name</label>
+            <label className="text-xs font-medium text-turtle-gray-2 block mb-1">{t("checkout_first_name")}</label>
             <input
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-turtle-pink"
-              placeholder="First name"
+              placeholder={t("checkout_first_name")}
             />
           </div>
           <div>
-            <label className="text-xs font-medium text-turtle-gray-2 block mb-1">Last name</label>
+            <label className="text-xs font-medium text-turtle-gray-2 block mb-1">{t("checkout_last_name")}</label>
             <input
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-turtle-pink"
-              placeholder="Last name"
+              placeholder={t("checkout_last_name")}
             />
           </div>
           <div>
-            <label className="text-xs font-medium text-turtle-gray-2 block mb-1">Mobile</label>
+            <label className="text-xs font-medium text-turtle-gray-2 block mb-1">{t("checkout_mobile")}</label>
             <input
               type="tel"
               value={phone}
@@ -104,25 +104,25 @@ export default function ProfilePage() {
               saved ? "bg-turtle-green text-white" : "bg-turtle-pink text-white hover:bg-turtle-pink-light"
             }`}
           >
-            {saved ? "Saved! ✓" : t("profile_save")}
+            {saved ? t("saved_confirmation") : t("profile_save")}
           </button>
         </div>
 
         {/* Password */}
         <div className="bg-white rounded-xl border border-gray-100 p-5 mb-4 space-y-3">
-          <p className="font-bold text-turtle-dark mb-1">Password</p>
+          <p className="font-bold text-turtle-dark mb-1">{t("profile_password")}</p>
           <input
             type="password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
-            placeholder="Current password"
+            placeholder={t("current_password_placeholder")}
             className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-turtle-pink"
           />
           <input
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="New password"
+            placeholder={t("new_password_placeholder")}
             className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-turtle-pink"
           />
           <button
@@ -136,27 +136,27 @@ export default function ProfilePage() {
                 : "bg-turtle-pink text-white hover:bg-turtle-pink-light"
             }`}
           >
-            {passwordSaved ? "Saved! ✓" : "Save"}
+            {passwordSaved ? t("saved_confirmation") : t("checkout_save")}
           </button>
         </div>
 
         {/* My payments */}
         <div className="bg-white rounded-xl border border-gray-100 p-5 mb-4">
-          <p className="font-bold text-turtle-dark mb-3">My payments</p>
-          <p className="text-sm text-turtle-gray-2">You have no saved payment options yet.</p>
+          <p className="font-bold text-turtle-dark mb-3">{t("profile_my_payments")}</p>
+          <p className="text-sm text-turtle-gray-2">{t("profile_no_payment_methods")}</p>
         </div>
 
         {/* Connected accounts */}
         <div className="bg-white rounded-xl border border-gray-100 p-5 mb-4">
-          <p className="font-bold text-turtle-dark mb-3">Connected accounts</p>
+          <p className="font-bold text-turtle-dark mb-3">{t("profile_connected_accounts")}</p>
           <div className="grid grid-cols-2 gap-3">
             <button className="flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-turtle-dark hover:bg-turtle-gray transition-colors">
               <Link2 size={16} className="text-turtle-gray-2 shrink-0" />
-              Facebook — Connect
+              {t("profile_facebook_connect")}
             </button>
             <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-turtle-dark">
               <Link2 size={16} className="text-turtle-green shrink-0" />
-              Google — Connected
+              {t("profile_google_connected")}
               <CheckCircle2 size={14} className="text-turtle-green ml-auto shrink-0" />
             </div>
           </div>
@@ -174,35 +174,35 @@ export default function ProfilePage() {
               </div>
             </div>
           ) : (
-            <p className="text-sm text-turtle-gray-2">No saved addresses</p>
+            <p className="text-sm text-turtle-gray-2">{t("profile_no_addresses")}</p>
           )}
         </div>
 
         {/* Account management */}
         <div className="bg-white rounded-xl border border-gray-100 p-5">
-          <p className="font-bold text-turtle-dark mb-2">Account Management</p>
-          <p className="text-sm text-turtle-gray-2 mb-3">You can delete your account and personal data associated with it.</p>
+          <p className="font-bold text-turtle-dark mb-2">{t("profile_account_management")}</p>
+          <p className="text-sm text-turtle-gray-2 mb-3">{t("profile_delete_account_desc")}</p>
           {!confirmingDelete ? (
             <button
               onClick={() => setConfirmingDelete(true)}
               className="border border-gray-300 text-turtle-dark text-sm font-medium px-4 py-2 rounded-lg hover:bg-turtle-gray transition-colors"
             >
-              Delete my account
+              {t("profile_delete_account_btn")}
             </button>
           ) : (
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-sm text-turtle-dark">Are you sure? This clears your saved profile and favourites.</span>
+              <span className="text-sm text-turtle-dark">{t("profile_delete_confirm_text")}</span>
               <button
                 onClick={handleDeleteAccount}
                 className="bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
               >
-                Yes, delete
+                {t("profile_delete_confirm_yes")}
               </button>
               <button
                 onClick={() => setConfirmingDelete(false)}
                 className="border border-gray-300 text-turtle-dark text-sm font-medium px-4 py-2 rounded-lg hover:bg-turtle-gray transition-colors"
               >
-                Cancel
+                {t("checkout_cancel")}
               </button>
             </div>
           )}

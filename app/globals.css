@@ -46,6 +46,11 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* iPhone home-indicator clearance for fixed bottom bars (requires viewport-fit=cover) */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
 /* Hide scrollbar but keep scrolling */
 .scrollbar-hide {
   -ms-overflow-style: none;
@@ -55,23 +60,18 @@ html {
   display: none;
 }
 
-/* Custom range slider */
+/* Custom range slider — native accent-color renders a properly filled pink
+   track plus a pink thumb consistently across Chrome/Safari/Firefox */
 input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 4px;
-  background: var(--turtle-gray);
-  border-radius: 2px;
-  outline: none;
+  accent-color: var(--turtle-pink);
+  height: 6px;
+  cursor: pointer;
 }
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--turtle-pink);
-  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+input[type="range"]::-moz-range-thumb {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 /* Line clamp utilities */

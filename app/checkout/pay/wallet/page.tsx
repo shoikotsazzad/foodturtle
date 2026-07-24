@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
+import { useLanguage } from "@/context/LanguageContext";
 import { useCart } from "@/context/CartContext";
 import { getPendingOrder, finalizePendingOrder, type PendingOrder } from "@/lib/orders";
 import { ChevronLeft, Wallet, ShieldCheck, CheckCircle2, Loader2 } from "lucide-react";
@@ -15,6 +16,7 @@ type Step = "phone" | "pin" | "processing" | "success";
 
 export default function WalletPaymentPage() {
   const router = useRouter();
+  const { t } = useLanguage();
   const { clearCart } = useCart();
   const [pending, setPending] = useState<PendingOrder | null>(null);
   const [step, setStep] = useState<Step>("phone");
@@ -70,7 +72,7 @@ export default function WalletPaymentPage() {
               href="/checkout"
               className="inline-flex items-center gap-1 text-sm font-semibold text-turtle-dark mb-6 hover:text-turtle-pink"
             >
-              <ChevronLeft size={16} /> Back to checkout
+              <ChevronLeft size={16} /> {t("pay_back_to_checkout")}
             </Link>
           )}
 
@@ -80,8 +82,8 @@ export default function WalletPaymentPage() {
                 <Wallet size={20} className="text-turtle-pink" />
               </div>
               <div>
-                <p className="font-bold text-turtle-dark">Turtle Pay Wallet</p>
-                <p className="text-xs text-turtle-gray-2">Simulated payment, nothing is actually charged</p>
+                <p className="font-bold text-turtle-dark">{t("pay_wallet_heading")}</p>
+                <p className="text-xs text-turtle-gray-2">{t("pay_simulated_note")}</p>
               </div>
             </div>
 
@@ -89,8 +91,8 @@ export default function WalletPaymentPage() {
 
             {step === "phone" && (
               <>
-                <p className="text-sm font-semibold text-turtle-dark mb-1">Enter your wallet number</p>
-                <p className="text-xs text-turtle-gray-2 mb-4">You&apos;ll pay Tk {pending.grandTotal} to Food Turtle</p>
+                <p className="text-sm font-semibold text-turtle-dark mb-1">{t("pay_enter_wallet_number")}</p>
+                <p className="text-xs text-turtle-gray-2 mb-4">{t("pay_will_pay", { amount: `Tk ${pending.grandTotal}` })}</p>
                 <input
                   type="tel"
                   inputMode="numeric"
@@ -103,22 +105,22 @@ export default function WalletPaymentPage() {
                   autoFocus
                 />
                 {attempted && !phoneValid && (
-                  <p className="text-xs text-red-500 mt-1">Enter a valid 11-digit wallet number (e.g. 01812345678)</p>
+                  <p className="text-xs text-red-500 mt-1">{t("pay_wallet_number_invalid")}</p>
                 )}
                 <button
                   onClick={handlePhoneNext}
                   className="w-full bg-turtle-pink text-white py-3 rounded-full text-sm font-bold mt-5 hover:bg-turtle-pink-light transition-colors"
                 >
-                  Next
+                  {t("pay_next")}
                 </button>
               </>
             )}
 
             {step === "pin" && (
               <>
-                <p className="text-sm font-semibold text-turtle-dark mb-1">Enter your PIN</p>
+                <p className="text-sm font-semibold text-turtle-dark mb-1">{t("pay_enter_pin")}</p>
                 <p className="text-xs text-turtle-gray-2 mb-4">
-                  For {phone} · this is a fake PIN, any 5 digits work
+                  {t("pay_pin_for", { phone })}
                 </p>
                 <input
                   type="password"
@@ -132,17 +134,17 @@ export default function WalletPaymentPage() {
                   autoFocus
                 />
                 {attempted && !pinValid && (
-                  <p className="text-xs text-red-500 mt-1 text-center">Enter your 5-digit PIN</p>
+                  <p className="text-xs text-red-500 mt-1 text-center">{t("pay_pin_invalid")}</p>
                 )}
                 <button
                   onClick={handlePinConfirm}
                   className="w-full bg-turtle-pink text-white py-3 rounded-full text-sm font-bold mt-5 hover:bg-turtle-pink-light transition-colors"
                 >
-                  Confirm payment · Tk {pending.grandTotal}
+                  {t("pay_confirm_amount", { amount: `Tk ${pending.grandTotal}` })}
                 </button>
                 <div className="flex items-center gap-1.5 justify-center mt-3 text-turtle-gray-2">
                   <ShieldCheck size={12} />
-                  <span className="text-[11px]">Simulated payment, no real money moves</span>
+                  <span className="text-[11px]">{t("pay_wallet_no_money_note")}</span>
                 </div>
               </>
             )}
@@ -150,22 +152,22 @@ export default function WalletPaymentPage() {
             {step === "processing" && (
               <div className="py-10 text-center">
                 <Loader2 size={36} className="animate-spin text-turtle-pink mx-auto mb-4" />
-                <p className="text-sm font-semibold text-turtle-dark">Processing your payment...</p>
-                <p className="text-xs text-turtle-gray-2 mt-1">Please don&apos;t close this window</p>
+                <p className="text-sm font-semibold text-turtle-dark">{t("pay_processing")}</p>
+                <p className="text-xs text-turtle-gray-2 mt-1">{t("pay_dont_close")}</p>
               </div>
             )}
 
             {step === "success" && (
               <div className="py-6 text-center">
                 <CheckCircle2 size={48} className="text-turtle-green mx-auto mb-4" />
-                <p className="text-lg font-bold text-turtle-dark mb-1">Payment successful</p>
-                <p className="text-sm text-turtle-gray-2 mb-1">Tk {pending.grandTotal} paid via Turtle Pay Wallet</p>
-                <p className="text-xs text-turtle-gray-2 mb-6">Order {orderId}</p>
+                <p className="text-lg font-bold text-turtle-dark mb-1">{t("pay_success")}</p>
+                <p className="text-sm text-turtle-gray-2 mb-1">{t("pay_wallet_paid", { amount: `Tk ${pending.grandTotal}` })}</p>
+                <p className="text-xs text-turtle-gray-2 mb-6">{t("pay_order_id", { id: orderId })}</p>
                 <button
                   onClick={() => router.replace("/order-placed")}
                   className="w-full bg-turtle-pink text-white py-3 rounded-full text-sm font-bold hover:bg-turtle-pink-light transition-colors"
                 >
-                  Continue
+                  {t("pay_continue")}
                 </button>
               </div>
             )}

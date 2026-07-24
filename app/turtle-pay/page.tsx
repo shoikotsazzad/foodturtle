@@ -9,7 +9,7 @@ import { Settings, Gift, CreditCard, Plus } from "lucide-react";
 export default function TurtlePayPage() {
   return (
     <>
-      <PageTitle title="Turtle Pay — Food Turtle" />
+      <PageTitle title="Turtle Pay · Food Turtle" />
       <Navbar />
       <main className="max-w-4xl mx-auto w-full px-4 py-6 pb-20 sm:pb-6">
         <h1 className="text-2xl font-bold text-turtle-dark mb-6">Turtle Pay</h1>
@@ -45,7 +45,7 @@ export default function TurtlePayPage() {
         </div>
 
         <p className="text-xs text-turtle-gray-2 mt-6 italic">
-          Your Turtle Pay balance stays at Tk 0 forever — refunds are only issued for orders that were placed, and no order has ever actually arrived.
+          Your Turtle Pay balance stays at Tk 0 forever. Refunds are only issued for orders that were placed, and no order has ever actually arrived.
         </p>
       </main>
       <Footer />

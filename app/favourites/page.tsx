@@ -19,7 +19,7 @@ export default function FavouritesPage() {
 
   return (
     <>
-      <PageTitle title="My Favourites — Food Turtle" />
+      <PageTitle title="My Favourites · Food Turtle" />
       <Navbar />
       <main className="max-w-7xl mx-auto w-full px-4 py-6 pb-20 sm:pb-6">
         <h1 className="text-3xl font-bold text-turtle-dark mb-6">{t("favourites_title")}</h1>

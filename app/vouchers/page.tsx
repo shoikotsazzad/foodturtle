@@ -20,7 +20,7 @@ export default function VouchersPage() {
 
   return (
     <>
-      <PageTitle title="Vouchers — Food Turtle" />
+      <PageTitle title="Vouchers · Food Turtle" />
       <Navbar />
       <main className="max-w-4xl mx-auto w-full px-4 py-6 pb-20 sm:pb-6">
         <h1 className="text-2xl font-bold text-turtle-dark mb-6">Vouchers &amp; offers</h1>

@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import Sidebar, { FilterState } from "@/components/layout/Sidebar";
+import MobileFilterSheet from "@/components/layout/MobileFilterSheet";
 import RestaurantGrid from "@/components/home/RestaurantGrid";
 import CuisineGrid from "@/components/home/CuisineGrid";
 import CartBottomBar from "@/components/cart/CartBottomBar";
@@ -28,7 +29,7 @@ export default function PickupPage() {
 
   return (
     <>
-      <PageTitle title="Food Turtle — Pick-up" />
+      <PageTitle title="Food Turtle · Pick-up" />
       <Navbar />
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6 pb-20 sm:pb-6">
         <div className="flex gap-6">
@@ -56,6 +57,10 @@ export default function PickupPage() {
                   {t("pickup_show_map")}
                 </button>
               </div>
+            </div>
+
+            <div className="lg:hidden">
+              <MobileFilterSheet filters={filters} onChange={setFilters} />
             </div>
 
             <CuisineGrid onFilter={setCuisineFilter} active={cuisineFilter} />
