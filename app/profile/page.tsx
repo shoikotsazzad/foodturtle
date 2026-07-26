@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
 import { useLanguage } from "@/context/LanguageContext";
@@ -209,7 +208,6 @@ export default function ProfilePage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

@@ -18,7 +18,7 @@ export default function CartBottomBar() {
   return (
     <Link
       href="/checkout"
-      className="fixed bottom-[calc(4rem+env(safe-area-inset-bottom))] sm:bottom-4 left-4 right-4 max-w-lg mx-auto z-30 bg-turtle-pink text-white rounded-full px-4 py-3 flex items-center justify-between shadow-xl hover:bg-turtle-pink-light transition-colors"
+      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-4 right-4 max-w-lg mx-auto z-30 bg-turtle-pink text-white rounded-full px-4 py-3 flex items-center justify-between shadow-xl hover:bg-turtle-pink-light transition-colors"
     >
       <div className="flex items-center gap-2">
         <div className="bg-white/20 rounded-full p-1.5">

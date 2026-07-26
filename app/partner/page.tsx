@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
 import { Handshake, CheckCircle2, TrendingUp, Users, ShieldCheck } from "lucide-react";
@@ -138,7 +137,6 @@ export default function PartnerPage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Plus, Minus, ShoppingCart, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import CartBottomBar from "@/components/cart/CartBottomBar";
 import { useLanguage } from "@/context/LanguageContext";
@@ -87,12 +86,12 @@ function ProductCard({ product }: { product: TmProduct }) {
 
   return (
     <Link href={`/turtlemart/${product.id}`} className="block group">
-      <div className="bg-white rounded-xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-shadow h-full">
-        <div className="relative aspect-square bg-white p-3">
+      <div className="bg-white rounded-xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+        <div className="relative w-full aspect-square bg-turtle-gray">
           <img
             src={product.image}
             alt={name}
-            className="w-full h-full object-contain group-hover:scale-[1.05] transition-transform duration-200"
+            className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-200"
           />
           {product.isOffer && (
             <span className="absolute top-1.5 left-1.5 bg-turtle-pink text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
@@ -127,7 +126,7 @@ function ProductCard({ product }: { product: TmProduct }) {
             </button>
           )}
         </div>
-        <div className="p-2.5 flex flex-col flex-1">
+        <div className="p-2.5 flex flex-col h-[108px] overflow-hidden">
           <div className="flex items-baseline gap-1.5">
             <p className="text-sm font-bold text-turtle-pink">Tk {product.price}</p>
             {product.save > 0 && (
@@ -151,7 +150,7 @@ function ProductSection({ title, products }: { title: string; products: TmProduc
   return (
     <section className="mb-8" id={`section-${title.replace(/\s+/g, "-")}`}>
       <h2 className="text-lg font-bold text-turtle-dark mb-3">{title}</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3">
+      <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 sm:gap-3">
         {products.map((p) => <ProductCard key={p.id} product={p} />)}
       </div>
     </section>
@@ -434,7 +433,6 @@ export default function TurtlemartPage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
       <CartBottomBar />
     </>
   );

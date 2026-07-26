@@ -4,7 +4,6 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
 import { ChevronLeft, Wallet, CreditCard } from "lucide-react";
@@ -142,7 +141,6 @@ export default function TurtleProPaymentPage() {
         </Suspense>
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

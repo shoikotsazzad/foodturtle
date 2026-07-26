@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import Sidebar, { FilterState } from "@/components/layout/Sidebar";
 import MobileFilterSheet from "@/components/layout/MobileFilterSheet";
@@ -12,6 +12,8 @@ import CartBottomBar from "@/components/cart/CartBottomBar";
 import PageTitle from "@/components/shared/PageTitle";
 import { useRestaurants } from "@/lib/hooks";
 import { useLanguage } from "@/context/LanguageContext";
+
+const RestaurantMapModal = dynamic(() => import("@/components/pickup/RestaurantMapModal"), { ssr: false });
 
 const DEFAULT_FILTERS: FilterState = {
   sort: "relevance",
@@ -26,6 +28,7 @@ export default function PickupPage() {
   const { restaurants, loading } = useRestaurants();
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [cuisineFilter, setCuisineFilter] = useState("");
+  const [showMap, setShowMap] = useState(false);
 
   return (
     <>
@@ -53,7 +56,10 @@ export default function PickupPage() {
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <div className="text-4xl mb-2">📍</div>
                 <h2 className="text-lg font-bold text-turtle-dark">{t("pickup_explore")}</h2>
-                <button className="mt-2 bg-turtle-pink text-white text-sm px-4 py-1.5 rounded-full font-medium">
+                <button
+                  onClick={() => setShowMap(true)}
+                  className="mt-2 bg-turtle-pink text-white text-sm px-4 py-1.5 rounded-full font-medium hover:bg-turtle-pink-light transition-colors"
+                >
                   {t("pickup_show_map")}
                 </button>
               </div>
@@ -75,8 +81,8 @@ export default function PickupPage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
       <CartBottomBar />
+      {showMap && <RestaurantMapModal restaurants={restaurants} onClose={() => setShowMap(false)} />}
     </>
   );
 }

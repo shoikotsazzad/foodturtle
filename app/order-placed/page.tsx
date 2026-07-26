@@ -15,10 +15,13 @@ import {
   Truck,
   Smile,
   BookOpen,
+  RotateCcw,
 } from "lucide-react";
 import PageTitle from "@/components/shared/PageTitle";
+import TurtleReceipt from "@/components/order-placed/TurtleReceipt";
 import { useLanguage } from "@/context/LanguageContext";
 import { useUser } from "@/context/UserContext";
+import { buildJokeQueue, pickRider, type Rider } from "@/lib/order-placed-data";
 import type { CartItem } from "@/types";
 
 interface LastOrder {
@@ -31,19 +34,6 @@ interface LastOrder {
   tip?: number;
   paymentMethod?: string;
 }
-
-const STATUS_KEYS = [
-  "order_placed_status_1",
-  "order_placed_status_2",
-  "order_placed_status_3",
-  "order_placed_status_4",
-  "order_placed_status_5",
-  "order_placed_status_6",
-  "order_placed_status_7",
-  "order_placed_status_8",
-  "order_placed_status_9",
-  "order_placed_status_10",
-] as const;
 
 const SECONDARY_STATS = [
   { key: "order_placed_p4_stat_dishes", icon: Droplets },
@@ -76,8 +66,11 @@ export default function OrderPlacedPage() {
   const [showConfirmToast, setShowConfirmToast] = useState(true);
   const [delivered, setDelivered] = useState(false);
   const [revealed, setRevealed] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [orderId, setOrderId] = useState("");
+  const [rider] = useState<Rider>(() => pickRider());
+  const [jokeQueue] = useState(() => buildJokeQueue());
+  const [jokeIndex, setJokeIndex] = useState(0);
+  const [jokeVisible, setJokeVisible] = useState(true);
 
   // Load the just-placed order (random fallback ID only ever generated client-side)
   useEffect(() => {
@@ -127,6 +120,19 @@ export default function OrderPlacedPage() {
     if (remaining === 0) setDelivered(true);
   }, [remaining]);
 
+  // Rotate through the shuffled joke queue every 4s, with a brief fade between them
+  useEffect(() => {
+    if (delivered) return;
+    const interval = setInterval(() => {
+      setJokeVisible(false);
+      setTimeout(() => {
+        setJokeIndex((i) => Math.min(i + 1, jokeQueue.length - 1));
+        setJokeVisible(true);
+      }, 300);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [delivered, jokeQueue.length]);
+
   useEffect(() => {
     if (!delivered) return;
     const t = setTimeout(() => setRevealed(true), 1600);
@@ -138,7 +144,7 @@ export default function OrderPlacedPage() {
   const mm = String(Math.floor(remaining / 60)).padStart(2, "0");
   const ss = String(remaining % 60).padStart(2, "0");
   const stepsDone = STEP_THRESHOLDS.filter((th) => elapsed >= th).length;
-  const statusIndex = Math.min(STATUS_KEYS.length - 1, Math.floor(elapsed / 12));
+  const inPhase3 = remaining <= 15 && remaining > 0;
   const turtleLeft = RESTAURANT_POS.left + (HOME_POS.left - RESTAURANT_POS.left) * progressFrac;
   const turtleTop = RESTAURANT_POS.top + (HOME_POS.top - RESTAURANT_POS.top) * progressFrac;
   const ringOffset = RING_CIRCUMFERENCE * (1 - progressFrac);
@@ -146,23 +152,12 @@ export default function OrderPlacedPage() {
   const firstItem = order?.items?.[0];
   const orderTotal = order?.total ?? 0;
   const reorderHref = firstItem?.restaurant_slug ? `/restaurant/${firstItem.restaurant_slug}` : "/";
-
-  const handleShare = async () => {
-    const shareMessage = t("order_placed_p4_share_text", { amount: orderTotal });
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share({ text: shareMessage });
-        return;
-      } catch {
-        // fall through to clipboard
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(shareMessage);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {}
-  };
+  const riderName = lang === "bn" ? rider.name_bn : rider.name_en;
+  const riderTagline = lang === "bn" ? rider.tagline_bn : rider.tagline_en;
+  const riderTitle = lang === "bn" ? rider.title_bn : rider.title_en;
+  const riderPhase3 = lang === "bn" ? rider.phase3_bn : rider.phase3_en;
+  const currentJoke = jokeQueue[jokeIndex];
+  const jokeText = currentJoke ? (lang === "bn" ? currentJoke.bn : currentJoke.en) : "";
 
   return (
     <div className="min-h-screen bg-turtle-gray/40">
@@ -172,8 +167,8 @@ export default function OrderPlacedPage() {
         <div className="px-4 py-6">
           <div className="max-w-md mx-auto">
             <div className="flex items-center gap-2 mb-4">
-              <img src="/logo.png" alt="" className="w-6 h-6 object-contain" />
-              <span className="font-extrabold text-turtle-dark text-sm tracking-tight">foodturtle</span>
+              <img src="/logo.png" alt="" className="w-8 h-8 object-contain" />
+              <span className="font-bold text-xl tracking-tight lowercase" style={{ color: "#FF2B85" }}>foodturtle</span>
             </div>
 
             {showConfirmToast && (
@@ -275,13 +270,18 @@ export default function OrderPlacedPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-4">
+              <div className="px-4 pt-3">
+                <span className="inline-block bg-turtle-pink-bg text-turtle-pink text-[10px] font-bold px-2.5 py-1 rounded-full">
+                  {riderTitle}
+                </span>
+              </div>
+              <div className="flex items-center gap-3 p-4 pt-2">
                 <div className="w-10 h-10 rounded-full bg-turtle-pink-bg flex items-center justify-center shrink-0 overflow-hidden p-2">
                   <img src="/logo.png" alt="" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm text-turtle-dark truncate">{t("order_placed_p2_rider_name")}</p>
-                  <p className="text-xs text-turtle-gray-2 truncate">{t("order_placed_p2_rider_tagline")}</p>
+                  <p className="font-semibold text-sm text-turtle-dark truncate">{riderName}</p>
+                  <p className="text-xs text-turtle-gray-2 truncate">{riderTagline}</p>
                 </div>
                 <div className="w-9 h-9 rounded-full bg-turtle-pink-bg flex items-center justify-center shrink-0">
                   <Phone size={14} className="text-turtle-pink" />
@@ -289,10 +289,13 @@ export default function OrderPlacedPage() {
               </div>
             </div>
 
-            {/* Rotating status strip */}
+            {/* Rotating joke strip, replaced by the rider's own line once the turtle slows down near the end */}
             <div className="bg-amber-50 border border-amber-100 rounded-2xl px-4 py-3 mb-4 text-center">
-              <p key={statusIndex} className="text-sm text-amber-800 animate-fade-in">
-                {t(STATUS_KEYS[statusIndex])}
+              <p
+                className="text-sm text-amber-800 transition-opacity duration-300"
+                style={{ opacity: jokeVisible ? 1 : 0 }}
+              >
+                {inPhase3 ? riderPhase3 : jokeText}
               </p>
             </div>
 
@@ -388,18 +391,15 @@ export default function OrderPlacedPage() {
             </div>
 
             <div className="space-y-2 mt-6">
-              <button
-                onClick={handleShare}
-                className="w-full bg-turtle-pink text-white py-3 rounded-full text-sm font-bold hover:bg-turtle-pink-light transition-colors animate-fade-up"
-                style={{ animationDelay: "900ms" }}
-              >
-                {copied ? t("order_placed_p4_copied") : t("order_placed_p4_share_btn")}
-              </button>
+              <div className="animate-fade-up" style={{ animationDelay: "900ms" }}>
+                <TurtleReceipt orderTotal={orderTotal} orderId={orderId} riderName={riderName} lang={lang} />
+              </div>
               <Link
                 href={reorderHref}
-                className="block w-full text-center border-2 border-turtle-pink text-turtle-pink py-3 rounded-full text-sm font-bold hover:bg-turtle-pink-bg transition-colors animate-fade-up"
+                className="w-full flex items-center justify-center gap-1.5 text-center border-2 border-turtle-pink text-turtle-pink py-3 rounded-full text-sm font-bold hover:bg-turtle-pink-bg transition-colors animate-fade-up"
                 style={{ animationDelay: "1000ms" }}
               >
+                <RotateCcw size={16} />
                 {t("order_placed_p4_reorder_btn")}
               </Link>
               <Link
@@ -407,8 +407,8 @@ export default function OrderPlacedPage() {
                 className="w-full flex items-center justify-center gap-1.5 text-center text-turtle-gray-2 py-3 rounded-full text-sm font-semibold hover:bg-turtle-gray transition-colors animate-fade-up"
                 style={{ animationDelay: "1100ms" }}
               >
+                <HomeIcon size={16} />
                 {t("order_placed_p4_stay_btn")}
-                <img src="/logo.png" alt="" className="w-4 h-4 object-contain" />
               </Link>
             </div>
           </div>

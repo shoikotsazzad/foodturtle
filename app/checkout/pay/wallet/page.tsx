@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
 import { useLanguage } from "@/context/LanguageContext";
@@ -175,7 +174,6 @@ export default function WalletPaymentPage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

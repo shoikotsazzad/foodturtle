@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Plus, Minus, ShoppingCart, Star, Clock, Shield } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
 import { useCart } from "@/context/CartContext";
@@ -31,7 +30,6 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
           </Link>
         </div>
         <Footer />
-        <MobileNav />
       </>
     );
   }
@@ -201,7 +199,6 @@ export default function TurtlemartProductPage({ params }: { params: Promise<{ pr
         )}
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

@@ -46,13 +46,26 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
   const [placingOrder, setPlacingOrder] = useState(false);
   const [attemptedSubmit, setAttemptedSubmit] = useState(false);
+  const [appliedVoucherId, setAppliedVoucherId] = useState<string | null>(null);
 
   const personalRef = useRef<HTMLDivElement>(null);
 
   const SERVICE_FEE = 5;
   const PRIORITY_FEE = 37;
   const extraFee = deliveryOption === "priority" ? PRIORITY_FEE : 0;
-  const grandTotal = total + SERVICE_FEE + tip + extraFee;
+
+  const appliedVoucher = vouchers.find((v) => v.id === appliedVoucherId) ?? null;
+  const voucherDiscount = appliedVoucher
+    ? appliedVoucher.discount_type === "percent"
+      ? Math.round(total * (appliedVoucher.discount_value / 100))
+      : appliedVoucher.discount_value
+    : 0;
+
+  const grandTotal = Math.max(0, total + SERVICE_FEE + tip + extraFee - voucherDiscount);
+
+  const toggleVoucher = (voucherId: string) => {
+    setAppliedVoucherId((current) => (current === voucherId ? null : voucherId));
+  };
 
   const emailValid = /^\S+@\S+\.\S+$/.test(email.trim());
   const firstNameValid = firstName.trim().length > 0;
@@ -159,14 +172,14 @@ export default function CheckoutPage() {
     <>
       <PageTitle title="Checkout · Food Turtle" />
       <Navbar />
-      <main className="max-w-4xl mx-auto px-4 py-6 pb-28 lg:pb-6">
+      <main className="max-w-4xl mx-auto px-6 lg:px-4 py-6 pb-28 lg:pb-6">
         <h1 className="text-2xl font-bold text-turtle-dark mb-6">{t("checkout_title")}</h1>
 
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Left column */}
           <div className="flex-1 space-y-4">
             {/* Delivery Address */}
-            <section className="bg-white rounded-xl border border-gray-100 p-4">
+            <section className="bg-white rounded-xl border border-gray-100 p-4 shadow-sm lg:shadow-none">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="font-bold text-turtle-dark">{t("checkout_delivery_address")}</h2>
                 <button
@@ -209,11 +222,11 @@ export default function CheckoutPage() {
             </section>
 
             {/* Delivery Options */}
-            <section className="bg-white rounded-xl border border-gray-100 p-4">
+            <section className="bg-white rounded-xl border border-gray-100 p-4 shadow-sm lg:shadow-none">
               <h2 className="font-bold text-turtle-dark mb-3">{t("checkout_delivery_options")}</h2>
               <div className="space-y-2">
                 <label className={`flex items-center justify-between p-3 rounded-xl border-2 cursor-pointer transition-colors ${
-                  deliveryOption === "standard" ? "border-turtle-pink bg-turtle-pink-bg" : "border-gray-100"
+                  deliveryOption === "standard" ? "border-turtle-pink bg-turtle-pink-bg" : "border-gray-200"
                 }`}>
                   <div className="flex items-center gap-3">
                     <input
@@ -230,7 +243,7 @@ export default function CheckoutPage() {
                   </div>
                 </label>
                 <label className={`flex items-center justify-between p-3 rounded-xl border-2 cursor-pointer transition-colors ${
-                  deliveryOption === "priority" ? "border-turtle-pink bg-turtle-pink-bg" : "border-gray-100"
+                  deliveryOption === "priority" ? "border-turtle-pink bg-turtle-pink-bg" : "border-gray-200"
                 }`}>
                   <div className="flex items-center gap-3">
                     <input
@@ -253,7 +266,7 @@ export default function CheckoutPage() {
             </section>
 
             {/* Personal Details */}
-            <section ref={personalRef} className="bg-white rounded-xl border border-gray-100 p-4">
+            <section ref={personalRef} className="bg-white rounded-xl border border-gray-100 p-4 shadow-sm lg:shadow-none">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="font-bold text-turtle-dark">{t("checkout_personal_details")}</h2>
                 {!showPersonalDetails && (
@@ -350,7 +363,7 @@ export default function CheckoutPage() {
             </section>
 
             {/* Tip your rider */}
-            <section className="bg-white rounded-xl border border-gray-100 p-4">
+            <section className="bg-white rounded-xl border border-gray-100 p-4 shadow-sm lg:shadow-none">
               <h2 className="font-bold text-turtle-dark mb-1">{t("checkout_tip_title")}</h2>
               <p className="text-xs text-turtle-gray-2 mb-3">{t("checkout_tip_subtitle")}</p>
               <div className="flex flex-wrap gap-2 mb-3">
@@ -383,7 +396,7 @@ export default function CheckoutPage() {
             </section>
 
             {/* Payment method */}
-            <section className="bg-white rounded-xl border border-gray-100 p-4">
+            <section className="bg-white rounded-xl border border-gray-100 p-4 shadow-sm lg:shadow-none">
               <h2 className="font-bold text-turtle-dark mb-3">Payment method</h2>
               <div className="space-y-2">
                 {(
@@ -415,11 +428,11 @@ export default function CheckoutPage() {
               </div>
             </section>
 
-            {/* Place order button */}
+            {/* Place order button — desktop only; mobile relies on the single sticky footer CTA below */}
             <button
               onClick={handlePlaceOrder}
               disabled={placingOrder}
-              className="w-full bg-turtle-pink text-white py-4 rounded-full text-base font-bold hover:bg-turtle-pink-light transition-colors disabled:opacity-70"
+              className="hidden lg:block w-full bg-turtle-pink text-white py-4 rounded-full text-base font-bold hover:bg-turtle-pink-light transition-colors disabled:opacity-70"
             >
               {placingOrder
                 ? "Placing order..."
@@ -454,11 +467,11 @@ export default function CheckoutPage() {
                       {group.items.map((item) => {
                         const name = lang === "bn" ? item.name_bn : item.name_en;
                         return (
-                          <div key={item.id} className="flex justify-between text-sm">
-                            <span className="text-turtle-dark">
+                          <div key={item.id} className="flex justify-between gap-2 text-sm">
+                            <span className="text-turtle-dark truncate min-w-0">
                               {item.quantity} × {name}
                             </span>
-                            <span className="text-turtle-dark font-medium">Tk {item.price * item.quantity}</span>
+                            <span className="text-turtle-dark font-medium shrink-0">Tk {item.price * item.quantity}</span>
                           </div>
                         );
                       })}
@@ -474,29 +487,48 @@ export default function CheckoutPage() {
                     <p className="text-xs font-bold text-turtle-dark">{t("checkout_vouchers")}</p>
                     <button className="text-xs text-turtle-pink">{t("checkout_view_all")}</button>
                   </div>
-                  <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-                    {vouchers.map((v) => (
-                      <div key={v.id} className="shrink-0 w-52 border border-gray-200 rounded-xl p-3">
-                        <div className="flex items-center gap-2 mb-1.5">
-                          <Tag size={12} className="text-turtle-pink" />
-                          <span className="text-xs font-bold text-turtle-dark">{v.code}</span>
-                          {v.discount_type === "percent" && (
-                            <span className="text-xs text-turtle-pink">{v.discount_value}% off</span>
-                          )}
+                  <div className="flex flex-col gap-2">
+                    {vouchers.map((v, i) => {
+                      const eligible = total >= v.min_order;
+                      const isApplied = appliedVoucherId === v.id;
+                      return (
+                        <div
+                          key={v.id}
+                          className={`border rounded-xl p-3 transition-colors ${i > 0 ? "hidden lg:block" : ""} ${
+                            isApplied ? "border-turtle-pink bg-turtle-pink-bg" : "border-gray-200"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2 mb-1.5">
+                            <Tag size={12} className="text-turtle-pink" />
+                            <span className="text-xs font-bold text-turtle-dark">{v.code}</span>
+                            <span className="text-xs text-turtle-pink">
+                              {v.discount_type === "percent" ? `${v.discount_value}% off` : `Tk ${v.discount_value} off`}
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-turtle-gray-2 mb-2">
+                            {eligible ? t("checkout_voucher_eligible") : t("checkout_voucher_add_more", { amount: Math.max(0, v.min_order - total) })}
+                          </p>
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] text-turtle-gray-2">
+                              Min. Tk {v.min_order} · {v.expires_at}
+                            </span>
+                            <button
+                              onClick={() => toggleVoucher(v.id)}
+                              disabled={!eligible}
+                              className={`text-xs font-medium ${
+                                !eligible
+                                  ? "text-turtle-gray-2 cursor-not-allowed"
+                                  : isApplied
+                                  ? "text-turtle-green"
+                                  : "text-turtle-pink hover:underline"
+                              }`}
+                            >
+                              {isApplied ? `✓ ${t("checkout_voucher_applied")}` : t("checkout_voucher_apply")}
+                            </button>
+                          </div>
                         </div>
-                        <p className="text-[10px] text-turtle-gray-2 mb-2">
-                          {t("checkout_voucher_add_more", { amount: Math.max(0, v.min_order - total) })}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-turtle-gray-2">
-                            Min. Tk {v.min_order} · {v.expires_at}
-                          </span>
-                          <button className="text-xs text-turtle-pink font-medium">
-                            {t("checkout_voucher_apply")}
-                          </button>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -521,6 +553,14 @@ export default function CheckoutPage() {
                   <span className="text-turtle-gray-2">Service fee</span>
                   <span className="text-turtle-dark font-medium">Tk {SERVICE_FEE}</span>
                 </div>
+                {appliedVoucher && voucherDiscount > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-turtle-gray-2">
+                      {t("checkout_voucher_discount_label")} ({appliedVoucher.code})
+                    </span>
+                    <span className="text-turtle-green font-medium">- Tk {voucherDiscount}</span>
+                  </div>
+                )}
                 {tip > 0 && (
                   <div className="flex justify-between text-sm">
                     <span className="text-turtle-gray-2">Tip</span>
@@ -540,7 +580,7 @@ export default function CheckoutPage() {
               <button
                 onClick={handlePlaceOrder}
                 disabled={placingOrder}
-                className="w-full bg-turtle-pink text-white py-3 rounded-full text-sm font-bold mt-4 hover:bg-turtle-pink-light transition-colors disabled:opacity-50"
+                className="hidden lg:block w-full bg-turtle-pink text-white py-3 rounded-full text-sm font-bold mt-4 hover:bg-turtle-pink-light transition-colors disabled:opacity-50"
               >
                 {placingOrder ? "Placing..." : paymentMethod === "cod" ? t("checkout_place_order") : "Continue to payment"}
               </button>
@@ -550,7 +590,7 @@ export default function CheckoutPage() {
       </main>
 
       {/* Sticky mobile CTA — desktop already has an in-flow/sticky summary button */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-100 px-4 py-3 safe-area-pb">
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-gray-100 px-6 pt-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="text-[10px] text-turtle-gray-2 leading-none mb-0.5">Total</p>

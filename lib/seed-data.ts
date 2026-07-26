@@ -771,30 +771,6 @@ export const SEED_VOUCHERS: Omit<FakeVoucher, "id">[] = [
     expires_at: "2025-12-31",
     is_active: true,
   },
-  {
-    code: "NBPLC100",
-    discount_type: "percent",
-    discount_value: 25,
-    min_order: 399,
-    expires_at: "2025-06-30",
-    is_active: true,
-  },
-  {
-    code: "CASHLESS",
-    discount_type: "percent",
-    discount_value: 7,
-    min_order: 1499,
-    expires_at: "2026-07-31",
-    is_active: true,
-  },
-  {
-    code: "DEALNAO",
-    discount_type: "percent",
-    discount_value: 30,
-    min_order: 450,
-    expires_at: "2025-12-31",
-    is_active: true,
-  },
 ];
 
 export const FAKE_REVIEWS_BY_SLUG: Record<string, { author: string; rating: number; text: string; date: string; is_top_reviewer: boolean }[]> = {

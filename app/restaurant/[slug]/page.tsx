@@ -4,7 +4,6 @@ import { use, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Heart, Star, Info, ChevronRight, Search, Plus, Minus, Flame } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import CartPanel from "@/components/restaurant/CartPanel";
 import CartBottomBar from "@/components/cart/CartBottomBar";
@@ -406,7 +405,6 @@ export default function RestaurantPage({ params }: { params: Promise<{ slug: str
         </div>
       </main>
       <Footer />
-      <MobileNav />
       <CartBottomBar />
     </>
   );

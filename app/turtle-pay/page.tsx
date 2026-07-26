@@ -1,7 +1,6 @@
 "use client";
 
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
 import { Settings, Gift, CreditCard, Plus } from "lucide-react";
@@ -49,7 +48,6 @@ export default function TurtlePayPage() {
         </p>
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

@@ -25,6 +25,7 @@
   "user_menu_rewards": "টার্টেল রিওয়ার্ডস",
   "user_menu_help": "সাহায্য কেন্দ্র",
   "user_menu_logout": "লগআউট",
+  "nav_language_label": "ভাষা",
 
   "address_modal_title": "আপনার ঠিকানা কী?",
   "address_modal_subtitle": "আমরা দেখব টার্টেলমার্ট আপনার এলাকায় ডেলিভারি করে কিনা",
@@ -36,6 +37,7 @@
   "address_modal_add": "ঠিকানা যোগ করুন",
 
   "filter_title": "ফিল্টার",
+  "filter_show_results": "ফলাফল দেখুন",
   "filter_sort_by": "সাজান",
   "filter_sort_relevance": "প্রাসঙ্গিকতা",
   "filter_sort_fastest": "দ্রুততম ডেলিভারি",
@@ -210,7 +212,10 @@
   "checkout_vouchers": "আপনার অর্ডারের ভাউচার",
   "checkout_view_all": "সব দেখুন",
   "checkout_voucher_apply": "প্রয়োগ করুন",
+  "checkout_voucher_applied": "প্রয়োগ হয়েছে",
   "checkout_voucher_add_more": "এই ভাউচার ব্যবহার করতে আরো {amount} টাকা যোগ করুন",
+  "checkout_voucher_eligible": "এই অর্ডারের জন্য প্রযোজ্য",
+  "checkout_voucher_discount_label": "ভাউচার ছাড়",
   "checkout_voucher_left": "বাকি",
 
   "pay_back_to_checkout": "চেকআউটে ফিরে যান",
@@ -254,7 +259,7 @@
   "order_placed_p1_subtitle": "একটু অপেক্ষা করুন, খাবার আসছে 🎉",
   "order_placed_p1_order_label": "অর্ডার",
 
-  "order_placed_p2_heading": "🐢 রাস্তায় আছে... মনে হয়।",
+  "order_placed_p2_heading": "রাস্তায় আছে... মনে হয়।",
   "order_placed_p2_paid_label": "পেমেন্ট হয়েছে",
   "order_placed_p2_rider_name": "রহিম ভাই (টার্টেল এক্সপ্রেস)",
   "order_placed_p2_rider_tagline": "আস্তে আস্তে... কিন্তু আসবেই... হয়তো",
@@ -285,8 +290,8 @@
   "order_placed_p4_stat_regrets": "০ আফসোস",
   "order_placed_p4_stat_story": "বলার মতো ১টি দারুণ গল্প",
   "order_placed_p4_tagline": "একমাত্র ডেলিভারি অ্যাপ যা কখনো হতাশ করে না, কারণ আমরা কখনো ডেলিভারি দিই না।",
-  "order_placed_p4_share_btn": "শেয়ার করুন 📤",
-  "order_placed_p4_reorder_btn": "আবার অর্ডার করুন 🔄",
+  "order_placed_p4_share_btn": "শেয়ার করুন",
+  "order_placed_p4_reorder_btn": "আবার অর্ডার করুন",
   "order_placed_p4_stay_btn": "আমাদের সাথে থাকুন",
   "order_placed_p4_share_text": "আমি Food Turtle তে অর্ডার দিলাম আর খাবার আসলো না 😂\n৳{amount} বাঁচলো!\nতুমিও ট্রাই করো 👇\nfoodturtle.com 🐢",
   "order_placed_p4_copied": "কপি হয়েছে!",

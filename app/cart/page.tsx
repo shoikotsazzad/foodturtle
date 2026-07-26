@@ -4,7 +4,6 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { Trash2, Plus, Minus } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
 import type { CartItem } from "@/types";
@@ -29,7 +28,7 @@ export default function CartPage() {
   return (
     <>
       <Navbar />
-      <main className="max-w-2xl mx-auto px-4 py-6 pb-24">
+      <main className="max-w-2xl lg:max-w-4xl mx-auto px-4 py-6 pb-24">
         <h1 className="text-xl font-bold text-turtle-dark mb-4">{t("cart_heading")}</h1>
         {itemCount === 0 ? (
           <div className="text-center py-20">
@@ -46,16 +45,16 @@ export default function CartPage() {
               {groups.map((group) => (
                 <div key={group.name}>
                   <p className="text-xs font-bold text-turtle-gray-2 uppercase tracking-wide mb-2">{group.name}</p>
-                  <div className="space-y-3">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                     {group.items.map((item) => {
                       const name = lang === "bn" ? item.name_bn : item.name_en;
                       return (
-                        <div key={item.id} className="bg-white rounded-xl border border-gray-100 p-3 flex gap-3">
+                        <div key={item.id} className="bg-white rounded-xl border border-gray-100 p-3 flex gap-3 min-w-0">
                           {item.image && (
                             <img src={item.image} alt={name} className="w-16 h-16 rounded-lg object-cover shrink-0" />
                           )}
-                          <div className="flex-1">
-                            <p className="font-semibold text-turtle-dark text-sm">{name}</p>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-semibold text-turtle-dark text-sm line-clamp-2">{name}</p>
                             <p className="text-sm font-bold text-turtle-pink">Tk {item.price}</p>
                           </div>
                           <div className="flex flex-col items-end gap-2">
@@ -114,7 +113,6 @@ export default function CartPage() {
           </>
         )}
       </main>
-      <MobileNav />
     </>
   );
 }

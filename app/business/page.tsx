@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
 import { Building2, CheckCircle2, Receipt, Clock, Users } from "lucide-react";
@@ -149,7 +148,6 @@ export default function BusinessPage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
 import { Briefcase, MapPin, ChevronDown, Award } from "lucide-react";
@@ -113,7 +112,6 @@ export default function CareersPage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

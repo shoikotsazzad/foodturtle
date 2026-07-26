@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import RestaurantCard from "@/components/home/RestaurantCard";
 import PageTitle from "@/components/shared/PageTitle";
@@ -44,7 +43,6 @@ export default function FavouritesPage() {
         )}
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

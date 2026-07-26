@@ -25,6 +25,7 @@
   "user_menu_rewards": "Turtle Rewards",
   "user_menu_help": "Help Center",
   "user_menu_logout": "Logout",
+  "nav_language_label": "Language",
 
   "address_modal_title": "What's your address?",
   "address_modal_subtitle": "We'll check if Turtlemart delivers to your area",
@@ -36,6 +37,7 @@
   "address_modal_add": "Add an address",
 
   "filter_title": "Filters",
+  "filter_show_results": "Show results",
   "filter_sort_by": "Sort by",
   "filter_sort_relevance": "Relevance",
   "filter_sort_fastest": "Fastest delivery",
@@ -210,7 +212,10 @@
   "checkout_vouchers": "Vouchers for your order",
   "checkout_view_all": "View all",
   "checkout_voucher_apply": "Apply",
+  "checkout_voucher_applied": "Applied",
   "checkout_voucher_add_more": "Add Tk {amount} more to use this voucher",
+  "checkout_voucher_eligible": "Eligible for this order",
+  "checkout_voucher_discount_label": "Voucher discount",
   "checkout_voucher_left": "left",
 
   "pay_back_to_checkout": "Back to checkout",
@@ -254,7 +259,7 @@
   "order_placed_p1_subtitle": "Hang tight, your food is on its way 🎉",
   "order_placed_p1_order_label": "Order",
 
-  "order_placed_p2_heading": "🐢 On the way... probably.",
+  "order_placed_p2_heading": "On the way... probably.",
   "order_placed_p2_paid_label": "paid",
   "order_placed_p2_rider_name": "Rahim Vai (Turtle Express)",
   "order_placed_p2_rider_tagline": "slow but steady... allegedly",
@@ -285,8 +290,8 @@
   "order_placed_p4_stat_regrets": "0 regrets",
   "order_placed_p4_stat_story": "1 great story to tell",
   "order_placed_p4_tagline": "The only delivery app that never disappoints, because we never deliver.",
-  "order_placed_p4_share_btn": "Share this 📤",
-  "order_placed_p4_reorder_btn": "Order again 🔄",
+  "order_placed_p4_share_btn": "Share this",
+  "order_placed_p4_reorder_btn": "Order again",
   "order_placed_p4_stay_btn": "Stay with us",
   "order_placed_p4_share_text": "I ordered on Food Turtle and the food never came 😂\nTk {amount} saved!\nTry it yourself 👇\nfoodturtle.com 🐢",
   "order_placed_p4_copied": "Copied!",

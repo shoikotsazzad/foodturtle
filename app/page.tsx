@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import Sidebar, { FilterState } from "@/components/layout/Sidebar";
 import MobileFilterSheet from "@/components/layout/MobileFilterSheet";
@@ -61,7 +60,6 @@ export default function HomePage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
       <CartBottomBar />
     </>
   );

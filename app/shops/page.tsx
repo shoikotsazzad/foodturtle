@@ -4,12 +4,11 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/context/LanguageContext";
 import { useCart } from "@/context/CartContext";
 import PageTitle from "@/components/shared/PageTitle";
-import { Clock, Star, Tag, Heart, Plus, Minus, ChevronRight, ChevronLeft, ChevronDown } from "lucide-react";
+import { Clock, Star, Tag, Heart, Plus, Minus, ChevronRight, ChevronLeft, ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import { SHOPS, SHOP_TYPES, getShopProducts, type Shop, type ShopProduct } from "@/lib/shops-data";
 
 const DEAL_TEMPLATES = [
@@ -97,8 +96,8 @@ function ShopProductMiniCard({ product, shop }: { product: ShopProduct; shop: Sh
 
   return (
     <div className="shrink-0 w-32 bg-white rounded-xl border border-gray-100 overflow-hidden">
-      <div className="relative aspect-square bg-turtle-gray p-2.5">
-        <img src={product.image} alt={name} className="w-full h-full object-contain" />
+      <div className="relative w-full aspect-square bg-turtle-gray">
+        <img src={product.image} alt={name} className="w-full h-full object-cover" />
         {qty > 0 ? (
           <div className="absolute bottom-1 right-1 flex items-center gap-0.5 bg-white rounded-full shadow border border-gray-100 p-0.5">
             <button onClick={() => updateQuantity(product.id, qty - 1)} className="w-5 h-5 rounded-full border border-gray-200 flex items-center justify-center">
@@ -115,7 +114,7 @@ function ShopProductMiniCard({ product, shop }: { product: ShopProduct; shop: Sh
           </button>
         )}
       </div>
-      <div className="p-2">
+      <div className="p-2 h-[74px] overflow-hidden">
         <p className="text-xs font-bold text-turtle-pink">Tk {product.price}</p>
         {product.original_price > product.price && (
           <p className="text-[10px] text-turtle-gray-2">
@@ -166,6 +165,7 @@ export default function ShopsPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [showAllTypes, setShowAllTypes] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const search = searchParams.get("q") ?? "";
   const activeTypes = searchParams.get("types")?.split(",").filter(Boolean) ?? [];
@@ -271,12 +271,46 @@ export default function ShopsPage() {
 
           {/* Main */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between mb-4">
+            <div className="hidden lg:flex items-center justify-between mb-4">
               <h1 className="text-2xl font-bold text-turtle-dark">{t("shops_title")}</h1>
             </div>
 
-            {/* Mobile-only filters (sidebar is desktop-only) */}
-            <div className="lg:hidden bg-white rounded-xl border border-gray-100 p-3 mb-4">{typeFilterPanel}</div>
+            {/* Mobile-only filter bar — single compact button, sidebar content moves into a bottom sheet */}
+            <div className="lg:hidden mb-4">
+              <button
+                onClick={() => setShowMobileFilters(true)}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-gray-200 text-sm font-semibold text-turtle-dark hover:border-turtle-pink transition-colors"
+              >
+                <SlidersHorizontal size={14} />
+                {t("filter_title")}
+                {(activeTypes.length > 0 || showVouchersOnly) && (
+                  <span className="w-4.5 h-4.5 min-w-[18px] min-h-[18px] bg-turtle-pink text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">
+                    {activeTypes.length + (showVouchersOnly ? 1 : 0)}
+                  </span>
+                )}
+              </button>
+            </div>
+
+            {showMobileFilters && (
+              <div className="lg:hidden fixed inset-0 z-50">
+                <div className="absolute inset-0 bg-black/40" onClick={() => setShowMobileFilters(false)} />
+                <div className="absolute inset-x-0 bottom-0 bg-white rounded-t-2xl max-h-[80vh] overflow-y-auto p-4 safe-area-pb">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="font-bold text-turtle-dark">{t("filter_title")}</p>
+                    <button onClick={() => setShowMobileFilters(false)} className="p-1 hover:bg-turtle-gray rounded-full">
+                      <X size={18} className="text-turtle-gray-2" />
+                    </button>
+                  </div>
+                  {typeFilterPanel}
+                  <button
+                    onClick={() => setShowMobileFilters(false)}
+                    className="w-full bg-turtle-pink text-white py-3 rounded-full font-bold text-sm mt-4"
+                  >
+                    {t("filter_show_results")}
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Popular strip — brand tile + name/time, not circular, with scroll arrows */}
             {isBrowsing && (
@@ -284,24 +318,24 @@ export default function ShopsPage() {
                 <h2 className="text-lg font-bold text-turtle-dark mb-3">{t("shops_popular")}</h2>
                 <div className="relative">
                   <ScrollArrows onLeft={() => popularScroll.scrollBy(-1)} onRight={() => popularScroll.scrollBy(1)} />
-                  <div ref={popularScroll.ref} className="flex gap-6 overflow-x-auto scrollbar-hide pb-1 scroll-smooth snap-x snap-proximity">
+                  <div ref={popularScroll.ref} className="flex gap-3 overflow-x-auto scrollbar-hide pb-1 scroll-smooth snap-x snap-proximity">
                     {popularShops.map((shop) => {
                       const name = lang === "bn" ? shop.name_bn : shop.name_en;
                       return (
                         <Link
                           key={shop.id}
                           href={`/shops/${shop.id}`}
-                          className="shrink-0 flex items-center gap-2.5 w-52 group snap-start"
+                          className="shrink-0 w-24 sm:w-32 lg:w-36 group snap-start"
                         >
-                          <img
-                            src={shop.logo}
-                            alt=""
-                            className="w-14 h-14 rounded-xl object-cover shrink-0 group-hover:shadow-md transition-shadow"
-                          />
-                          <div className="min-w-0">
-                            <p className="text-sm font-semibold text-turtle-dark truncate">{name}</p>
-                            <p className="text-xs text-turtle-gray-2">{shop.delivery_time.split("-")[0]} min</p>
+                          <div className="w-full aspect-square rounded-xl overflow-hidden bg-turtle-gray mb-2">
+                            <img
+                              src={shop.logo}
+                              alt=""
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                            />
                           </div>
+                          <p className="text-xs sm:text-sm font-semibold text-turtle-dark truncate">{name}</p>
+                          <p className="text-[11px] sm:text-xs text-turtle-gray-2">{shop.delivery_time.split("-")[0]} min</p>
                         </Link>
                       );
                     })}
@@ -444,7 +478,6 @@ export default function ShopsPage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

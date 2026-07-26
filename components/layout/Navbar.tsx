@@ -30,6 +30,7 @@ import LanguageToggle from "@/components/shared/LanguageToggle";
 import AddressModal from "@/components/shared/AddressModal";
 import LoginModal from "@/components/shared/LoginModal";
 import RunningIcon from "@/components/shared/RunningIcon";
+import MobileAccountDrawer from "@/components/layout/MobileAccountDrawer";
 
 const TABS = [
   { key: "delivery", href: "/", icon: Bike, labelKey: "nav_delivery" as const },
@@ -54,6 +55,7 @@ export default function Navbar() {
   const searchParams = useSearchParams();
   const [showAddress, setShowAddress] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showMobileDrawer, setShowMobileDrawer] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [searchValue, setSearchValue] = useState(searchParams.get("q") ?? "");
 
@@ -82,12 +84,65 @@ export default function Navbar() {
 
   const isRestaurantPage = pathname.startsWith("/restaurant/");
 
+  const handleProfileTap = () => {
+    if (isLoggedIn) setShowMobileDrawer(true);
+    else setShowLogin(true);
+  };
+
   return (
     <>
       <header className="bg-white shadow-sm sticky top-0 z-40">
         {/* Top row */}
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
+          {/* Mobile top row — profile icon / centered logo / favourites + cart.
+              Side columns are auto-sized to their icons and the center column
+              takes the rest, so the logo can never grow wider than its column
+              and overflow (unlike equal-thirds grid-cols-3). */}
+          <div className="md:hidden grid grid-cols-[auto_1fr_auto] items-center h-14">
+            <button
+              onClick={handleProfileTap}
+              className="justify-self-start p-2 -ml-2 hover:bg-turtle-gray rounded-lg transition-colors"
+              aria-label="Account"
+            >
+              <User size={22} className="text-turtle-dark" />
+            </button>
+
+            <Link href="/" className="justify-self-center flex items-center gap-2 min-w-0">
+              <Image src="/logo.png" alt="Food Turtle" width={40} height={40} className="w-9 h-9 object-contain shrink-0" priority />
+              <span className="font-light text-2xl tracking-tight lowercase truncate" style={{ color: "#FF2B85" }}>
+                foodturtle
+              </span>
+            </Link>
+
+            <div className="justify-self-end flex items-center gap-1">
+              <Link href="/favourites" className="p-2 hover:bg-turtle-gray rounded-lg transition-colors">
+                <Heart size={22} className="text-turtle-dark" />
+              </Link>
+              <Link href="/cart" className="relative p-2 hover:bg-turtle-gray rounded-lg transition-colors">
+                <ShoppingCart size={22} className="text-turtle-dark" />
+                {itemCount > 0 && (
+                  <span className="absolute top-0.5 right-0.5 w-4.5 h-4.5 min-w-[18px] min-h-[18px] bg-turtle-pink text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none px-0.5">
+                    {itemCount}
+                  </span>
+                )}
+              </Link>
+            </div>
+          </div>
+
+          {/* Mobile address bar — centered */}
+          <button
+            onClick={() => setShowAddress(true)}
+            className="md:hidden flex items-center justify-center gap-1.5 pb-2 w-full"
+          >
+            <MapPin size={14} className="text-turtle-pink shrink-0" />
+            <span className="text-sm font-medium text-turtle-dark truncate max-w-[75%]">
+              {user.address || t("nav_address_placeholder")}
+            </span>
+            <ChevronDown size={12} className="text-turtle-gray-2 shrink-0" />
+          </button>
+
+          {/* Desktop top row */}
+          <div className="hidden md:flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 shrink-0">
               <Image src="/logo.png" alt="Food Turtle" width={36} height={36} className="w-8 h-8 sm:w-9 sm:h-9 object-contain" priority />
@@ -203,18 +258,6 @@ export default function Navbar() {
               </Link>
             </div>
           </div>
-
-          {/* Mobile address bar */}
-          <button
-            onClick={() => setShowAddress(true)}
-            className="md:hidden flex items-center gap-1.5 pb-2 w-full"
-          >
-            <MapPin size={14} className="text-turtle-pink shrink-0" />
-            <span className="text-sm font-medium text-turtle-dark truncate">
-              {user.address || t("nav_address_placeholder")}
-            </span>
-            <ChevronDown size={12} className="text-turtle-gray-2 shrink-0" />
-          </button>
         </div>
 
         {/* Mode tabs — search bar lives on this same row, right-aligned */}
@@ -282,6 +325,7 @@ export default function Navbar() {
 
       {showAddress && <AddressModal onClose={() => setShowAddress(false)} />}
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+      {showMobileDrawer && <MobileAccountDrawer onClose={() => setShowMobileDrawer(false)} />}
     </>
   );
 }

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Clock, Star, Plus, Minus, ShoppingCart, Trash2, Search, MapPin } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import CartBottomBar from "@/components/cart/CartBottomBar";
 import { useLanguage } from "@/context/LanguageContext";
@@ -45,7 +44,7 @@ function ShopProductCard({ product, shop }: { product: ShopProduct; shop: Shop }
   return (
     <div className="bg-white rounded-xl border border-gray-100 p-3 flex flex-col hover:shadow-md transition-shadow">
       <div className="relative mb-2">
-        <img src={product.image} alt={name} className="w-full h-28 object-contain rounded-lg bg-turtle-gray p-2" />
+        <img src={product.image} alt={name} className="w-full h-28 object-cover rounded-lg bg-turtle-gray" />
         <span className="absolute top-1 right-1 bg-turtle-pink text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
           -{discountPct}%
         </span>
@@ -104,7 +103,6 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
           </Link>
         </div>
         <Footer />
-        <MobileNav />
       </>
     );
   }
@@ -322,7 +320,6 @@ export default function ShopDetailPage({ params }: { params: Promise<{ shopId: s
         </div>
       </main>
       <Footer />
-      <MobileNav />
       <CartBottomBar />
     </>
   );

@@ -24,7 +24,7 @@ export default function Footer() {
         </div>
 
         {/* Links grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 text-sm">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 text-sm text-center">
           {[
             { label: t("footer_help"), href: "/help" },
             { label: t("footer_terms"), href: "/terms" },

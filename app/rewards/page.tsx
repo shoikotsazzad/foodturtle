@@ -1,7 +1,6 @@
 "use client";
 
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
 import { Star, ChevronRight, Gift } from "lucide-react";
@@ -59,7 +58,6 @@ export default function RewardsPage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }

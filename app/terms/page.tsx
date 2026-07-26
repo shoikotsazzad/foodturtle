@@ -1,7 +1,6 @@
 "use client";
 
 import Navbar from "@/components/layout/Navbar";
-import MobileNav from "@/components/layout/MobileNav";
 import Footer from "@/components/layout/Footer";
 import PageTitle from "@/components/shared/PageTitle";
 import { FileText } from "lucide-react";
@@ -70,7 +69,6 @@ export default function TermsPage() {
         </div>
       </main>
       <Footer />
-      <MobileNav />
     </>
   );
 }
