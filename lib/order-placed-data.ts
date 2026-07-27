@@ -163,20 +163,16 @@ export const STATUS_JOKES: StatusJoke[] = [
   { id: 30, bucket: "late", en: "🐢 Something is coming. Slowly. From somewhere. We think it's your food.", bn: "🐢 কিছু একটা আসছে। ধীরে। কোথাও থেকে। মনে হচ্ছে আপনার খাবার।" },
 ];
 
-function shuffle<T>(arr: T[]): T[] {
-  const copy = [...arr];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
+export function jokeBucketForElapsed(elapsedSeconds: number): StatusJoke["bucket"] {
+  if (elapsedSeconds < 40) return "early";
+  if (elapsedSeconds < 90) return "mid";
+  return "late";
 }
 
-export function buildJokeQueue(): StatusJoke[] {
-  const early = STATUS_JOKES.filter((j) => j.bucket === "early");
-  const mid = STATUS_JOKES.filter((j) => j.bucket === "mid");
-  const late = STATUS_JOKES.filter((j) => j.bucket === "late");
-  return [...shuffle(early).slice(0, 4), ...shuffle(mid).slice(0, 4), ...shuffle(late).slice(0, 4)];
+export function pickRandomJoke(bucket: StatusJoke["bucket"], excludeId?: number): StatusJoke {
+  const pool = STATUS_JOKES.filter((j) => j.bucket === bucket);
+  const choices = pool.length > 1 ? pool.filter((j) => j.id !== excludeId) : pool;
+  return choices[Math.floor(Math.random() * choices.length)];
 }
 
 export function pickRider(): Rider {

@@ -73,8 +73,8 @@ export default function DineInPage() {
 
           <div className="grid sm:grid-cols-3 gap-4 mb-10">
             {STEPS.map((s, i) => (
-              <div key={s.title} className="bg-white rounded-xl border border-gray-100 p-5">
-                <span className="w-7 h-7 rounded-full bg-turtle-pink-bg text-turtle-pink text-sm font-bold flex items-center justify-center mb-3">
+              <div key={s.title} className="bg-white rounded-xl border border-gray-100 p-5 text-center">
+                <span className="w-7 h-7 rounded-full bg-turtle-pink-bg text-turtle-pink text-sm font-bold flex items-center justify-center mb-3 mx-auto">
                   {i + 1}
                 </span>
                 <p className="font-bold text-turtle-dark text-sm mb-1">{s.title}</p>
@@ -83,9 +83,9 @@ export default function DineInPage() {
             ))}
           </div>
 
-          <div className="bg-turtle-pink-bg rounded-xl p-5 mb-10">
+          <div className="bg-turtle-pink-bg rounded-xl p-5 mb-10 text-center">
             {notified ? (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center gap-3">
                 <CheckCircle2 size={22} className="text-turtle-green shrink-0" />
                 <p className="text-sm font-semibold text-turtle-dark">You&apos;re on the list, we&apos;ll email you when table reservations open up.</p>
               </div>
@@ -115,10 +115,10 @@ export default function DineInPage() {
             )}
           </div>
 
-          <h2 className="text-lg font-bold text-turtle-dark mb-4">Frequently asked questions</h2>
+          <h2 className="text-lg font-bold text-turtle-dark mb-4 text-center">Frequently asked questions</h2>
           <div className="space-y-2">
             {FAQ.map((f) => (
-              <div key={f.q} className="border border-gray-100 rounded-xl bg-white p-4">
+              <div key={f.q} className="border border-gray-100 rounded-xl bg-white p-4 text-center">
                 <p className="font-semibold text-turtle-dark text-sm mb-1">{f.q}</p>
                 <p className="text-sm text-turtle-gray-2">{f.a}</p>
               </div>

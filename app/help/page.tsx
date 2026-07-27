@@ -55,7 +55,7 @@ export default function HelpPage() {
       <PageTitle title="Help Center · Food Turtle" />
       <Navbar />
       <main className="max-w-2xl mx-auto w-full px-4 py-6 pb-20 sm:pb-6">
-        <div className="bg-turtle-pink rounded-2xl p-6 mb-6">
+        <div className="bg-turtle-pink rounded-2xl p-6 mb-6 text-center">
           <p className="text-white font-bold text-lg mb-3">How can we help?</p>
           <div className="relative">
             <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-turtle-gray-2" />
@@ -64,7 +64,7 @@ export default function HelpPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder='Press enter to search (Eg: "Account")'
-              className="w-full pl-10 pr-4 py-3 rounded-full text-sm focus:outline-none"
+              className="w-full pl-10 pr-4 py-3 rounded-full text-sm focus:outline-none text-left"
             />
           </div>
           <p className="text-xs text-white/85 mt-3">
@@ -118,8 +118,8 @@ export default function HelpPage() {
         )}
 
         {/* Contact form */}
-        <div className="bg-white rounded-xl border border-gray-100 p-5">
-          <div className="flex items-center gap-2 mb-1">
+        <div className="bg-white rounded-xl border border-gray-100 p-5 text-center">
+          <div className="flex items-center justify-center gap-2 mb-1">
             <Mail size={18} className="text-turtle-pink" />
             <p className="font-bold text-turtle-dark">Still stuck? Email us</p>
           </div>

@@ -87,7 +87,7 @@ function ProductCard({ product }: { product: TmProduct }) {
   return (
     <Link href={`/turtlemart/${product.id}`} className="block group">
       <div className="bg-white rounded-xl border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
-        <div className="relative w-full aspect-square bg-turtle-gray">
+        <div className="relative h-36 bg-turtle-gray">
           <img
             src={product.image}
             alt={name}

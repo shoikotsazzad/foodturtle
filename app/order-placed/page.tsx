@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import confetti from "canvas-confetti";
 import {
@@ -21,7 +21,7 @@ import PageTitle from "@/components/shared/PageTitle";
 import TurtleReceipt from "@/components/order-placed/TurtleReceipt";
 import { useLanguage } from "@/context/LanguageContext";
 import { useUser } from "@/context/UserContext";
-import { buildJokeQueue, pickRider, type Rider } from "@/lib/order-placed-data";
+import { jokeBucketForElapsed, pickRandomJoke, pickRider, type Rider, type StatusJoke } from "@/lib/order-placed-data";
 import type { CartItem } from "@/types";
 
 interface LastOrder {
@@ -68,9 +68,9 @@ export default function OrderPlacedPage() {
   const [revealed, setRevealed] = useState(false);
   const [orderId, setOrderId] = useState("");
   const [rider] = useState<Rider>(() => pickRider());
-  const [jokeQueue] = useState(() => buildJokeQueue());
-  const [jokeIndex, setJokeIndex] = useState(0);
+  const [currentJoke, setCurrentJoke] = useState<StatusJoke>(() => pickRandomJoke("early"));
   const [jokeVisible, setJokeVisible] = useState(true);
+  const remainingRef = useRef(TOTAL_SECONDS);
 
   // Load the just-placed order (random fallback ID only ever generated client-side)
   useEffect(() => {
@@ -106,11 +106,10 @@ export default function OrderPlacedPage() {
   useEffect(() => {
     const id = setInterval(() => {
       setRemaining((r) => {
-        if (r <= 1) {
-          clearInterval(id);
-          return 0;
-        }
-        return r - 1;
+        const next = r <= 1 ? 0 : r - 1;
+        remainingRef.current = next;
+        if (next === 0) clearInterval(id);
+        return next;
       });
     }, 1000);
     return () => clearInterval(id);
@@ -120,18 +119,20 @@ export default function OrderPlacedPage() {
     if (remaining === 0) setDelivered(true);
   }, [remaining]);
 
-  // Rotate through the shuffled joke queue every 4s, with a brief fade between them
+  // Each joke stays on screen for 10s, then a new random one from the
+  // current wait-time bucket takes its place (never immediately repeating).
   useEffect(() => {
     if (delivered) return;
     const interval = setInterval(() => {
       setJokeVisible(false);
       setTimeout(() => {
-        setJokeIndex((i) => Math.min(i + 1, jokeQueue.length - 1));
+        const elapsedNow = TOTAL_SECONDS - remainingRef.current;
+        setCurrentJoke((prev) => pickRandomJoke(jokeBucketForElapsed(elapsedNow), prev.id));
         setJokeVisible(true);
       }, 300);
-    }, 4000);
+    }, 10000);
     return () => clearInterval(interval);
-  }, [delivered, jokeQueue.length]);
+  }, [delivered]);
 
   useEffect(() => {
     if (!delivered) return;
@@ -156,8 +157,7 @@ export default function OrderPlacedPage() {
   const riderTagline = lang === "bn" ? rider.tagline_bn : rider.tagline_en;
   const riderTitle = lang === "bn" ? rider.title_bn : rider.title_en;
   const riderPhase3 = lang === "bn" ? rider.phase3_bn : rider.phase3_en;
-  const currentJoke = jokeQueue[jokeIndex];
-  const jokeText = currentJoke ? (lang === "bn" ? currentJoke.bn : currentJoke.en) : "";
+  const jokeText = lang === "bn" ? currentJoke.bn : currentJoke.en;
 
   return (
     <div className="min-h-screen bg-turtle-gray/40">

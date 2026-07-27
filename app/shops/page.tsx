@@ -96,7 +96,7 @@ function ShopProductMiniCard({ product, shop }: { product: ShopProduct; shop: Sh
 
   return (
     <div className="shrink-0 w-32 bg-white rounded-xl border border-gray-100 overflow-hidden">
-      <div className="relative w-full aspect-square bg-turtle-gray">
+      <div className="relative h-32 bg-turtle-gray">
         <img src={product.image} alt={name} className="w-full h-full object-cover" />
         {qty > 0 ? (
           <div className="absolute bottom-1 right-1 flex items-center gap-0.5 bg-white rounded-full shadow border border-gray-100 p-0.5">
@@ -327,7 +327,7 @@ export default function ShopsPage() {
                           href={`/shops/${shop.id}`}
                           className="shrink-0 w-24 sm:w-32 lg:w-36 group snap-start"
                         >
-                          <div className="w-full aspect-square rounded-xl overflow-hidden bg-turtle-gray mb-2">
+                          <div className="h-24 sm:h-32 lg:h-36 rounded-xl overflow-hidden bg-turtle-gray mb-2">
                             <img
                               src={shop.logo}
                               alt=""

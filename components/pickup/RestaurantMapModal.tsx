@@ -19,12 +19,23 @@ function hashSlug(slug: string): number {
   return Math.abs(h);
 }
 
-function fakeCoords(slug: string): [number, number] {
+function fakeCoords(slug: string, center: [number, number]): [number, number] {
   const h = hashSlug(slug);
   const latOffset = ((h % 1000) / 1000 - 0.5) * 0.045;
   const lngOffset = (((h >> 8) % 1000) / 1000 - 0.5) * 0.045;
-  return [GULSHAN_CENTER[0] + latOffset, GULSHAN_CENTER[1] + lngOffset];
+  return [center[0] + latOffset, center[1] + lngOffset];
 }
+
+const homeIcon = L.divIcon({
+  html: `<div style="
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #22C55E; border: 3px solid white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  "></div>`,
+  className: "",
+  iconSize: [18, 18],
+  iconAnchor: [9, 9],
+});
 
 const pinIcon = L.divIcon({
   html: `<div style="
@@ -42,19 +53,23 @@ const pinIcon = L.divIcon({
 interface RestaurantMapModalProps {
   restaurants: Restaurant[];
   onClose: () => void;
+  userCoords?: { lat: number; lng: number };
 }
 
-export default function RestaurantMapModal({ restaurants, onClose }: RestaurantMapModalProps) {
+export default function RestaurantMapModal({ restaurants, onClose, userCoords }: RestaurantMapModalProps) {
   const { lang } = useLanguage();
+
+  const center: [number, number] = userCoords ? [userCoords.lat, userCoords.lng] : GULSHAN_CENTER;
 
   const pins = useMemo(
     () =>
       restaurants.slice(0, 60).map((r) => ({
         ...r,
-        coords: fakeCoords(r.slug),
+        coords: fakeCoords(r.slug, center),
         walkMin: Math.max(3, Math.round(r.distance_km * 12)),
       })),
-    [restaurants]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [restaurants, center[0], center[1]]
   );
 
   return (
@@ -69,11 +84,18 @@ export default function RestaurantMapModal({ restaurants, onClose }: RestaurantM
         </button>
       </div>
 
-      <MapContainer center={GULSHAN_CENTER} zoom={14} className="w-full h-full" scrollWheelZoom>
+      <MapContainer center={center} zoom={14} className="w-full h-full" scrollWheelZoom>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        {userCoords && (
+          <Marker position={center} icon={homeIcon}>
+            <Popup>
+              <p className="text-xs font-medium text-turtle-dark">You are here</p>
+            </Popup>
+          </Marker>
+        )}
         {pins.map((p) => {
           const name = lang === "bn" ? p.name_bn : p.name_en;
           return (

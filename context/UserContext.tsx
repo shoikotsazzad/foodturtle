@@ -9,6 +9,8 @@ interface UserProfile {
   phone: string;
   address: string;
   city: string;
+  lat?: number;
+  lng?: number;
 }
 
 interface UserContextValue {

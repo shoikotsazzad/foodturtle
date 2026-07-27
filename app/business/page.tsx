@@ -56,8 +56,8 @@ export default function BusinessPage() {
         <div className="max-w-2xl mx-auto px-4 py-10">
           <div className="grid sm:grid-cols-3 gap-4 mb-10">
             {BENEFITS.map((b) => (
-              <div key={b.title} className="bg-white rounded-xl border border-gray-100 p-5">
-                <b.icon size={20} className="text-turtle-pink mb-3" />
+              <div key={b.title} className="bg-white rounded-xl border border-gray-100 p-5 text-center">
+                <b.icon size={20} className="text-turtle-pink mb-3 mx-auto" />
                 <p className="font-bold text-turtle-dark text-sm mb-1">{b.title}</p>
                 <p className="text-xs text-turtle-gray-2">{b.body}</p>
               </div>
@@ -75,7 +75,7 @@ export default function BusinessPage() {
               </div>
             ) : (
               <>
-                <h2 className="font-bold text-turtle-dark mb-4">Talk to sales</h2>
+                <h2 className="font-bold text-turtle-dark mb-4 text-center">Talk to sales</h2>
                 <div className="space-y-3">
                   <div>
                     <input
@@ -136,10 +136,10 @@ export default function BusinessPage() {
             )}
           </div>
 
-          <h2 className="text-lg font-bold text-turtle-dark mb-4">Frequently asked questions</h2>
+          <h2 className="text-lg font-bold text-turtle-dark mb-4 text-center">Frequently asked questions</h2>
           <div className="space-y-2">
             {FAQ.map((f) => (
-              <div key={f.q} className="border border-gray-100 rounded-xl bg-white p-4">
+              <div key={f.q} className="border border-gray-100 rounded-xl bg-white p-4 text-center">
                 <p className="font-semibold text-turtle-dark text-sm mb-1">{f.q}</p>
                 <p className="text-sm text-turtle-gray-2">{f.a}</p>
               </div>

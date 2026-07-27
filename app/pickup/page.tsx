@@ -12,6 +12,7 @@ import CartBottomBar from "@/components/cart/CartBottomBar";
 import PageTitle from "@/components/shared/PageTitle";
 import { useRestaurants } from "@/lib/hooks";
 import { useLanguage } from "@/context/LanguageContext";
+import { useUser } from "@/context/UserContext";
 
 const RestaurantMapModal = dynamic(() => import("@/components/pickup/RestaurantMapModal"), { ssr: false });
 
@@ -25,6 +26,7 @@ const DEFAULT_FILTERS: FilterState = {
 
 export default function PickupPage() {
   const { t } = useLanguage();
+  const { user } = useUser();
   const { restaurants, loading } = useRestaurants();
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [cuisineFilter, setCuisineFilter] = useState("");
@@ -82,7 +84,13 @@ export default function PickupPage() {
       </main>
       <Footer />
       <CartBottomBar />
-      {showMap && <RestaurantMapModal restaurants={restaurants} onClose={() => setShowMap(false)} />}
+      {showMap && (
+        <RestaurantMapModal
+          restaurants={restaurants}
+          onClose={() => setShowMap(false)}
+          userCoords={user.lat && user.lng ? { lat: user.lat, lng: user.lng } : undefined}
+        />
+      )}
     </>
   );
 }

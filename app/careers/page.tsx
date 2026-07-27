@@ -61,14 +61,14 @@ export default function CareersPage() {
         <div className="max-w-2xl mx-auto px-4 py-10">
           <div className="grid sm:grid-cols-2 gap-3 mb-10">
             {BENEFITS.map((b) => (
-              <div key={b} className="flex items-center gap-2.5 bg-white rounded-xl border border-gray-100 p-3">
+              <div key={b} className="flex items-center justify-center gap-2.5 bg-white rounded-xl border border-gray-100 p-3">
                 <Award size={16} className="text-turtle-pink shrink-0" />
                 <span className="text-sm text-turtle-dark">{b}</span>
               </div>
             ))}
           </div>
 
-          <h2 className="text-lg font-bold text-turtle-dark mb-4">Open roles</h2>
+          <h2 className="text-lg font-bold text-turtle-dark mb-4 text-center">Open roles</h2>
           <div className="space-y-2 mb-10">
             {JOBS.map((job, i) => (
               <div key={job.title} className="border border-gray-100 rounded-xl bg-white overflow-hidden">

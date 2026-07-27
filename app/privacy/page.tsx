@@ -41,8 +41,8 @@ export default function PrivacyPage() {
     <>
       <PageTitle title="Privacy Policy · Food Turtle" />
       <Navbar />
-      <main className="max-w-3xl mx-auto w-full px-4 py-10 pb-20 sm:pb-10">
-        <div className="flex items-center gap-3 mb-2">
+      <main className="max-w-3xl mx-auto w-full px-4 py-10 pb-20 sm:pb-10 text-center">
+        <div className="flex flex-col items-center gap-3 mb-2">
           <div className="w-11 h-11 rounded-xl bg-turtle-pink-bg flex items-center justify-center shrink-0">
             <Shield size={20} className="text-turtle-pink" />
           </div>
