@@ -187,7 +187,7 @@ export default function RestaurantPage({ params }: { params: Promise<{ slug: str
               <div className="w-full h-full flex items-center justify-center text-3xl">🍽️</div>
             )}
           </div>
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <p className="text-xs text-turtle-gray-2 mb-1">{cuisines.join(" · ")}</p>
             <h1 className="text-2xl font-bold text-turtle-dark mb-1">{name}</h1>
             <p className="text-sm text-turtle-green font-medium mb-1">
@@ -196,7 +196,7 @@ export default function RestaurantPage({ params }: { params: Promise<{ slug: str
               {" · "}
               <span className="text-turtle-gray-2">{t("restaurant_detail_min_order")} {restaurant.min_order}</span>
             </p>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center flex-wrap gap-x-3 gap-y-1">
               <div className="flex items-center gap-1">
                 <Star size={14} className="fill-turtle-yellow text-turtle-yellow" />
                 <span className="text-sm font-bold text-turtle-dark">{restaurant.rating}/5</span>
@@ -243,7 +243,7 @@ export default function RestaurantPage({ params }: { params: Promise<{ slug: str
           {/* Main content */}
           <div className="flex-1 min-w-0">
             {/* Sticky menu tabs */}
-            <div className="sticky top-[9rem] md:top-16 bg-white border-b border-gray-100 z-20 -mx-4 px-4 mb-4">
+            <div className="md:sticky md:top-16 bg-white border-b border-gray-100 z-20 -mx-4 px-4 mb-4">
               {/* Mobile search — full width, own row above the tab strip */}
               <div className="md:hidden relative pt-2 pb-2">
                 <Search size={14} className="absolute left-2.5 top-[1.15rem] text-turtle-gray-2" />
