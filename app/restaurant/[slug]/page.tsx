@@ -212,7 +212,7 @@ export default function RestaurantPage({ params }: { params: Promise<{ slug: str
           </div>
           <button
             onClick={() => toggleFavourite(restaurant.id)}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-full border text-sm font-medium transition-colors h-fit ${
+            className={`hidden md:flex items-center gap-1.5 px-4 py-2 rounded-full border text-sm font-medium transition-colors h-fit shrink-0 ${
               fav
                 ? "border-turtle-pink text-turtle-pink bg-turtle-pink-bg"
                 : "border-gray-200 text-turtle-dark hover:border-turtle-pink"
