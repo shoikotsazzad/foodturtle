@@ -39,7 +39,10 @@ export default function HeroBanner({ onCuisineFilter, activeCuisine }: HeroBanne
     >
       <div className="relative z-10 p-6 md:p-8 flex items-center justify-between">
         <div className="flex-1">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-1 tracking-tight">
+          <h1
+            className="text-3xl md:text-4xl font-extrabold text-white mb-1 tracking-tight"
+            suppressHydrationWarning
+          >
             {greeting}{firstName ? `, ${firstName}` : ""}!
           </h1>
           <p className="text-white/85 text-sm md:text-base mb-4">

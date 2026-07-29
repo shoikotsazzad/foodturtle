@@ -55,6 +55,20 @@ html {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+/* iOS Safari auto-zooms the whole page when a focused input/select/textarea
+   has a font-size under 16px — that's what makes forms look like they
+   "grow" the moment you start typing. Android has no such rule, which is
+   why the same page stays stable there. Forcing 16px on mobile widths
+   only (desktop keeps its existing smaller form text) stops the zoom from
+   ever triggering. */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
 /* Hide scrollbar but keep scrolling */
 .scrollbar-hide {
   -ms-overflow-style: none;
