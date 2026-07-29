@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -46,7 +46,7 @@ const SEARCH_PLACEHOLDERS: Record<string, string> = {
   "/shops": "Search for shops, categories, and products",
 };
 
-export default function Navbar() {
+function NavbarInner() {
   const { t } = useLanguage();
   const { itemCount } = useCart();
   const { user, isLoggedIn, logout } = useUser();
@@ -327,5 +327,13 @@ export default function Navbar() {
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       {showMobileDrawer && <MobileAccountDrawer onClose={() => setShowMobileDrawer(false)} />}
     </>
+  );
+}
+
+export default function Navbar() {
+  return (
+    <Suspense fallback={null}>
+      <NavbarInner />
+    </Suspense>
   );
 }

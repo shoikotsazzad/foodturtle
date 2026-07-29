@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Plus, Minus, ShoppingCart, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
@@ -157,7 +157,7 @@ function ProductSection({ title, products }: { title: string; products: TmProduc
   );
 }
 
-export default function TurtlemartPage() {
+function TurtlemartPageInner() {
   const { t, lang } = useLanguage();
   const router = useRouter();
   const pathname = usePathname();
@@ -435,5 +435,13 @@ export default function TurtlemartPage() {
       <Footer />
       <CartBottomBar />
     </>
+  );
+}
+
+export default function TurtlemartPage() {
+  return (
+    <Suspense fallback={null}>
+      <TurtlemartPageInner />
+    </Suspense>
   );
 }

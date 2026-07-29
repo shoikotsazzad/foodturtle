@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { Restaurant } from "@/types";
@@ -15,7 +16,7 @@ interface RestaurantGridProps {
   showWalkTime?: boolean;
 }
 
-export default function RestaurantGrid({
+function RestaurantGridInner({
   restaurants,
   loading,
   filters,
@@ -90,5 +91,13 @@ export default function RestaurantGrid({
         ))}
       </div>
     </section>
+  );
+}
+
+export default function RestaurantGrid(props: RestaurantGridProps) {
+  return (
+    <Suspense fallback={<SkeletonRestaurantGrid />}>
+      <RestaurantGridInner {...props} />
+    </Suspense>
   );
 }

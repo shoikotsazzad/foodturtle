@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
@@ -159,7 +159,7 @@ function ShopSwimlane({ shop }: { shop: Shop }) {
   );
 }
 
-export default function ShopsPage() {
+function ShopsPageInner() {
   const { t, lang } = useLanguage();
   const router = useRouter();
   const pathname = usePathname();
@@ -479,5 +479,13 @@ export default function ShopsPage() {
       </main>
       <Footer />
     </>
+  );
+}
+
+export default function ShopsPage() {
+  return (
+    <Suspense fallback={null}>
+      <ShopsPageInner />
+    </Suspense>
   );
 }
