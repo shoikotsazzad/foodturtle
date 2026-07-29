@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 
@@ -9,6 +9,27 @@ export default function LoginModal({ onClose }: { onClose: () => void }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+
+  // iOS Safari can render `position: fixed` elements at the wrong horizontal
+  // offset when they're inserted while the page is scrolled down. Freezing
+  // body scroll while the modal is open (and restoring the exact position on
+  // close) works around it, and also stops the background page from
+  // scrolling behind the overlay.
+  useEffect(() => {
+    const scrollY = window.scrollY;
+    const { body } = document;
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    return () => {
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      window.scrollTo(0, scrollY);
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
