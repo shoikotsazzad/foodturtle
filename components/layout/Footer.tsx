@@ -24,7 +24,7 @@ export default function Footer() {
         </div>
 
         {/* Links grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 text-sm text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 text-sm text-left sm:text-center">
           {[
             { label: t("footer_help"), href: "/help" },
             { label: t("footer_terms"), href: "/terms" },
@@ -45,13 +45,24 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-2 pt-4 border-t border-gray-100 text-center sm:text-left">
+        <div className="flex flex-col items-center gap-1.5 pt-5 border-t border-gray-100 text-center">
           <p className="text-xs text-turtle-gray-2">{t("footer_copy")}</p>
           <div className="flex items-center gap-1.5">
             <span className="text-xs text-turtle-gray-2 italic">Built with</span>
             <Image src="/logo.png" alt="Food Turtle" width={16} height={16} className="w-4 h-4 object-contain" />
             <span className="text-xs text-turtle-gray-2 italic">and zero actual food.</span>
           </div>
+          <p className="text-xs text-turtle-gray-2">
+            Designed &amp; developed by{" "}
+            <a
+              href="https://www.linkedin.com/in/shoikotsazzad/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-turtle-pink font-semibold hover:underline"
+            >
+              @Shoikot Sazzad
+            </a>
+          </p>
         </div>
       </div>
     </footer>
