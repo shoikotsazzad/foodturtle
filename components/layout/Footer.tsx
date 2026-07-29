@@ -15,7 +15,7 @@ export default function Footer() {
     <footer className="bg-white border-t border-gray-100 mt-auto">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Top row */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center justify-center sm:justify-start gap-4 mb-6">
           <div className="flex items-center gap-2">
             <Image src="/logo.png" alt="Food Turtle" width={100} height={34} className="h-8 w-auto object-contain" />
           </div>
@@ -45,7 +45,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-4 border-t border-gray-100">
+        <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-2 pt-4 border-t border-gray-100 text-center sm:text-left">
           <p className="text-xs text-turtle-gray-2">{t("footer_copy")}</p>
           <div className="flex items-center gap-1.5">
             <span className="text-xs text-turtle-gray-2 italic">Built with</span>

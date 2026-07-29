@@ -106,7 +106,7 @@ export default function TurtleProPage() {
           <h2 className="text-xl font-bold text-turtle-dark mb-4">Choose your plan</h2>
           <div className="grid sm:grid-cols-3 gap-4 mb-6">
             {PLANS.map((plan) => (
-              <div key={plan.key} className="border border-gray-100 rounded-xl p-5 bg-white flex flex-col">
+              <div key={plan.key} className="border border-gray-100 rounded-xl p-5 bg-white flex flex-col text-center sm:text-left">
                 <p className="font-bold text-turtle-dark mb-1">{plan.label}</p>
                 <p className="text-2xl font-extrabold text-turtle-dark mb-1">
                   Tk {plan.perMonth}<span className="text-sm font-normal text-turtle-gray-2">/mo.</span>

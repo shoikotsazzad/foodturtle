@@ -41,16 +41,11 @@ export default function OrdersPage() {
               const name = lang === "bn" ? order.restaurant_name_bn : order.restaurant_name_en;
               return (
                 <div key={order.id} className="bg-white rounded-xl border border-gray-100 p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <p className="font-bold text-turtle-dark">{name}</p>
-                      <p className="text-xs text-turtle-gray-2">
-                        {new Date(order.date).toLocaleDateString()} · #{order.id}
-                      </p>
-                    </div>
-                    <span className="text-xs bg-turtle-pink-bg text-turtle-pink px-2 py-1 rounded-full font-medium">
-                      {t("orders_status")}
-                    </span>
+                  <div className="mb-2">
+                    <p className="font-bold text-turtle-dark">{name}</p>
+                    <p className="text-xs text-turtle-gray-2">
+                      {new Date(order.date).toLocaleDateString()} · #{order.id}
+                    </p>
                   </div>
                   <div className="text-sm text-turtle-gray-2 mb-3">
                     {order.items.map((item) => {

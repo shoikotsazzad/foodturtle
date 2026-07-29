@@ -19,8 +19,8 @@ export default function LoginModal({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40">
-      <div className="bg-white w-full sm:max-w-sm sm:rounded-2xl rounded-t-2xl p-6 animate-slide-up">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 p-0 sm:p-4">
+      <div className="bg-white w-full sm:max-w-sm sm:rounded-2xl rounded-t-2xl p-6 max-h-[90vh] overflow-y-auto animate-slide-up">
         <div className="flex justify-between items-center mb-5">
           <div className="flex items-center gap-3">
             <img src="/logo.png" alt="" className="w-10 h-10 object-contain shrink-0" />

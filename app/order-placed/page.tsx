@@ -166,7 +166,7 @@ export default function OrderPlacedPage() {
       {!delivered && (
         <div className="px-4 py-6">
           <div className="max-w-md mx-auto">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
               <img src="/logo.png" alt="" className="w-8 h-8 object-contain" />
               <span className="font-bold text-xl tracking-tight lowercase" style={{ color: "#FF2B85" }}>foodturtle</span>
             </div>
