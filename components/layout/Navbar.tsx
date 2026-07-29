@@ -28,7 +28,6 @@ import { useCart } from "@/context/CartContext";
 import { useUser } from "@/context/UserContext";
 import LanguageToggle from "@/components/shared/LanguageToggle";
 import AddressModal from "@/components/shared/AddressModal";
-import LoginModal from "@/components/shared/LoginModal";
 import RunningIcon from "@/components/shared/RunningIcon";
 import MobileAccountDrawer from "@/components/layout/MobileAccountDrawer";
 
@@ -56,7 +55,6 @@ function NavbarInner() {
   const [showAddress, setShowAddress] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileDrawer, setShowMobileDrawer] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
   const [searchValue, setSearchValue] = useState(searchParams.get("q") ?? "");
 
   const searchPlaceholder = SEARCH_PLACEHOLDERS[pathname];
@@ -86,7 +84,7 @@ function NavbarInner() {
 
   const handleProfileTap = () => {
     if (isLoggedIn) setShowMobileDrawer(true);
-    else setShowLogin(true);
+    else router.push("/login");
   };
 
   return (
@@ -231,7 +229,7 @@ function NavbarInner() {
               ) : (
                 /* Sign-in button */
                 <button
-                  onClick={() => setShowLogin(true)}
+                  onClick={() => router.push("/login")}
                   className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 border border-turtle-pink text-turtle-pink hover:bg-turtle-pink-bg rounded-full text-sm font-medium transition-colors"
                 >
                   <User size={15} />
@@ -324,7 +322,6 @@ function NavbarInner() {
       </header>
 
       {showAddress && <AddressModal onClose={() => setShowAddress(false)} />}
-      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       {showMobileDrawer && <MobileAccountDrawer onClose={() => setShowMobileDrawer(false)} />}
     </>
   );
