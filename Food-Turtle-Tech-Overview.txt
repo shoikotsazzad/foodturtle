@@ -1,0 +1,142 @@
+FOOD TURTLE — TECHNICAL OVERVIEW
+==================================
+(A plain-language summary of how the app is built. Written to be pasted into a Google Doc.)
+
+
+1. WHAT KIND OF APP THIS IS
+----------------------------
+Food Turtle is a single Next.js web application. It is NOT split into a separate
+"frontend project" and "backend project" — it's one codebase where the frontend
+(what you see and click) and the backend (data + logic) both live, which is the
+normal setup for a modern Next.js app.
+
+There is currently no custom backend server and no live database connected.
+All restaurant, shop, and product data is hardcoded directly in the code
+(see section 4). The app is built so it CAN connect to a real database
+(Firebase/Firestore) later with zero code changes — it's wired up and ready,
+just not switched on yet.
+
+
+2. FRONTEND (what runs in the browser)
+----------------------------------------
+Framework: Next.js 16 (App Router) — a React framework that handles routing,
+  page rendering, and project structure.
+UI library: React 19.
+Language: TypeScript (JavaScript with type-checking, catches bugs before they
+  happen).
+Styling: Tailwind CSS 4 — utility-based CSS, no separate .css files per
+  component; styling is written directly alongside the markup.
+Icons: lucide-react (icon set).
+Maps: Leaflet / react-leaflet — used for the pickup map preview and address
+  picker.
+Extra effects/utilities:
+  - canvas-confetti — the confetti animation (e.g. on order placed).
+  - html2canvas — used to turn parts of the page into an image (e.g. the
+    "share" receipt/transcript image feature).
+
+Pages live under the app/ folder — each folder is a route, e.g.:
+  app/page.tsx              -> home page ("/")
+  app/turtlemart/           -> Turtlemart grocery section
+  app/shops/                -> Shops section
+  app/restaurant/[slug]/    -> individual restaurant page
+  app/checkout/             -> checkout flow
+  app/admin/                -> internal admin/analytics dashboard
+
+Reusable UI pieces live under components/ (cart widgets, nav bars, sidebars,
+restaurant cards, checkout forms, etc.), organized by feature area.
+
+
+3. BACKEND (data + logic)
+----------------------------
+There is no separate backend server (no Express/Node API, no custom REST or
+GraphQL API routes). Next.js CAN host backend logic ("API routes"), but this
+project doesn't currently use any — everything runs client-side in the
+browser.
+
+What normally would be "backend work" is instead handled by:
+  - Hardcoded seed data files (see section 4) acting as a stand-in database.
+  - Firebase Firestore, pre-wired but currently disconnected (see section 5).
+  - Browser storage (localStorage/sessionStorage) for anything that needs to
+    persist between page loads on a single device — e.g. your cart, your
+    order history, your last placed order. This data lives only in your own
+    browser, not on any server, and would disappear if you cleared browser
+    data or opened the site on a different device.
+
+So today, "placing an order" doesn't send anything to a real server — it
+generates a fake order ID, saves it to your browser's local storage, and
+shows you the confirmation flow. Nothing is actually transmitted anywhere.
+
+
+4. HOW THE APP DATA (restaurants/shops/products) IS STORED
+--------------------------------------------------------------
+All the restaurant, shop, and grocery-product listings you see are written
+directly into TypeScript files in the lib/ folder:
+  lib/seed-data.ts        -> restaurants + menu items + vouchers (delivery)
+  lib/shops-data.ts       -> all shops (grocery/pharmacy/pet/etc. stores)
+  lib/turtlemart-data.ts  -> all Turtlemart grocery products + categories
+  lib/order-placed-data.ts-> fake rider/order-tracking flavor data
+
+These are essentially large lists of JavaScript objects (name, price, rating,
+image, category, etc.) that the app reads and displays. This is why adding
+"more restaurants" or "more products" is just a matter of adding more entries
+to these lists — there's no real database to update.
+
+
+5. DATABASE — IS ONE ACTUALLY USED?
+---------------------------------------
+Short answer: not right now, but the app is built to use one.
+
+The project depends on Firebase (Google's app backend platform) and its
+Firestore database, and the code has real logic to read/write Firestore for:
+  - Restaurants and menu items (lib/hooks.ts)
+  - Analytics: pageviews, sessions, order tracking (lib/analytics.ts)
+  - Admin dashboard stats (lib/useAdminStats.ts)
+
+However, the Firebase project credentials in .env.local are still placeholder
+values ("your_project_id", etc.) — no real Firebase project has been created
+or connected yet. The code specifically checks for this
+(isFirebaseConfigured() in lib/firebase.ts) and, whenever Firestore isn't
+configured or a request fails, automatically falls back to the hardcoded seed
+data described in section 4. In other words: the "database mode" exists in
+the code and would activate automatically the moment real Firebase
+credentials are added — but as of today, the app is effectively running
+database-free, serving only the hardcoded seed content.
+
+
+6. HOW A PAGE LOADS DATA, IN PLAIN TERMS
+---------------------------------------------
+1. You open a page (e.g. the home page).
+2. A React hook (e.g. useRestaurants in lib/hooks.ts) runs.
+3. It checks: "Is a real Firebase project connected?"
+   - If NO (current state) -> it immediately shows the hardcoded seed data.
+   - If YES (future state) -> it fetches data from Firestore; if that fetch
+     fails or comes back empty, it still safely falls back to the seed data
+     so the app never shows a broken/empty page.
+4. The data is rendered as restaurant cards, product grids, etc.
+
+
+7. OTHER NOTABLE PIECES
+----------------------------
+- No user accounts / login system currently — there's a profile page but no
+  real authentication.
+- No payment processor integration — checkout payment methods (cash on
+  delivery, wallet, card) are simulated selections, not real payment
+  processing.
+- Admin dashboard (app/admin/) is an internal-only analytics/stats view,
+  intended for desktop use, separate from the customer-facing site.
+- The whole app runs as one Next.js process during development (locally on
+  a specific port); in production it would typically be deployed to a
+  hosting platform built for Next.js (e.g. Vercel), with Firebase supplying
+  the database/analytics backend once real credentials are added.
+
+
+SUMMARY IN ONE PARAGRAPH
+----------------------------
+Food Turtle is a single Next.js + React + TypeScript web app (frontend and
+backend combined in one project). There is no custom backend server and no
+live database connected today — all restaurant, shop, and product listings
+are hardcoded in the code itself. The app is pre-wired to use Firebase
+Firestore as a real database and analytics backend, and will start using it
+automatically once real Firebase project credentials are added; until then,
+it runs entirely on the hardcoded seed data, with your cart/orders saved only
+in your own browser's local storage.
